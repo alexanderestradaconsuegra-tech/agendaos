@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgendaOS — No te lo vamos a explicar.</title>
-<meta name="description" content="AgendaOS agenda citas, responde clientes y vende por WhatsApp automáticamente. Pruébalo 7 días gratis.">
-<meta property="og:title" content="AgendaOS — No te lo vamos a explicar.">
+<title>AgendaOS — Agenda citas automáticamente desde WhatsApp.</title>
+<meta name="description" content="AgendaOS responde clientes, muestra horarios y agenda sin que tengas que intervenir. 7 días gratis.">
+<meta property="og:title" content="AgendaOS — Agenda citas automáticamente desde WhatsApp.">
 <meta property="og:description" content="Agenda citas, responde clientes y vende por WhatsApp automáticamente.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234361ee'/><text x='16' y='23' font-family='Arial' font-size='11' font-weight='900' fill='white' text-anchor='middle'>OS</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234361ee'/><text x='16' y='23' font-family='Arial' font-size='11' font-weight='900' fill='white' text-anchor='middle'>O​S</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -54,7 +54,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 6%;backdrop-filter
 .badge-dot{width:5px;height:5px;border-radius:50%;background:var(--os);animation:blink 2s infinite}
 @keyframes blink{0%,100%{box-shadow:0 0 0 0 var(--os-glow)}50%{box-shadow:0 0 0 6px rgba(0,212,170,0)}}
 
-.hero-h1{font-size:clamp(52px,9vw,110px);font-weight:900;line-height:0.92;letter-spacing:-4px;color:#fff;margin-bottom:28px;animation:up 0.5s 0.08s ease both}
+.hero-h1{font-size:clamp(36px,6vw,72px);font-weight:900;line-height:0.95;letter-spacing:-3px;color:#fff;margin-bottom:28px;animation:up 0.5s 0.08s ease both}
 .hero-h1-line2{display:block;font-size:clamp(14px,2vw,18px);font-weight:400;letter-spacing:0px;color:rgba(255,255,255,0.5);line-height:2;margin-top:16px}
 .hero-h1-line2 strong{color:#fff;font-weight:700}
 .hero-h1-cta-line{display:block;font-size:clamp(13px,1.5vw,15px);color:var(--os);font-weight:700;margin-top:6px;letter-spacing:0px;line-height:1}
@@ -438,6 +438,36 @@ hr.foot-div{border:none;border-top:1px solid var(--border);margin-bottom:22px}
 .d-notif.hide{animation:d-hide 0.3s ease forwards}
 @keyframes d-hide{to{opacity:0;transform:translateY(-4px)}}
 
+
+/* ── MOBILE DEMO ── */
+.demo-mobile{display:none}
+@media(max-width:600px){
+  .hero-mockup .mock-wrap{display:none}
+  .demo-label{display:none}
+  .demo-mobile{display:flex;justify-content:center;margin-top:32px}
+}
+.phone-frame{width:220px;background:#0a0e1a;border-radius:36px;border:6px solid #1a2235;box-shadow:0 32px 72px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.06),inset 0 1px 0 rgba(255,255,255,0.04);overflow:hidden;position:relative}
+.phone-notch{width:60px;height:16px;background:#0a0e1a;border-radius:0 0 12px 12px;margin:0 auto;position:relative;z-index:2}
+.phone-screen{background:#f5f7ff;min-height:420px;display:flex;flex-direction:column}
+.phone-topbar{background:#fff;padding:8px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e4e8f5;flex-shrink:0}
+.phone-tb-av{width:26px;height:26px;background:#4361ee;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#fff;flex-shrink:0}
+.phone-tb-name{font-size:11px;font-weight:700;color:#0d1117;flex:1}
+.phone-tb-sts{font-size:9px;color:#00d4aa;font-weight:600}
+.phone-chat{flex:1;padding:10px;display:flex;flex-direction:column;gap:7px;background:#eef1fd}
+.ph-bbl{padding:8px 11px;border-radius:12px;font-size:11px;line-height:1.5;max-width:85%}
+.ph-u{background:#4361ee;color:#fff;border-radius:12px 12px 3px 12px;align-self:flex-end}
+.ph-a{background:#fff;color:#374151;border-radius:12px 12px 12px 3px;align-self:flex-start;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.ph-t{font-size:8px;color:rgba(0,0,0,0.25);margin-top:-4px;padding:0 4px}
+.ph-tr{text-align:right;align-self:flex-end}
+.phone-input{background:#fff;padding:8px 12px;display:flex;align-items:center;gap:7px;border-top:1px solid #e4e8f5;flex-shrink:0}
+.phone-inp-field{flex:1;background:#f5f7ff;border-radius:100px;padding:7px 12px;font-size:10px;color:#6b7280;border:1px solid #e4e8f5}
+.phone-inp-send{width:28px;height:28px;background:#4361ee;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.phone-notif{position:absolute;top:8px;left:8px;right:8px;background:#0d1117;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:7px;z-index:5;animation:ph-notif 0.3s 2s ease both;opacity:0}
+@keyframes ph-notif{to{opacity:1}}
+.ph-notif-icon{width:24px;height:24px;background:#4361ee;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.ph-notif-txt{font-size:9px;color:rgba(255,255,255,0.5);line-height:1.4}
+.ph-notif-bold{font-weight:700;color:#fff}
+
 </style>
 </head>
 <body>
@@ -453,8 +483,8 @@ hr.foot-div{border:none;border-top:1px solid var(--border);margin-bottom:22px}
 <nav>
   <div class="nav-inner">
     <a href="#" class="nav-logo">
-      <div class="nav-logo-mark">OS</div>
-      <div class="nav-logo-name">Agenda<span class="os">OS</span></div>
+      <div class="nav-logo-mark">O​S</div>
+      <div class="nav-logo-name">Agenda<span class="os"><span style="font-style:normal" aria-hidden="true">O​S</span></div>
     </a>
     <div class="nav-links">
       <a href="#features">Funciones</a>
@@ -476,9 +506,9 @@ hr.foot-div{border:none;border-top:1px solid var(--border);margin-bottom:22px}
   <div class="hero-content">
     <div class="hero-badge"><div class="badge-dot"></div>7 días gratis · Sin tarjeta · Activo hoy</div>
     <h1 class="hero-h1">
-      No te lo vamos<br>a explicar.
+      Agenda citas<br><span style="color:#00d4aa">automáticamente</span><br>desde <span style="color:#25d366;filter:drop-shadow(0 0 12px rgba(37,211,102,0.3))">WhatsApp.</span>
       <span class="hero-h1-line2">
-        <strong>AgendaOS</strong> agenda citas, responde clientes y vende por WhatsApp automáticamente.
+        <strong>AgendaOS</strong> responde clientes, muestra horarios y agenda <strong>sin que tengas que intervenir.</strong>
       </span>
       <span class="hero-h1-cta-line">👉 Escríbenos y pruébalo tú mismo ahora.</span>
     </h1>
@@ -519,8 +549,8 @@ hr.foot-div{border:none;border-top:1px solid var(--border);margin-bottom:22px}
         <!-- SIDEBAR -->
         <div class="demo-sb">
           <div class="demo-sb-top">
-            <div class="demo-sb-mark">OS</div>
-            <div class="demo-sb-name">Agenda<span style="color:#00d4aa">OS</span></div>
+            <div class="demo-sb-mark">O​S</div>
+            <div class="demo-sb-name">Agenda<span style="color:#00d4aa"><span style="font-style:normal" aria-hidden="true">O​S</span></div>
           </div>
           <div class="demo-sb-neg">Barbería El Clásico</div>
           <div class="demo-sb-sec">Principal</div>
@@ -602,7 +632,7 @@ hr.foot-div{border:none;border-top:1px solid var(--border);margin-bottom:22px}
     <div class="reveal rd2">
       <div class="chat-mock">
         <div class="chat-hdr">
-          <div class="chat-av">OS</div>
+          <div class="chat-av">O​S</div>
           <div>
             <div class="chat-name">AgendaOS · Tu negocio</div>
             <div class="chat-sts">En línea ahora</div>
@@ -800,8 +830,8 @@ hr.foot-div{border:none;border-top:1px solid var(--border);margin-bottom:22px}
     <div class="footer-top">
       <div>
         <div class="footer-brand">
-          <div class="footer-mark">OS</div>
-          <div class="footer-name">Agenda<span class="os">OS</span></div>
+          <div class="footer-mark">O​S</div>
+          <div class="footer-name">Agenda<span class="os"><span style="font-style:normal" aria-hidden="true">O​S</span></div>
         </div>
         <div class="footer-tag">Sistema inteligente de gestión de citas para negocios en Latinoamérica. Powered by Autix — Santiago, Chile.</div>
         <div class="footer-socs">
