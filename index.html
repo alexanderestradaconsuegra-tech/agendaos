@@ -1,1384 +1,539 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgendaOS — Agenda citas automáticamente desde WhatsApp.</title>
-<meta name="description" content="AgendaOS responde clientes, muestra horarios y agenda sin que tengas que intervenir. 7 días gratis.">
-<meta property="og:title" content="AgendaOS — Agenda citas automáticamente desde WhatsApp.">
-<meta property="og:description" content="Agenda citas, responde clientes y vende por WhatsApp automáticamente.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234361ee'/><text x='16' y='23' font-family='Arial' font-size='11' font-weight='900' fill='white' text-anchor='middle'>O​S</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --blue:#4361ee;--blue2:#3451d1;--blue3:#2541b2;
-  --blue-glow:rgba(67,97,238,0.2);--blue-light:rgba(67,97,238,0.06);
-  --os:#00d4aa;--os2:#00b894;--os-glow:rgba(0,212,170,0.25);
-  --dark:#08090e;--dark2:#0d1117;--dark3:#131924;--dark4:#1a2235;
-  --off:#f4f6ff;--white:#ffffff;
-  --border:rgba(255,255,255,0.06);--border-l:rgba(67,97,238,0.12);
-  --text:#0d1117;--muted:#6b7280;--faint:#e2e8f0;
-  --green:#10b981;--amber:#f59e0b;--red:#ef4444;
-  --r:10px;--r-lg:16px;--r-xl:24px;
-  --font:'Plus Jakarta Sans',sans-serif;
-  --mono:'JetBrains Mono',monospace;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font);background:var(--dark);color:#fff;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased}
+import React from "react";
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 6%;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(8,9,14,0.85);border-bottom:1px solid var(--border);transition:all 0.3s}
-.nav-inner{max-width:1140px;margin:0 auto;height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-logo-mark{width:30px;height:30px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;box-shadow:0 0 16px var(--blue-glow)}
-.nav-logo-name{font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.4px}
-.nav-logo-name .os{color:var(--os)}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s}
-.nav-links a:hover{color:#fff}
-@media(max-width:768px){.nav-links{display:none}}
-.nav-cta{background:var(--blue);color:#fff;padding:9px 22px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer;font-family:var(--font);white-space:nowrap;box-shadow:0 4px 16px var(--blue-glow)}
-.nav-cta:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 8px 24px var(--blue-glow)}
+const WHATSAPP_URL = "https://wa.me/56927446802?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20AgendaOS";
+const SYSTEM_DEMO_URL = "https://app.agendaos.pro";
 
-/* ── HERO ── */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 6% 60px;position:relative;overflow:hidden;background:var(--dark)}
-.hero-bg{position:absolute;inset:0;pointer-events:none}
-.hero-glow-1{position:absolute;top:-10%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(67,97,238,0.12) 0%,transparent 65%)}
-.hero-glow-2{position:absolute;bottom:-5%;right:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,170,0.08) 0%,transparent 65%)}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(67,97,238,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(67,97,238,0.04) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at 50% 40%,black 20%,transparent 75%)}
-.hero-content{position:relative;z-index:1;text-align:center;max-width:860px;margin:0 auto}
-
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:700;color:var(--os);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:32px;animation:up 0.5s ease both}
-.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--os);animation:blink 2s infinite}
-@keyframes blink{0%,100%{box-shadow:0 0 0 0 var(--os-glow)}50%{box-shadow:0 0 0 6px rgba(0,212,170,0)}}
-
-.hero-h1{font-size:clamp(36px,6vw,72px);font-weight:900;line-height:0.95;letter-spacing:-3px;color:#fff;margin-bottom:28px;animation:up 0.5s 0.08s ease both}
-.hero-h1-line2{display:block;font-size:clamp(14px,2vw,18px);font-weight:400;letter-spacing:0px;color:rgba(255,255,255,0.5);line-height:2;margin-top:16px}
-.hero-h1-line2 strong{color:#fff;font-weight:700}
-.hero-h1-cta-line{display:block;font-size:clamp(13px,1.5vw,15px);color:var(--os);font-weight:700;margin-top:6px;letter-spacing:0px;line-height:1}
-
-.hero-actions{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;animation:up 0.5s 0.2s ease both;margin-top:36px}
-.btn-h{padding:14px 30px;border-radius:100px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all 0.2s;font-family:var(--font);text-decoration:none;display:inline-flex;align-items:center;gap:8px;letter-spacing:-0.2px}
-.btn-primary{background:var(--blue);color:#fff;box-shadow:0 4px 24px var(--blue-glow)}
-.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 12px 36px var(--blue-glow)}
-.btn-wa{background:rgba(37,211,102,0.12);color:#25d366;border:1px solid rgba(37,211,102,0.25)}
-.btn-wa:hover{background:rgba(37,211,102,0.2);transform:translateY(-1px)}
-
-.hero-proof{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;animation:up 0.5s 0.25s ease both}
-.hero-avs{display:flex}
-.hero-av{width:26px;height:26px;border-radius:50%;border:2px solid var(--dark);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;margin-left:-8px}
-.hero-av:first-child{margin-left:0}
-.hero-proof-txt{font-size:12px;color:rgba(255,255,255,0.35);font-weight:500}
-.hero-proof-txt strong{color:rgba(255,255,255,0.7)}
-
-/* ── DASHBOARD MOCKUP ── */
-.hero-mockup{position:relative;z-index:1;width:100%;max-width:1000px;margin:52px auto 0;animation:up 0.7s 0.35s ease both}
-.mock-wrap{background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-xl);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.04),inset 0 1px 0 rgba(255,255,255,0.05)}
-.mock-bar{background:var(--dark2);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
-.mock-dot{width:10px;height:10px;border-radius:50%}
-.mock-url{flex:1;background:rgba(255,255,255,0.04);border-radius:6px;padding:4px 12px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.2);margin:0 10px;text-align:center}
-.mock-live{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;color:var(--os);font-weight:600}
-.mock-live-dot{width:5px;height:5px;border-radius:50%;background:var(--os);animation:blink 2s infinite}
-.mock-body{display:grid;grid-template-columns:180px 1fr;height:380px}
-@media(max-width:600px){.mock-body{grid-template-columns:1fr;height:auto}}
-.mock-sb{background:rgba(8,9,14,0.7);padding:14px 10px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:2px}
-@media(max-width:600px){.mock-sb{display:none}}
-.mock-sb-brand{display:flex;align-items:center;gap:8px;padding:6px 8px;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:12px}
-.mock-sb-mark{width:22px;height:22px;background:var(--blue);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#fff}
-.mock-sb-name{font-size:12px;font-weight:800;color:#fff;letter-spacing:-0.3px}
-.mock-sb-name .os{color:var(--os)}
-.mock-mi{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:6px;font-size:11px;color:rgba(255,255,255,0.3);font-weight:500;cursor:pointer}
-.mock-mi.a{color:#fff;background:rgba(67,97,238,0.15);font-weight:600}
-.mock-mi-ic{width:14px;height:14px;border-radius:4px;background:currentColor;opacity:0.4;flex-shrink:0}
-.mock-main{padding:16px;overflow:hidden;display:flex;flex-direction:column;gap:10px;background:rgba(13,17,23,0.5)}
-.mock-hdr{display:flex;align-items:center;justify-content:space-between}
-.mock-title{font-size:15px;font-weight:700;color:#fff}
-.mock-date{font-size:10px;color:rgba(255,255,255,0.25);font-family:var(--mono)}
-.mock-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-@media(max-width:480px){.mock-kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:9px;padding:9px 11px;transition:border-color 0.2s}
-.kpi:hover{border-color:rgba(67,97,238,0.25)}
-.kpi-l{font-size:9px;text-transform:uppercase;letter-spacing:0.5px;color:rgba(255,255,255,0.25);margin-bottom:4px;font-weight:600}
-.kpi-v{font-size:20px;font-weight:900;color:#fff;line-height:1;margin-bottom:4px;letter-spacing:-0.5px}
-.kpi-b{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 6px;border-radius:100px}
-.ku{background:rgba(0,212,170,0.12);color:var(--os)}
-.kn{background:rgba(67,97,238,0.12);color:rgba(147,166,255,1)}
-.mock-charts{display:grid;grid-template-columns:1fr 130px;gap:7px;flex:1}
-@media(max-width:480px){.mock-charts{grid-template-columns:1fr}}
-.cc{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:9px;padding:11px;overflow:hidden;position:relative}
-.cc-title{font-size:9px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
-.ai-notif{position:absolute;bottom:10px;right:10px;background:var(--blue);border-radius:10px 10px 2px 10px;padding:8px 11px;font-size:9px;color:#fff;max-width:170px;line-height:1.5;animation:notif-pop 0.4s 2.5s ease both;opacity:0;box-shadow:0 8px 24px var(--blue-glow)}
-@keyframes notif-pop{from{opacity:0;transform:scale(0.85) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.ai-notif-h{font-weight:700;font-size:9px;margin-bottom:2px;display:flex;align-items:center;gap:4px}
-.ai-dots{display:flex;gap:3px;margin-top:5px}
-.ai-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,0.6);animation:ai-bounce 1.2s ease-in-out infinite}
-.ai-dot:nth-child(2){animation-delay:0.2s}
-.ai-dot:nth-child(3){animation-delay:0.4s}
-@keyframes ai-bounce{0%,100%{transform:translateY(0);opacity:0.5}50%{transform:translateY(-3px);opacity:1}}
-
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── STATS ── */
-.stats-strip{background:rgba(13,17,23,0.8);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:32px 6%}
-.stats-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-@media(max-width:600px){.stats-inner{grid-template-columns:repeat(2,1fr);gap:24px}}
-.stat-item{text-align:center;border-right:1px solid var(--border)}
-.stat-item:last-child{border:none}
-@media(max-width:600px){.stat-item{border:none}}
-.stat-num{font-size:34px;font-weight:900;letter-spacing:-1.5px;line-height:1;background:linear-gradient(135deg,var(--blue),var(--os));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-label{font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;font-weight:500}
-
-/* ── SECTION ── */
-.section{padding:88px 6%;position:relative}
-.section-inner{max-width:1140px;margin:0 auto}
-.section-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(67,97,238,0.08);border:1px solid rgba(67,97,238,0.2);border-radius:100px;padding:5px 14px;font-size:10px;font-weight:700;color:rgba(147,166,255,0.9);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
-.section-title{font-size:clamp(28px,4.5vw,52px);font-weight:900;letter-spacing:-2px;line-height:1;color:#fff;margin-bottom:14px}
-.section-sub{font-size:16px;color:rgba(255,255,255,0.35);line-height:1.7;max-width:500px}
-.txt-blue{color:var(--blue)}
-.txt-os{color:var(--os)}
-
-/* ── FEATURES ── */
-.features-section{background:var(--dark2)}
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:52px}
-@media(max-width:900px){.features-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.features-grid{grid-template-columns:1fr}}
-.feat-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-xl);padding:26px;transition:all 0.25s;position:relative;overflow:hidden;cursor:default}
-.feat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(67,97,238,0.06),transparent 60%);opacity:0;transition:opacity 0.3s}
-.feat-card:hover{border-color:rgba(67,97,238,0.25);transform:translateY(-3px);box-shadow:0 16px 48px rgba(67,97,238,0.08)}
-.feat-card:hover::before{opacity:1}
-.feat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;transition:all 0.25s;flex-shrink:0}
-.fi-blue{background:rgba(67,97,238,0.12);border:1px solid rgba(67,97,238,0.2)}
-.fi-os{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2)}
-.feat-card:hover .feat-icon{transform:scale(1.06)}
-.feat-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:7px;letter-spacing:-0.3px}
-.feat-desc{font-size:13px;color:rgba(255,255,255,0.35);line-height:1.7}
-
-/* ── AGENT DARK ── */
-.agent-section{background:var(--dark);padding:88px 6%;overflow:hidden;position:relative}
-.agent-glow{position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(67,97,238,0.08),transparent 70%);pointer-events:none}
-.agent-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
-@media(max-width:900px){.agent-grid{grid-template-columns:1fr;gap:48px}}
-.agent-feats{display:flex;flex-direction:column;gap:10px;margin-top:24px}
-.agent-feat{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.5);font-weight:500}
-.af-icon{width:32px;height:32px;border-radius:9px;background:rgba(67,97,238,0.1);border:1px solid rgba(67,97,238,0.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-
-/* CHAT MOCKUP */
-.chat-mock{background:rgba(13,17,23,0.9);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px;box-shadow:0 32px 72px rgba(0,0,0,0.4)}
-.chat-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.chat-av{width:36px;height:36px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 0 12px var(--blue-glow)}
-.chat-name{font-weight:700;color:#fff;font-size:12px}
-.chat-sts{font-size:10px;color:var(--os);display:flex;align-items:center;gap:4px;margin-top:1px}
-.chat-sts::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--os);display:inline-block}
-.msg{margin-bottom:10px}
-.bbl{display:inline-block;padding:9px 13px;border-radius:14px;font-size:12px;line-height:1.55;max-width:85%}
-.bbl-u{background:var(--blue);color:#fff;border-radius:14px 14px 3px 14px;float:right;clear:both}
-.bbl-a{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.8);border-radius:14px 14px 14px 3px;clear:both}
-.clr{clear:both;height:0}
-.msg-t{font-size:9px;color:rgba(255,255,255,0.18);margin-top:3px;display:block}
-.msg-tr{text-align:right}
-.typing{background:rgba(255,255,255,0.04);border-radius:14px 14px 14px 3px;padding:9px 13px;display:inline-flex;gap:4px;margin-top:4px}
-
-/* ── HOW IT WORKS ── */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:52px;position:relative}
-@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.steps{grid-template-columns:1fr}}
-.steps::before{content:'';position:absolute;top:26px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(67,97,238,0.3),transparent);z-index:0}
-@media(max-width:900px){.steps::before{display:none}}
-.step{text-align:center;position:relative;z-index:1}
-.step-n{width:52px;height:52px;border-radius:50%;background:rgba(67,97,238,0.1);border:1px solid rgba(67,97,238,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--blue);margin:0 auto 18px;transition:all 0.25s;font-family:var(--mono)}
-.step:hover .step-n{background:var(--blue);color:#fff;border-color:var(--blue);transform:scale(1.08);box-shadow:0 8px 24px var(--blue-glow)}
-.step-t{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px}
-.step-d{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6}
-
-/* ── PRICING ── */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:48px}
-@media(max-width:900px){.pricing-grid{grid-template-columns:1fr}}
-.pc{border:1px solid var(--border);border-radius:var(--r-xl);padding:28px;position:relative;transition:all 0.25s;background:rgba(255,255,255,0.02)}
-.pc:hover{border-color:rgba(67,97,238,0.25);transform:translateY(-3px);box-shadow:0 20px 52px rgba(67,97,238,0.08)}
-.pc.feat{background:rgba(67,97,238,0.07);border-color:rgba(67,97,238,0.3);box-shadow:0 20px 60px rgba(67,97,238,0.12)}
-.pc-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:4px 16px;border-radius:100px;white-space:nowrap;letter-spacing:0.3px}
-.pc-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:5px}
-.pc-desc{font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:18px;line-height:1.6}
-.pc-price{font-size:38px;font-weight:900;letter-spacing:-1.5px;line-height:1;color:#fff;margin-bottom:3px}
-.pc-period{font-size:12px;color:rgba(255,255,255,0.25);margin-bottom:22px}
-.pc-btn{width:100%;padding:11px;border-radius:100px;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all 0.2s;font-family:var(--font);margin-bottom:22px}
-.pb-outline{background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6)}
-.pb-outline:hover{border-color:var(--blue);color:#fff}
-.pb-solid{background:var(--blue);color:#fff;box-shadow:0 6px 20px var(--blue-glow)}
-.pb-solid:hover{background:var(--blue2);transform:translateY(-1px)}
-.pc-feats{display:flex;flex-direction:column;gap:8px}
-.pc-feat{display:flex;align-items:center;gap:9px;font-size:12px;color:rgba(255,255,255,0.5);font-weight:500}
-.fc{width:16px;height:16px;border-radius:50%;background:rgba(67,97,238,0.12);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
-
-/* ── TESTIMONIALS ── */
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:48px}
-@media(max-width:900px){.testi-grid{grid-template-columns:1fr}}
-.tc{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r-xl);padding:24px;transition:all 0.25s}
-.tc:hover{border-color:rgba(67,97,238,0.2);transform:translateY(-2px)}
-.tc-stars{color:var(--os);font-size:12px;margin-bottom:12px;letter-spacing:2px}
-.tc-txt{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:18px}
-.tc-auth{display:flex;align-items:center;gap:10px}
-.tc-av{width:34px;height:34px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
-.tc-name{font-size:12px;font-weight:700;color:#fff}
-.tc-role{font-size:10px;color:rgba(255,255,255,0.25)}
-
-/* ── REGISTER ── */
-.reg-section{background:var(--dark2);padding:88px 6%;position:relative;overflow:hidden}
-.reg-glow{position:absolute;bottom:0;left:0;width:600px;height:600px;background:radial-gradient(circle,rgba(67,97,238,0.08),transparent 70%);pointer-events:none}
-.reg-glow-2{position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.05),transparent 70%);pointer-events:none}
-.reg-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;position:relative;z-index:1}
-@media(max-width:900px){.reg-grid{grid-template-columns:1fr;gap:40px}}
-.reg-title{font-size:clamp(28px,4vw,52px);font-weight:900;letter-spacing:-2px;line-height:0.95;color:#fff;margin-bottom:16px}
-.reg-sub{font-size:15px;color:rgba(255,255,255,0.35);line-height:1.7;margin-bottom:28px}
-.trust-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.4);font-weight:500;margin-bottom:11px}
-.t-icon{width:28px;height:28px;border-radius:8px;background:rgba(67,97,238,0.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.trial-banner{background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.18);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px}
-.trial-dot{width:8px;height:8px;border-radius:50%;background:var(--os);animation:blink 2s infinite;flex-shrink:0}
-.trial-txt{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5}
-.trial-txt strong{color:var(--os)}
-
-.reg-form{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r-xl);padding:30px}
-.reg-form-t{font-size:18px;font-weight:700;color:#fff;margin-bottom:3px;letter-spacing:-0.3px}
-.reg-form-s{font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:22px}
-.fg{margin-bottom:12px}
-.fg label{display:block;font-size:9px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:5px}
-.fg input,.fg select{width:100%;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.07);border-radius:var(--r);padding:10px 12px;font-family:var(--font);font-size:13px;color:#fff;outline:none;transition:all 0.2s}
-.fg input::placeholder{color:rgba(255,255,255,0.18)}
-.fg input:focus,.fg select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(67,97,238,0.1)}
-.fg select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='rgba(255,255,255,0.25)' d='M6 7L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-color:rgba(255,255,255,0.04)}
-.fg select option{background:#1a2235;color:#fff}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:480px){.form-row{grid-template-columns:1fr}}
-.fg-slug input{font-family:var(--mono);letter-spacing:0.3px}
-.slug-preview{font-size:10px;color:rgba(255,255,255,0.2);margin-top:4px;font-family:var(--mono)}
-.slug-preview span{color:var(--os)}
-
-.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
-.plan-opt{border:1.5px solid rgba(255,255,255,0.07);border-radius:var(--r);padding:10px 7px;text-align:center;cursor:pointer;transition:all 0.18s}
-.plan-opt:hover{border-color:rgba(67,97,238,0.3)}
-.plan-opt.sel{border-color:var(--blue);background:rgba(67,97,238,0.1)}
-.plan-opt-name{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px}
-.plan-opt-price{font-size:10px;color:rgba(255,255,255,0.3)}
-
-.btn-reg{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 24px var(--blue-glow);margin-top:4px;letter-spacing:-0.2px}
-.btn-reg:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 12px 36px var(--blue-glow)}
-.btn-reg:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
-.reg-note{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:11px;color:rgba(255,255,255,0.2)}
-
-/* ── FAQ ── */
-.faq-wrap{max-width:700px;margin:48px auto 0}
-.faq-item{border-bottom:1px solid var(--border)}
-.faq-q{font-size:14px;font-weight:600;color:rgba(255,255,255,0.7);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 0;transition:color 0.2s}
-.faq-q:hover{color:#fff}
-.faq-ic{width:24px;height:24px;border-radius:50%;background:rgba(67,97,238,0.1);color:rgba(147,166,255,0.8);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all 0.2s;font-weight:700}
-.faq-item.open .faq-ic{background:var(--blue);color:#fff;transform:rotate(45deg)}
-.faq-a{font-size:13px;color:rgba(255,255,255,0.35);line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s}
-.faq-item.open .faq-a{max-height:200px;padding-bottom:16px}
-
-/* ── FOOTER ── */
-footer{background:var(--dark2);border-top:1px solid var(--border);padding:60px 6% 32px}
-.footer-inner{max-width:1140px;margin:0 auto}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
-@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr;gap:36px}}
-@media(max-width:480px){.footer-top{grid-template-columns:1fr}}
-.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.footer-mark{width:28px;height:28px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff}
-.footer-name{font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.3px}
-.footer-name .os{color:var(--os)}
-.footer-tag{font-size:12px;color:rgba(255,255,255,0.22);line-height:1.7;max-width:220px;margin-bottom:18px}
-.footer-socs{display:flex;gap:8px}
-.footer-soc{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all 0.18s;text-decoration:none}
-.footer-soc:hover{background:rgba(67,97,238,0.15);border-color:rgba(67,97,238,0.3)}
-.footer-col-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-bottom:14px}
-.footer-links{display:flex;flex-direction:column;gap:9px}
-.footer-links a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.18s;font-weight:500}
-.footer-links a:hover{color:#fff}
-.tag-new{background:var(--blue);color:#fff;font-size:8px;font-weight:700;padding:2px 5px;border-radius:4px;margin-left:4px}
-hr.foot-div{border:none;border-top:1px solid var(--border);margin-bottom:22px}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.footer-copy{font-size:11px;color:rgba(255,255,255,0.15)}
-.footer-legal{display:flex;gap:16px}
-.footer-legal a{font-size:11px;color:rgba(255,255,255,0.15);text-decoration:none;transition:color 0.2s}
-.footer-legal a:hover{color:rgba(255,255,255,0.4)}
-
-/* ── UTILS ── */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.6s ease,transform 0.6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.rd1{transition-delay:0.1s}.rd2{transition-delay:0.2s}.rd3{transition-delay:0.3s}
-.fab{position:fixed;bottom:24px;right:20px;background:var(--blue);color:#fff;border:none;border-radius:100px;padding:12px 22px;font-size:13px;font-weight:700;cursor:pointer;z-index:50;box-shadow:0 6px 24px var(--blue-glow);transition:all 0.2s;font-family:var(--font);display:flex;align-items:center;gap:6px;opacity:0;pointer-events:none}
-.fab.show{opacity:1;pointer-events:all}
-.fab:hover{transform:translateY(-2px);box-shadow:0 12px 32px var(--blue-glow)}
-.notif-popup{position:fixed;top:74px;right:16px;background:var(--dark3);border:1px solid rgba(67,97,238,0.2);border-radius:var(--r-lg);padding:12px 14px;z-index:200;display:none;align-items:center;gap:10px;max-width:270px;box-shadow:0 12px 32px rgba(0,0,0,0.4)}
-.notif-popup.show{display:flex;animation:up 0.3s ease}
-.notif-icon{width:32px;height:32px;border-radius:8px;background:rgba(0,212,170,0.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.notif-body{font-size:11px;color:rgba(255,255,255,0.5);line-height:1.4}
-.notif-name{font-weight:700;color:#fff}
-
-/* SUCCESS STATE */
-.reg-success{display:none;text-align:center;padding:32px 20px}
-.reg-success-icon{font-size:40px;margin-bottom:14px}
-.reg-success-t{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px}
-.reg-success-s{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:20px}
-.reg-success-btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:12px 28px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;transition:all 0.2s;box-shadow:0 6px 20px var(--blue-glow)}
-.reg-success-btn:hover{background:var(--blue2);transform:translateY(-2px)}
-
-/* ── INTERACTIVE DEMO ── */
-.demo-label{display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:rgba(255,255,255,0.35);font-weight:600;margin-bottom:12px;letter-spacing:0.3px}
-.demo-label-dot{width:6px;height:6px;border-radius:50%;background:#00d4aa;animation:blink 2s infinite}
-.demo-topbar{background:#06080f;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.05)}
-.d-dot{width:9px;height:9px;border-radius:50%}
-.demo-url{flex:1;background:rgba(255,255,255,0.04);border-radius:5px;padding:3px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.2);text-align:center}
-.demo-live{display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:9px;color:#00d4aa;font-weight:600}
-.demo-live-dot{width:5px;height:5px;border-radius:50%;background:#00d4aa;animation:blink 2s infinite}
-.demo-layout{display:grid;grid-template-columns:170px 1fr;height:440px}
-@media(max-width:600px){.demo-layout{grid-template-columns:1fr}}
-.demo-sb{background:#0a0e1a;border-right:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;padding:10px 6px;gap:1px;overflow:hidden}
-@media(max-width:600px){.demo-sb{display:none}}
-.demo-sb-top{display:flex;align-items:center;gap:7px;padding:6px 7px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:10px}
-.demo-sb-mark{width:20px;height:20px;background:#4361ee;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#fff;box-shadow:0 0 8px rgba(67,97,238,0.4)}
-.demo-sb-name{font-size:12px;font-weight:800;color:#fff;letter-spacing:-0.3px}
-.demo-sb-neg{font-size:9px;color:rgba(255,255,255,0.2);padding:0 7px;margin-bottom:8px;font-family:'JetBrains Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.demo-sb-sec{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.15);padding:6px 7px 3px}
-.d-nav{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:all 0.12s;color:rgba(255,255,255,0.3);font-size:11px;font-weight:500;position:relative;user-select:none}
-.d-nav:hover{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.6)}
-.d-nav.active{background:rgba(67,97,238,0.18);color:#fff;font-weight:600}
-.d-nav.active::before{content:'';position:absolute;left:-6px;top:50%;transform:translateY(-50%);width:2px;height:14px;background:#4361ee;border-radius:0 2px 2px 0}
-.d-nav-ic{font-size:11px;width:16px;text-align:center;flex-shrink:0}
-.demo-sb-user{display:flex;align-items:center;gap:6px;padding:6px 8px;border-top:1px solid rgba(255,255,255,0.05);margin-top:auto}
-.demo-sb-av{width:22px;height:22px;border-radius:50%;background:#4361ee;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0}
-.demo-main{display:flex;flex-direction:column;background:#f5f7ff;overflow:hidden;position:relative}
-.demo-maintop{height:44px;background:#fff;border-bottom:1px solid #e4e8f5;display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0}
-.demo-maintop-title{font-size:13px;font-weight:700;color:#0d1117;flex:1;letter-spacing:-0.2px}
-.demo-maintop-right{display:flex;align-items:center;gap:6px}
-.demo-live-pill{display:flex;align-items:center;gap:4px;font-size:9px;color:#00d4aa;background:rgba(0,212,170,0.08);padding:3px 9px;border-radius:100px;border:1px solid rgba(0,212,170,0.2);font-weight:600}
-.demo-chip{font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:#eef1fd;color:#4361ee;border:1px solid rgba(67,97,238,0.15);cursor:pointer}
-.demo-content{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px}
-.demo-content::-webkit-scrollbar{width:3px}
-.demo-content::-webkit-scrollbar-thumb{background:#d1d9f0;border-radius:3px}
-.d-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.d-mc{background:#fff;border:1px solid #e4e8f5;border-radius:9px;padding:10px 12px;cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden}
-.d-mc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transition:transform 0.2s;transform-origin:left}
-.d-mc.c-b::after{background:#4361ee}.d-mc.c-os::after{background:#00d4aa}.d-mc.c-a::after{background:#f59e0b}.d-mc.c-p::after{background:#8b5cf6}
-.d-mc:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(67,97,238,0.1)}.d-mc:hover::after{transform:scaleX(1)}
-.d-mc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
-.d-mc-label{font-size:9px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.3px}
-.d-mc-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px}
-.d-ic-b{background:#eef1fd;color:#4361ee}.d-ic-os{background:rgba(0,212,170,0.1);color:#00d4aa}.d-ic-a{background:rgba(245,158,11,0.08);color:#f59e0b}.d-ic-p{background:rgba(139,92,246,0.08);color:#8b5cf6}
-.d-mc-val{font-size:22px;font-weight:900;color:#0d1117;letter-spacing:-0.8px;line-height:1;margin-bottom:5px}
-.d-mc-val.os{color:#00d4aa}.d-mc-val.blue{color:#4361ee}
-.d-mc-trend{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 5px;border-radius:100px}
-.d-tr-up{background:rgba(16,185,129,0.1);color:#10b981}
-.d-tr-n{background:rgba(67,97,238,0.08);color:#4361ee}
-.d-card{background:#fff;border:1px solid #e4e8f5;border-radius:9px;overflow:hidden}
-.d-card-head{padding:9px 12px;border-bottom:1px solid #e4e8f5;display:flex;align-items:center;justify-content:space-between}
-.d-card-title{font-size:11px;font-weight:700;color:#0d1117}
-.d-card-action{font-size:10px;color:#4361ee;cursor:pointer;background:none;border:none;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif}
-.d-card-body{padding:10px 12px}
-.d-qa{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.d-qa-btn{background:#fff;border:1.5px solid #e4e8f5;border-radius:9px;padding:9px 5px;text-align:center;cursor:pointer;transition:all 0.15s;user-select:none}
-.d-qa-btn:hover{border-color:#4361ee;background:#eef1fd;transform:translateY(-2px)}
-.d-qa-icon{font-size:16px;display:block;margin-bottom:4px}
-.d-qa-label{font-size:10px;font-weight:600;color:#374151}
-.d-qa-btn:hover .d-qa-label{color:#4361ee}
-.d-table{width:100%;border-collapse:collapse}
-.d-th{font-size:9px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;padding:6px 10px;text-align:left;border-bottom:1px solid #e4e8f5;background:#f5f7ff;white-space:nowrap}
-.d-td{padding:8px 10px;font-size:11px;border-bottom:1px solid #e4e8f5;color:#0d1117;vertical-align:middle}
-.d-tr:last-child .d-td{border:none}
-.d-tr:hover .d-td{background:#eef1fd}
-.d-av{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;vertical-align:middle;margin-right:5px}
-.d-status{display:inline-flex;align-items:center;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;gap:3px}
-.d-status::before{content:'';width:4px;height:4px;border-radius:50%}
-.d-sc{background:rgba(16,185,129,0.1);color:#10b981}.d-sc::before{background:#10b981}
-.d-sp{background:rgba(245,158,11,0.08);color:#f59e0b}.d-sp::before{background:#f59e0b}
-.d-sx{background:rgba(239,68,68,0.08);color:#ef4444}.d-sx::before{background:#ef4444}
-.d-sd{background:rgba(139,92,246,0.08);color:#8b5cf6}.d-sd::before{background:#8b5cf6}
-.d-chart{height:60px}
-.d-chart svg{width:100%;height:100%}
-.d-chart-labels{display:flex;justify-content:space-between;font-size:8px;color:#d1d9f0;font-family:'JetBrains Mono',monospace;margin-top:3px}
-.d-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.d-cal-h{text-align:center;font-size:8px;font-weight:700;color:#6b7280;padding:2px 0;text-transform:uppercase}
-.d-cal-d{aspect-ratio:1;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#6b7280;transition:all 0.1s;font-weight:500;position:relative}
-.d-cal-d:hover{background:#eef1fd;color:#4361ee}
-.d-cal-d.today{background:#4361ee;color:#fff;font-weight:800}
-.d-cal-d.ev{background:#eef1fd;color:#4361ee;font-weight:600}
-.d-cal-d.ev::after{content:'';width:3px;height:3px;border-radius:50%;background:#4361ee;position:absolute;bottom:2px}
-.d-slot{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;border:1px solid #e4e8f5;background:#fff;margin-bottom:4px;cursor:pointer;transition:all 0.12s}
-.d-slot:hover{border-color:rgba(67,97,238,0.25);background:#eef1fd}
-.d-slot.busy{border-color:rgba(67,97,238,0.12);background:linear-gradient(90deg,#eef1fd,#fff)}
-.d-slot-t{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:#4361ee;width:34px;flex-shrink:0}
-.d-slot-bar{width:2px;height:24px;border-radius:2px;flex-shrink:0}
-.d-slot-name{font-size:11px;font-weight:700;color:#0d1117}
-.d-slot-svc{font-size:9px;color:#6b7280}
-.d-terminal{display:grid;grid-template-columns:1fr 180px;gap:8px;height:100%}
-.d-prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-.d-prod{background:#fff;border:1.5px solid #e4e8f5;border-radius:8px;padding:8px 5px;cursor:pointer;text-align:center;transition:all 0.12s;user-select:none}
-.d-prod:hover{border-color:#4361ee;background:#eef1fd;transform:scale(1.02)}
-.d-prod:active{transform:scale(0.97)}
-.d-prod-emoji{font-size:18px;margin-bottom:4px}
-.d-prod-name{font-size:9px;font-weight:700;color:#0d1117;margin-bottom:2px}
-.d-prod-price{font-size:10px;font-weight:800;color:#4361ee;font-family:'JetBrains Mono',monospace}
-.d-cart{background:#fff;border:1px solid #e4e8f5;border-radius:9px;display:flex;flex-direction:column;overflow:hidden}
-.d-cart-h{padding:7px 10px;border-bottom:1px solid #e4e8f5;font-size:10px;font-weight:700;color:#0d1117}
-.d-cart-items{flex:1;padding:5px;overflow-y:auto;min-height:80px}
-.d-cart-item{display:flex;align-items:center;gap:5px;padding:5px;border:1px solid #e4e8f5;border-radius:6px;margin-bottom:3px;background:#f5f7ff;font-size:10px}
-.d-cart-item-n{flex:1;font-weight:600;color:#0d1117}
-.d-cart-item-p{font-weight:800;color:#4361ee;font-family:'JetBrains Mono',monospace}
-.d-cart-foot{padding:8px 10px;border-top:1px solid #e4e8f5;background:#f5f7ff}
-.d-cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
-.d-cart-total-label{font-size:9px;color:#6b7280;font-weight:600}
-.d-cart-total-val{font-size:18px;font-weight:900;color:#0d1117;letter-spacing:-0.5px}
-.d-cobrar{width:100%;padding:8px;background:#4361ee;color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 3px 8px rgba(67,97,238,0.3);transition:all 0.15s}
-.d-cobrar:hover{background:#3451d1;transform:translateY(-1px)}
-.d-cobrar:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-.d-notif{position:absolute;top:52px;right:8px;background:#4361ee;border-radius:9px 9px 3px 9px;padding:8px 11px;font-size:10px;color:#fff;max-width:190px;line-height:1.5;opacity:0;box-shadow:0 6px 20px rgba(67,97,238,0.4);z-index:10;pointer-events:none}
-.d-notif.show{animation:d-pop 0.3s ease forwards}
-@keyframes d-pop{0%{opacity:0;transform:scale(0.85) translateY(-6px)}60%{opacity:1;transform:scale(1.02) translateY(0)}100%{opacity:1;transform:scale(1) translateY(0)}}
-.d-notif.hide{animation:d-hide 0.3s ease forwards}
-@keyframes d-hide{to{opacity:0;transform:translateY(-4px)}}
-
-
-/* ── MOBILE DEMO ── */
-.demo-mobile{display:none}
-@media(max-width:600px){
-  .hero-mockup .mock-wrap{display:none}
-  .demo-label{display:none}
-  .demo-mobile{display:flex;justify-content:center;margin-top:32px}
-}
-.phone-frame{width:220px;background:#0a0e1a;border-radius:36px;border:6px solid #1a2235;box-shadow:0 32px 72px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.06),inset 0 1px 0 rgba(255,255,255,0.04);overflow:hidden;position:relative}
-.phone-notch{width:60px;height:16px;background:#0a0e1a;border-radius:0 0 12px 12px;margin:0 auto;position:relative;z-index:2}
-.phone-screen{background:#f5f7ff;min-height:420px;display:flex;flex-direction:column}
-.phone-topbar{background:#fff;padding:8px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e4e8f5;flex-shrink:0}
-.phone-tb-av{width:26px;height:26px;background:#4361ee;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#fff;flex-shrink:0}
-.phone-tb-name{font-size:11px;font-weight:700;color:#0d1117;flex:1}
-.phone-tb-sts{font-size:9px;color:#00d4aa;font-weight:600}
-.phone-chat{flex:1;padding:10px;display:flex;flex-direction:column;gap:7px;background:#eef1fd}
-.ph-bbl{padding:8px 11px;border-radius:12px;font-size:11px;line-height:1.5;max-width:85%}
-.ph-u{background:#4361ee;color:#fff;border-radius:12px 12px 3px 12px;align-self:flex-end}
-.ph-a{background:#fff;color:#374151;border-radius:12px 12px 12px 3px;align-self:flex-start;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
-.ph-t{font-size:8px;color:rgba(0,0,0,0.25);margin-top:-4px;padding:0 4px}
-.ph-tr{text-align:right;align-self:flex-end}
-.phone-input{background:#fff;padding:8px 12px;display:flex;align-items:center;gap:7px;border-top:1px solid #e4e8f5;flex-shrink:0}
-.phone-inp-field{flex:1;background:#f5f7ff;border-radius:100px;padding:7px 12px;font-size:10px;color:#6b7280;border:1px solid #e4e8f5}
-.phone-inp-send{width:28px;height:28px;background:#4361ee;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.phone-notif{position:absolute;top:8px;left:8px;right:8px;background:#0d1117;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:7px;z-index:5;animation:ph-notif 0.3s 2s ease both;opacity:0}
-@keyframes ph-notif{to{opacity:1}}
-.ph-notif-icon{width:24px;height:24px;background:#4361ee;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
-.ph-notif-txt{font-size:9px;color:rgba(255,255,255,0.5);line-height:1.4}
-.ph-notif-bold{font-weight:700;color:#fff}
-
-
-/* ── BRAND LOGO INLINE ── */
-.brand-logo-inline{display:inline-flex;align-items:center;gap:4px;line-height:1}
-.brand-cal{font-size:0.7em;opacity:0.85;filter:drop-shadow(0 0 4px rgba(0,212,170,0.4));line-height:1}
-.brand-os{color:#00d4aa;font-weight:900}
-
-</style>
-</head>
-<body>
-
-<div class="notif-popup" id="notif">
-  <div class="notif-icon">🎉</div>
-  <div class="notif-body"><div class="notif-name" id="notif-name">Carlos M.</div><div id="notif-msg">acaba de activar AgendaOS</div></div>
-</div>
-
-<button class="fab" id="fab" onclick="gotoReg()">Prueba gratis 7 días →</button>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <div class="nav-logo-mark">O​S</div>
-      <div class="nav-logo-name">Agenda<span class="os"><span style="font-style:normal" aria-hidden="true">O​S</span></div>
-    </a>
-    <div class="nav-links">
-      <a href="#features">Funciones</a>
-      <a href="#how">Cómo funciona</a>
-      <a href="#pricing">Precios</a>
-      <a href="#faq">FAQ</a>
-    </div>
-    <button class="nav-cta" onclick="gotoReg()">Prueba 7 días gratis</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg">
-    <div class="hero-glow-1"></div>
-    <div class="hero-glow-2"></div>
-    <div class="hero-grid"></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-badge"><div class="badge-dot"></div>7 días gratis · Sin tarjeta · Activo hoy</div>
-    <h1 class="hero-h1">
-      Agenda citas<br><span style="color:#00d4aa">automáticamente</span><br>desde <span style="color:#25d366;filter:drop-shadow(0 0 12px rgba(37,211,102,0.3))">WhatsApp.</span>
-      <span class="hero-h1-line2">
-        <strong>AgendaOS</strong> responde clientes, muestra horarios y agenda <strong>sin que tengas que intervenir.</strong>
-      </span>
-      <span class="hero-h1-cta-line">👉 Escríbenos y pruébalo tú mismo ahora.</span>
-    </h1>
-    <div class="hero-actions">
-      <button class="btn-h btn-primary" onclick="gotoReg()">Crear cuenta gratis → 7 días</button>
-      <a href="https://wa.me/56973675754?text=Hola%2C+quiero+probar+AgendaOS" target="_blank" class="btn-h btn-wa">💬 Escríbenos en WhatsApp</a>
-    </div>
-    <div class="hero-proof">
-      <div class="hero-avs">
-        <div class="hero-av" style="background:#4361ee">CF</div>
-        <div class="hero-av" style="background:#00d4aa">MR</div>
-        <div class="hero-av" style="background:#8b5cf6">AP</div>
-        <div class="hero-av" style="background:#f59e0b">DS</div>
-      </div>
-      <div class="hero-proof-txt"><strong>+240 negocios</strong> ya usan AgendaOS en Chile</div>
-    </div>
-  </div>
-
-  <!-- INTERACTIVE DEMO -->
-  <div class="hero-mockup">
-    <div class="demo-label">
-      <span class="demo-label-dot"></span>
-      Demo interactiva · El sistema real · Haz clic y explora
-    </div>
-    <div class="mock-wrap" id="demo-shell">
-      <!-- TOPBAR -->
-      <div class="demo-topbar">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div class="d-dot" style="background:#ff5f57"></div>
-          <div class="d-dot" style="background:#febc2e"></div>
-          <div class="d-dot" style="background:#28c840"></div>
-        </div>
-        <div class="demo-url">app.agendaos.pro</div>
-        <div class="demo-live"><div class="demo-live-dot"></div>En vivo</div>
-      </div>
-      <!-- LAYOUT -->
-      <div class="demo-layout">
-        <!-- SIDEBAR -->
-        <div class="demo-sb">
-          <div class="demo-sb-top">
-            <div class="demo-sb-mark">O​S</div>
-            <div class="demo-sb-name">Agenda<span style="color:#00d4aa"><span style="font-style:normal" aria-hidden="true">O​S</span></div>
-          </div>
-          <div class="demo-sb-neg">Barbería El Clásico</div>
-          <div class="demo-sb-sec">Principal</div>
-          <div class="d-nav active" onclick="demoNav('dashboard',this)"><span class="d-nav-ic">◈</span>Dashboard</div>
-          <div class="d-nav" onclick="demoNav('citas',this)"><span class="d-nav-ic">📅</span>Citas</div>
-          <div class="d-nav" onclick="demoNav('terminal',this)"><span class="d-nav-ic">⊡</span>Terminal</div>
-          <div class="d-nav" onclick="demoNav('clientes',this)"><span class="d-nav-ic">◉</span>Clientes</div>
-          <div class="demo-sb-sec">Negocio</div>
-          <div class="d-nav" onclick="demoNav('finanzas',this)"><span class="d-nav-ic">⊕</span>Finanzas</div>
-          <div class="d-nav" onclick="demoNav('servicios',this)"><span class="d-nav-ic">◎</span>Servicios</div>
-          <div class="demo-sb-user">
-            <div class="demo-sb-av">CF</div>
-            <span style="font-size:10px;color:rgba(255,255,255,0.35)">Carlos · Admin</span>
-          </div>
-        </div>
-        <!-- MAIN -->
-        <div class="demo-main">
-          <!-- TOPBAR -->
-          <div class="demo-maintop">
-            <div class="demo-maintop-title" id="demo-page-title">Dashboard</div>
-            <div class="demo-maintop-right">
-              <div class="demo-live-pill"><div class="demo-live-dot"></div>En vivo</div>
-              <div class="demo-chip">↗ Link público</div>
-            </div>
-          </div>
-          <!-- PANELS -->
-          <div class="demo-content" id="demo-content">
-            <!-- injected by JS -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats-strip">
-  <div class="stats-inner">
-    <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">El agente atiende siempre</div></div>
-    <div class="stat-item"><div class="stat-num">+300%</div><div class="stat-label">Más reservas sin esfuerzo</div></div>
-    <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Citas perdidas por WhatsApp</div></div>
-    <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Días gratis sin tarjeta</div></div>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<section class="section features-section" id="features">
-  <div class="section-inner">
-    <div class="reveal"><div class="section-badge">✦ Funciones</div></div>
-    <div class="reveal rd1"><h2 class="section-title">Tu competencia ya<br>lo está usando.<br><span class="txt-os">¿Y tú?</span></h2></div>
-    <div class="reveal rd2"><p class="section-sub">Mientras tú contestas mensajes manualmente, tu competencia tiene un agente IA trabajando 24/7. AgendaOS cambia eso hoy.</p></div>
-    <div class="features-grid">
-      <div class="feat-card reveal"><div class="feat-icon fi-os">📅</div><div class="feat-title">Agenda en tiempo real</div><div class="feat-desc">Tus clientes reservan online 24/7 y tú ves cada cita instantáneamente. Confirmaciones automáticas, sin llamadas perdidas.</div></div>
-      <div class="feat-card reveal rd1"><div class="feat-icon fi-blue">🤖</div><div class="feat-title">Agente IA por WhatsApp</div><div class="feat-desc">Tu asistente inteligente atiende clientes, agenda citas y responde consultas en texto, voz e imágenes — automatizado.</div></div>
-      <div class="feat-card reveal rd2"><div class="feat-icon fi-blue">💳</div><div class="feat-title">Terminal de ventas</div><div class="feat-desc">Cobra servicios y productos directamente. Efectivo, débito, crédito o transferencia — con boleta térmica al instante.</div></div>
-      <div class="feat-card reveal"><div class="feat-icon fi-os">👥</div><div class="feat-title">CRM & Marketing</div><div class="feat-desc">Clientes VIP, campañas masivas por WhatsApp y recordatorios automáticos que reducen ausencias un 80%.</div></div>
-      <div class="feat-card reveal rd1"><div class="feat-icon fi-blue">💰</div><div class="feat-title">Finanzas automatizadas</div><div class="feat-desc">Ingresos, egresos y comisiones por profesional calculadas automáticamente. Sabe exactamente qué genera cada uno.</div></div>
-      <div class="feat-card reveal rd2"><div class="feat-icon fi-os">🧠</div><div class="feat-title">Memoria conversacional</div><div class="feat-desc">El agente recuerda a cada cliente, sus preferencias e historial. Cada conversación personalizada como con un humano.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- AGENT -->
-<section class="agent-section" id="agent">
-  <div class="agent-glow"></div>
-  <div class="agent-grid">
-    <div>
-      <div class="reveal"><div class="section-badge">✦ Agente IA</div></div>
-      <div class="reveal rd1"><h2 class="section-title">Tu empleado más<br>productivo trabaja<br><span class="txt-blue">sin parar.</span></h2></div>
-      <div class="reveal rd2"><p class="section-sub" style="margin-bottom:0">El agente de AgendaOS atiende con la calidad de un humano — sin descanso, sin errores y sin sueldo mensual.</p></div>
-      <div class="agent-feats reveal rd3">
-        <div class="agent-feat"><div class="af-icon">🗣️</div>Entiende mensajes de voz perfectamente</div>
-        <div class="agent-feat"><div class="af-icon">📷</div>Analiza imágenes enviadas por clientes</div>
-        <div class="agent-feat"><div class="af-icon">💬</div>Responde en lenguaje natural y amigable</div>
-        <div class="agent-feat"><div class="af-icon">📅</div>Agenda citas directamente en el sistema</div>
-        <div class="agent-feat"><div class="af-icon">🧠</div>Recuerda a cada cliente y sus preferencias</div>
-      </div>
-    </div>
-    <div class="reveal rd2">
-      <div class="chat-mock">
-        <div class="chat-hdr">
-          <div class="chat-av">O​S</div>
-          <div>
-            <div class="chat-name">AgendaOS · Tu negocio</div>
-            <div class="chat-sts">En línea ahora</div>
-          </div>
-        </div>
-        <div class="msg"><div class="bbl bbl-u">Hola quiero un corte para mañana a las 3</div><div class="clr"></div><div class="msg-t msg-tr">14:32 ✓✓</div></div>
-        <div class="msg"><div class="bbl bbl-a">¡Hola Carlos! 👋 Perfecto, tengo disponibilidad mañana martes a las 3pm con Felipe. Tu corte habitual (Fade + barba) cuesta $12.000. ¿Confirmo?</div><div class="msg-t">14:32</div></div>
-        <div class="msg" style="margin-top:8px"><div class="bbl bbl-u">Sí confirma</div><div class="clr"></div><div class="msg-t msg-tr">14:33 ✓✓</div></div>
-        <div class="msg"><div class="bbl bbl-a">✅ ¡Listo! Cita confirmada.<br>📅 Martes 22 de Abril · 15:00<br>💈 Felipe · Fade + barba<br><br>Te mando recordatorio mañana. ¡Nos vemos!</div></div>
-        <div style="margin-top:10px"><div class="typing"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section" id="how" style="background:var(--dark2)">
-  <div class="section-inner" style="text-align:center">
-    <div class="reveal"><div class="section-badge" style="margin:0 auto 14px">✦ Proceso</div></div>
-    <div class="reveal rd1"><h2 class="section-title" style="text-align:center">Listo en 4 pasos.<br><span class="txt-os">Sin complicaciones.</span></h2></div>
-    <div class="steps reveal rd2">
-      <div class="step"><div class="step-n">1</div><div class="step-t">Regístrate</div><div class="step-d">Crea tu cuenta con datos de tu negocio en menos de 2 minutos — 7 días gratis</div></div>
-      <div class="step"><div class="step-n">2</div><div class="step-t">Configura</div><div class="step-d">Agrega servicios, horarios y equipo desde el panel de gestión</div></div>
-      <div class="step"><div class="step-n">3</div><div class="step-t">Conecta WhatsApp</div><div class="step-d">Tu agente IA queda activo en minutos — nuestro equipo lo hace por ti</div></div>
-      <div class="step"><div class="step-n">4</div><div class="step-t">Gestiona en vivo</div><div class="step-d">Citas, ventas y clientes se actualizan en tiempo real desde cualquier dispositivo</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="section" id="pricing" style="background:var(--dark)">
-  <div class="section-inner">
-    <div class="reveal"><div class="section-badge">✦ Planes</div></div>
-    <div class="reveal rd1"><h2 class="section-title">Inversión que<br><span class="txt-blue">se paga sola.</span></h2></div>
-    <div class="reveal rd2"><p class="section-sub">Sin contratos. Setup incluido. 7 días gratis en todos los planes. Cancela cuando quieras.</p></div>
-    <div class="pricing-grid reveal rd2">
-      <div class="pc">
-        <div class="pc-name">Starter</div>
-        <div class="pc-desc">Para emprendedores que recién comienzan</div>
-        <div class="pc-price">$29.990</div>
-        <div class="pc-period">CLP por mes · IVA incluido</div>
-        <button class="pc-btn pb-outline" onclick="selectPlan('starter');gotoReg()">Comenzar gratis →</button>
-        <div class="pc-feats">
-          <div class="pc-feat"><div class="fc">✓</div>Panel de gestión completo</div>
-          <div class="pc-feat"><div class="fc">✓</div>Agenda online 24/7</div>
-          <div class="pc-feat"><div class="fc">✓</div>Hasta 2 profesionales</div>
-          <div class="pc-feat"><div class="fc">✓</div>CRM básico de clientes</div>
-          <div class="pc-feat"><div class="fc">✓</div>Terminal de ventas</div>
-          <div class="pc-feat"><div class="fc">✓</div>Soporte por WhatsApp</div>
-        </div>
-      </div>
-      <div class="pc feat">
-        <div class="pc-badge">⭐ Más popular</div>
-        <div class="pc-name">Pro</div>
-        <div class="pc-desc">Para negocios que quieren crecer rápido</div>
-        <div class="pc-price">$49.990</div>
-        <div class="pc-period">CLP por mes · IVA incluido</div>
-        <button class="pc-btn pb-solid" onclick="selectPlan('pro');gotoReg()">Empezar 7 días gratis →</button>
-        <div class="pc-feats">
-          <div class="pc-feat"><div class="fc">✓</div>Todo lo del plan Starter</div>
-          <div class="pc-feat"><div class="fc">✓</div>Agente IA por WhatsApp</div>
-          <div class="pc-feat"><div class="fc">✓</div>Voz, texto e imágenes</div>
-          <div class="pc-feat"><div class="fc">✓</div>Hasta 5 profesionales</div>
-          <div class="pc-feat"><div class="fc">✓</div>CRM & Marketing masivo</div>
-          <div class="pc-feat"><div class="fc">✓</div>Recordatorios automáticos</div>
-          <div class="pc-feat"><div class="fc">✓</div>Soporte prioritario 24/7</div>
-        </div>
-      </div>
-      <div class="pc">
-        <div class="pc-name">Business IA</div>
-        <div class="pc-desc">Para centros con múltiples profesionales</div>
-        <div class="pc-price">$79.990</div>
-        <div class="pc-period">CLP por mes · IVA incluido</div>
-        <button class="pc-btn pb-outline" onclick="selectPlan('business');gotoReg()">Contactar →</button>
-        <div class="pc-feats">
-          <div class="pc-feat"><div class="fc">✓</div>Todo lo del plan Pro</div>
-          <div class="pc-feat"><div class="fc">✓</div>Profesionales ilimitados</div>
-          <div class="pc-feat"><div class="fc">✓</div>Agente IA avanzado</div>
-          <div class="pc-feat"><div class="fc">✓</div>Setup personalizado completo</div>
-          <div class="pc-feat"><div class="fc">✓</div>Integración MercadoPago</div>
-          <div class="pc-feat"><div class="fc">✓</div>Soporte WhatsApp dedicado</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section" style="background:var(--dark2)">
-  <div class="section-inner">
-    <div style="text-align:center">
-      <div class="reveal"><div class="section-badge" style="margin:0 auto 14px">✦ Testimonios</div></div>
-      <div class="reveal rd1"><h2 class="section-title" style="text-align:center">Lo que dicen<br><span class="txt-os">nuestros clientes</span></h2></div>
-    </div>
-    <div class="testi-grid">
-      <div class="tc reveal"><div class="tc-stars">★★★★★</div><div class="tc-txt">"Desde que activé AgendaOS no he perdido ni una cita. El agente atiende a mis clientes mientras duermo y al despertar ya tengo la agenda llena."</div><div class="tc-auth"><div class="tc-av">CF</div><div><div class="tc-name">Carlos Fuentes</div><div class="tc-role">Barbería El Clásico · Santiago</div></div></div></div>
-      <div class="tc reveal rd1"><div class="tc-stars">★★★★★</div><div class="tc-txt">"Mis ingresos subieron 40% el primer mes. El terminal de ventas y la boleta automática me ahorra 2 horas de trabajo administrativo cada día."</div><div class="tc-auth"><div class="tc-av">MR</div><div><div class="tc-name">María Rodríguez</div><div class="tc-role">Centro de Estética Glow · Providencia</div></div></div></div>
-      <div class="tc reveal rd2"><div class="tc-stars">★★★★★</div><div class="tc-txt">"El agente entiende perfectamente a mis pacientes. Agenda citas, responde dudas y manda recordatorios. Como tener una secretaria virtual de primer nivel."</div><div class="tc-auth"><div class="tc-av">AP</div><div><div class="tc-name">Dra. Andrea Pérez</div><div class="tc-role">Psicóloga · Vitacura</div></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- REGISTER -->
-<section class="reg-section" id="register">
-  <div class="reg-glow"></div>
-  <div class="reg-glow-2"></div>
-  <div class="reg-grid">
-    <div>
-      <div class="reveal"><div class="section-badge">✦ Empieza hoy</div></div>
-      <div class="reveal rd1"><h2 class="reg-title">7 días gratis.<br><span style="color:var(--os)">Sin tarjeta.</span><br>Sin excusas.</h2></div>
-      <div class="reveal rd2"><p class="reg-sub">Crea tu cuenta ahora y en menos de 2 minutos tienes acceso completo al sistema. Nuestro equipo configura el agente IA contigo.</p></div>
-      <div class="reveal rd3">
-        <div class="trust-item"><div class="t-icon">🆓</div>7 días de prueba completa sin pagar</div>
-        <div class="trust-item"><div class="t-icon">⚡</div>Acceso inmediato al sistema completo</div>
-        <div class="trust-item"><div class="t-icon">💬</div>Setup del agente IA por WhatsApp</div>
-        <div class="trust-item"><div class="t-icon">🔒</div>Sin compromisos · Cancela cuando quieras</div>
-      </div>
-    </div>
-    <div class="reveal rd2">
-      <div class="reg-form">
-        <!-- FORM STATE -->
-        <div id="form-state">
-          <div class="reg-form-t">Crear mi cuenta</div>
-          <div class="reg-form-s">7 días gratis · Sin tarjeta de crédito · Acceso inmediato</div>
-          <div class="trial-banner">
-            <div class="trial-dot"></div>
-            <div class="trial-txt">Tu cuenta queda <strong>activa de inmediato</strong> con acceso completo por 7 días. Después elige tu plan.</div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label>Nombre</label><input id="r-nom" type="text" placeholder="Tu nombre"></div>
-            <div class="fg"><label>Negocio</label><input id="r-neg" type="text" placeholder="Nombre del negocio" oninput="autoSlug(this.value)"></div>
-          </div>
-          <div class="fg"><label>WhatsApp</label><input id="r-tel" type="tel" placeholder="+56 9 ..."></div>
-          <div class="fg"><label>Email</label><input id="r-email" type="email" placeholder="tu@email.com"></div>
-          <div class="fg"><label>Rubro</label>
-            <select id="r-rubro">
-              <option value="">Selecciona tu rubro</option>
-              <option>Barbería</option><option>Salón de belleza</option><option>Spa / Estética</option>
-              <option>Médico / Clínica</option><option>Psicología</option><option>Nutricionista</option>
-              <option>Dentista</option><option>Centro deportivo</option><option>Veterinaria</option><option>Otro</option>
-            </select>
-          </div>
-          <div class="fg fg-slug">
-            <label>ID del negocio (para tu URL pública)</label>
-            <input id="r-slug" type="text" placeholder="mi-negocio" autocomplete="off" spellcheck="false" oninput="document.getElementById('slug-preview').textContent=this.value||'mi-negocio'">
-            <div class="slug-preview">app.agendaos.pro/reserva/<span id="slug-preview">mi-negocio</span></div>
-          </div>
-          <div class="fg">
-            <label>Contraseña (para tu panel)</label>
-            <input id="r-pass" type="password" placeholder="Mínimo 6 caracteres">
-          </div>
-          <div class="fg"><label>Elige tu plan (empieza gratis)</label>
-            <div class="plan-grid">
-              <div class="plan-opt" id="pl-starter" onclick="selectPlan('starter')"><div class="plan-opt-name">Starter</div><div class="plan-opt-price">$29.990/mes</div></div>
-              <div class="plan-opt sel" id="pl-pro" onclick="selectPlan('pro')"><div class="plan-opt-name">Pro ⭐</div><div class="plan-opt-price">$49.990/mes</div></div>
-              <div class="plan-opt" id="pl-business" onclick="selectPlan('business')"><div class="plan-opt-name">Business</div><div class="plan-opt-price">$79.990/mes</div></div>
-            </div>
-          </div>
-          <div id="reg-err" style="font-size:11px;color:#ef4444;margin-bottom:8px;min-height:14px"></div>
-          <button class="btn-reg" id="btn-reg" onclick="registrar()">Crear cuenta gratis → Acceso inmediato</button>
-          <div class="reg-note">🔒 Tus datos están seguros · Ley 19.628 Chile</div>
-        </div>
-        <!-- SUCCESS STATE -->
-        <div class="reg-success" id="success-state">
-          <div class="reg-success-icon">✅</div>
-          <div class="reg-success-t">¡Cuenta creada!</div>
-          <div class="reg-success-s" id="success-msg">Tu acceso está listo. Entra con tu ID y contraseña.</div>
-          <a href="https://app.agendaos.pro" class="reg-success-btn">Ir al panel →</a>
-          <div style="margin-top:12px;font-size:11px;color:rgba(255,255,255,0.25)">También te contactamos por WhatsApp para configurar tu agente IA.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="section" id="faq" style="background:var(--dark)">
-  <div class="section-inner" style="text-align:center">
-    <div class="reveal"><div class="section-badge" style="margin:0 auto 14px">✦ Preguntas frecuentes</div></div>
-    <div class="reveal rd1"><h2 class="section-title" style="text-align:center">¿Tienes dudas?<br><span class="txt-os">Las resolvemos aquí.</span></h2></div>
-    <div class="faq-wrap reveal rd2">
-      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">¿Los 7 días gratis incluyen todo?<div class="faq-ic">+</div></div><div class="faq-a">Sí. Acceso completo al sistema — agenda, terminal, CRM, finanzas y el agente IA — sin restricciones durante 7 días. Sin tarjeta de crédito requerida.</div></div>
-      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">¿Necesito conocimientos técnicos?<div class="faq-ic">+</div></div><div class="faq-a">No. Creas tu cuenta aquí y en minutos tienes acceso. Nuestro equipo te contacta por WhatsApp para configurar el agente IA por ti.</div></div>
-      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">¿El agente IA habla desde mi número de WhatsApp?<div class="faq-ic">+</div></div><div class="faq-a">Sí. El agente usa tu número. Tus clientes siempre ven tu número, no uno genérico. La conversación es fluida como si fuera tú respondiendo.</div></div>
-      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">¿Puedo cancelar cuando quiera?<div class="faq-ic">+</div></div><div class="faq-a">Sí, sin contratos ni permanencia. Cancelas cuando quieras desde tu panel. Sin penalizaciones.</div></div>
-      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">¿Funciona para cualquier tipo de negocio?<div class="faq-ic">+</div></div><div class="faq-a">AgendaOS funciona para cualquier negocio con citas: barberías, salones, médicos, psicólogos, nutricionistas, spas, centros deportivos, veterinarias y más de 40 rubros.</div></div>
-      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">¿Qué pasa si mis clientes hablan en voz?<div class="faq-ic">+</div></div><div class="faq-a">El agente transcribe y entiende mensajes de voz automáticamente. También analiza imágenes. Responde en el formato que prefiera el cliente.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div>
-        <div class="footer-brand">
-          <div class="footer-mark">O​S</div>
-          <div class="footer-name">Agenda<span class="os"><span style="font-style:normal" aria-hidden="true">O​S</span></div>
-        </div>
-        <div class="footer-tag">Sistema inteligente de gestión de citas para negocios en Latinoamérica. Powered by Autix — Santiago, Chile.</div>
-        <div class="footer-socs">
-          <a class="footer-soc" href="https://wa.me/56973675754" target="_blank">📱</a>
-          <a class="footer-soc" href="mailto:hola@autix.pro">✉️</a>
-          <a class="footer-soc" href="https://instagram.com/autixagencia" target="_blank">📷</a>
-          <a class="footer-soc" href="https://tiktok.com/@autixagencia" target="_blank">🎵</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-t">Producto</div>
-        <div class="footer-links">
-          <a href="#features">Funciones</a>
-          <a href="#pricing">Precios</a>
-          <a href="#how">Cómo funciona</a>
-          <a href="#register">Registro</a>
-          <a href="https://app.agendaos.pro" target="_blank">Panel de gestión <span class="tag-new">APP</span></a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-t">Empresa</div>
-        <div class="footer-links">
-          <a href="https://autix.pro" target="_blank">Autix</a>
-          <a href="#agent">Agente IA</a>
-          <a href="https://wa.me/56973675754" target="_blank">Soporte WhatsApp</a>
-          <a href="mailto:hola@autix.pro">Contacto</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-t">Legal</div>
-        <div class="footer-links">
-          <a href="#">Términos de uso</a>
-          <a href="#">Política de privacidad</a>
-          <a href="#">Ley 19.628 (Chile)</a>
-        </div>
-      </div>
-    </div>
-    <hr class="foot-div">
-    <div class="footer-bottom">
-      <div class="footer-copy">© 2025 Autix · AgendaOS — Todos los derechos reservados</div>
-      <div class="footer-copy">Hecho con ❤️ en Santiago, Chile</div>
-      <div class="footer-legal">
-        <a href="#">Términos</a>
-        <a href="#">Privacidad</a>
-        <a href="https://wa.me/56973675754" target="_blank">Soporte</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-
-// ── INTERACTIVE DEMO ───────────────────────────────────────────────────────
-const DEMO_DATA = {
-  citas: [
-    {nombre:'Carlos Fuentes', svc:'Fade + barba', prof:'Felipe', hora:'09:00', estado:'sc', color:'#4361ee'},
-    {nombre:'María Rodríguez', svc:'Coloración', prof:'Valentina', hora:'10:30', estado:'sp', color:'#00d4aa'},
-    {nombre:'Diego Pérez', svc:'Corte clásico', prof:'Felipe', hora:'12:00', estado:'sc', color:'#8b5cf6'},
-    {nombre:'Sofía Lara', svc:'Manicure', prof:'Valentina', hora:'14:00', estado:'sp', color:'#f59e0b'},
-    {nombre:'Andrés Vega', svc:'Afeitado navaja', prof:'Felipe', hora:'15:30', estado:'sd', color:'#0ea5e9'},
-  ],
-  clientes: [
-    {nombre:'Carlos Fuentes', tel:'+569 8823 1234', citas:12, gasto:'$144.000', seg:'VIP', color:'#4361ee'},
-    {nombre:'María Rodríguez', tel:'+569 7712 5678', citas:8, gasto:'$96.000', seg:'Regular', color:'#00d4aa'},
-    {nombre:'Diego Pérez', tel:'+569 6601 9012', citas:5, gasto:'$60.000', seg:'Regular', color:'#8b5cf6'},
-    {nombre:'Sofía Lara', tel:'+569 5590 3456', citas:2, gasto:'$24.000', seg:'Nuevo', color:'#f59e0b'},
-  ],
-  productos: [
-    {emoji:'✂️', nombre:'Corte clásico', precio:'$8.000'},
-    {emoji:'🪒', nombre:'Fade + barba', precio:'$12.000'},
-    {emoji:'🧴', nombre:'Coloración', precio:'$25.000'},
-    {emoji:'💅', nombre:'Manicure', precio:'$10.000'},
-    {emoji:'🛁', nombre:'Afeitado', precio:'$7.000'},
-    {emoji:'💆', nombre:'Masaje facial', precio:'$15.000'},
-  ]
-};
-
-let demoCart = [];
-let demoTotal = 0;
-
-function money(n){ return '$'+Math.round(n).toLocaleString('es-CL'); }
-
-function stsBadge(s){
-  const m={sc:'d-sc',sp:'d-sp',sx:'d-sx',sd:'d-sd'};
-  const l={sc:'Confirmada',sp:'Pendiente',sx:'Cancelada',sd:'Completada'};
-  return `<span class="d-status ${m[s]}">${l[s]}</span>`;
-}
-
-function renderDashboard(){
-  return `
-    <div class="d-metrics">
-      <div class="d-mc c-os"><div class="d-mc-top"><div class="d-mc-label">Citas hoy</div><div class="d-mc-icon d-ic-os">📅</div></div><div class="d-mc-val os">14</div><div class="d-mc-trend d-tr-up">↑ 3 nuevas</div></div>
-      <div class="d-mc c-b"><div class="d-mc-top"><div class="d-mc-label">Ingresos mes</div><div class="d-mc-icon d-ic-b">💰</div></div><div class="d-mc-val">$1.2M</div><div class="d-mc-trend d-tr-up">↑ 23%</div></div>
-      <div class="d-mc c-a"><div class="d-mc-top"><div class="d-mc-label">Total citas</div><div class="d-mc-icon d-ic-a">📋</div></div><div class="d-mc-val">342</div><div class="d-mc-trend d-tr-n">históricas</div></div>
-      <div class="d-mc c-p"><div class="d-mc-top"><div class="d-mc-label">Asistencia</div><div class="d-mc-icon d-ic-p">✓</div></div><div class="d-mc-val">96%</div><div class="d-mc-trend d-tr-up">↑ Récord</div></div>
-    </div>
-    <div class="d-qa">
-      <div class="d-qa-btn" onclick="demoNav('citas',null)"><span class="d-qa-icon">📅</span><div class="d-qa-label">Nueva cita</div></div>
-      <div class="d-qa-btn" onclick="demoNav('terminal',null)"><span class="d-qa-icon">💳</span><div class="d-qa-label">Terminal</div></div>
-      <div class="d-qa-btn" onclick="demoNav('clientes',null)"><span class="d-qa-icon">👤</span><div class="d-qa-label">Cliente nuevo</div></div>
-      <div class="d-qa-btn" onclick="demoNav('finanzas',null)"><span class="d-qa-icon">💬</span><div class="d-qa-label">WhatsApp</div></div>
-    </div>
-    <div class="d-card">
-      <div class="d-card-head"><div class="d-card-title">Citas · últimas 2 semanas</div><div style="font-size:9px;color:#00d4aa;background:rgba(0,212,170,0.08);padding:2px 8px;border-radius:100px;border:1px solid rgba(0,212,170,0.2);font-weight:600;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#00d4aa;display:inline-block;animation:blink 2s infinite"></span>En vivo</div></div>
-      <div class="d-card-body">
-        <div class="d-chart">
-          <svg viewBox="0 0 500 60" preserveAspectRatio="none">
-            <defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d4aa" stop-opacity="0.2"/><stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/></linearGradient></defs>
-            <path d="M0,55 L35,50 L70,44 L105,38 L140,30 L175,22 L210,16 L245,10 L280,14 L315,8 L350,4 L385,6 L420,2 L455,4 L500,0 L500,60 L0,60Z" fill="url(#dg)"/>
-            <path d="M0,55 L35,50 L70,44 L105,38 L140,30 L175,22 L210,16 L245,10 L280,14 L315,8 L350,4 L385,6 L420,2 L455,4 L500,0" fill="none" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="350" cy="4" r="3" fill="#00d4aa"/>
-          </svg>
-        </div>
-        <div class="d-chart-labels"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Hoy</span></div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div class="d-card">
-        <div class="d-card-head"><div class="d-card-title">Citas de hoy</div><div class="d-card-action">Ver todas →</div></div>
-        <div class="d-card-body" style="padding:7px 10px">
-          ${DEMO_DATA.citas.slice(0,3).map(c=>`
-            <div class="d-slot busy">
-              <div class="d-slot-t">${c.hora}</div>
-              <div class="d-slot-bar" style="background:${c.color}"></div>
-              <div style="flex:1"><div class="d-slot-name">${c.nombre}</div><div class="d-slot-svc">${c.svc}</div></div>
-              ${stsBadge(c.estado)}
-            </div>`).join('')}
-        </div>
-      </div>
-      <div class="d-card">
-        <div class="d-card-head"><div class="d-card-title">Métodos de pago</div></div>
-        <div class="d-card-body" style="display:flex;flex-direction:column;gap:7px">
-          ${[['#4361ee','Efectivo','45%'],['#00d4aa','Débito','32%'],['#f59e0b','Transfer.','23%']].map(([c,l,p])=>`
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:10px">
-              <span style="color:#6b7280;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:${c};display:inline-block"></span>${l}</span>
-              <span style="font-weight:700;color:#0d1117;font-family:var(--mono)">${p}</span>
-            </div>
-            <div style="height:4px;background:#e4e8f5;border-radius:2px"><div style="height:100%;width:${p};background:${c};border-radius:2px"></div></div>`).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderCitas(){
-  const today = new Date();
-  const d = today.getDate();
-  const daysInMonth = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
-  const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
-  const evDays = [d, d-3, d-1, d+2, d+5].filter(x => x > 0 && x <= daysInMonth);
-  const heads = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
-  let cells = '';
-  for(let i=0;i<(firstDay||7)-1;i++) cells += '<div></div>';
-  for(let i=1;i<=daysInMonth;i++){
-    const isTod = i===d;
-    const isEv = evDays.includes(i);
-    cells += `<div class="d-cal-d ${isTod?'today':''} ${isEv&&!isTod?'ev':''} ${isTod&&isEv?'today ev':''}">${i}</div>`;
-  }
-  return `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div class="d-card">
-        <div class="d-card-head"><div class="d-card-title">📅 Calendario — ${['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][today.getMonth()]} ${today.getFullYear()}</div></div>
-        <div class="d-card-body">
-          <div class="d-cal" style="margin-bottom:6px">${heads.map(h=>`<div class="d-cal-h">${h}</div>`).join('')}</div>
-          <div class="d-cal">${cells}</div>
-        </div>
-      </div>
-      <div class="d-card">
-        <div class="d-card-head"><div class="d-card-title">Hoy · ${d} ${['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][today.getMonth()]}</div><button class="d-card-action">+ Nueva</button></div>
-        <div class="d-card-body" style="padding:7px 10px">
-          ${DEMO_DATA.citas.map(c=>`
-            <div class="d-slot busy">
-              <div class="d-slot-t">${c.hora}</div>
-              <div class="d-slot-bar" style="background:${c.color}"></div>
-              <div style="flex:1"><div class="d-slot-name">${c.nombre}</div><div class="d-slot-svc">${c.svc} · ${c.prof}</div></div>
-              ${stsBadge(c.estado)}
-            </div>`).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderTerminal(){
-  const cartHTML = demoCart.length
-    ? demoCart.map(i=>`<div class="d-cart-item"><span class="d-cart-item-n">${i.n} ×${i.q}</span><span class="d-cart-item-p">${money(i.p*i.q)}</span></div>`).join('')
-    : '<div style="text-align:center;padding:16px;font-size:11px;color:#6b7280">Agrega productos →</div>';
-  return `
-    <div class="d-terminal">
-      <div class="d-card">
-        <div class="d-card-head"><div class="d-card-title">Catálogo de productos</div></div>
-        <div style="padding:8px">
-          <div class="d-prod-grid">
-            ${DEMO_DATA.productos.map(p=>`
-              <div class="d-prod" onclick="demoAddCart('${p.nombre}',${parseInt(p.precio.replace(/[.$]/g,'').replace(',',''))})">
-                <div class="d-prod-emoji">${p.emoji}</div>
-                <div class="d-prod-name">${p.nombre}</div>
-                <div class="d-prod-price">${p.precio}</div>
-              </div>`).join('')}
-          </div>
-        </div>
-      </div>
-      <div class="d-cart">
-        <div class="d-cart-h">Venta actual</div>
-        <div class="d-cart-items" id="d-cart-items">${cartHTML}</div>
-        <div class="d-cart-foot">
-          <div class="d-cart-total"><span class="d-cart-total-label">Total</span><span class="d-cart-total-val" id="d-cart-total">${money(demoTotal)}</span></div>
-          <button class="d-cobrar" ${demoTotal?'':'disabled'} onclick="demoCobrar()">Cobrar ${demoTotal?money(demoTotal):''}</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderClientes(){
-  return `
-    <div class="d-card">
-      <div class="d-card-head"><div class="d-card-title">Clientes · ${DEMO_DATA.clientes.length} registrados</div><button class="d-card-action">+ Nuevo cliente</button></div>
-      <div style="overflow-x:auto">
-        <table class="d-table">
-          <thead><tr>
-            <th class="d-th">Cliente</th><th class="d-th">WhatsApp</th>
-            <th class="d-th">Citas</th><th class="d-th">Gasto total</th><th class="d-th">Segmento</th>
-          </tr></thead>
-          <tbody>
-            ${DEMO_DATA.clientes.map(c=>`
-              <tr class="d-tr">
-                <td class="d-td"><span class="d-av" style="background:${c.color}">${c.nombre.split(' ').map(x=>x[0]).join('')}</span>${c.nombre}</td>
-                <td class="d-td" style="font-family:var(--mono);font-size:10px">${c.tel}</td>
-                <td class="d-td" style="font-weight:700">${c.citas}</td>
-                <td class="d-td" style="font-weight:700;color:#4361ee;font-family:var(--mono)">${c.gasto}</td>
-                <td class="d-td"><span class="d-mc-trend ${c.seg==='VIP'?'d-tr-up':c.seg==='Regular'?'d-tr-n':'d-tr-n'}">${c.seg}</span></td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="d-card">
-      <div class="d-card-head"><div class="d-card-title">CRM · Campañas WhatsApp</div></div>
-      <div class="d-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        ${[['🔔','Recordatorio 24h antes','Activo · 5 clientes hoy'],['⭐','Encuesta post-cita','Activo · 89% responden'],['💬','Reactivar inactivos','3 clientes +30 días'],['🎁','Promo fidelidad','Enviar esta semana']].map(([ic,t,s])=>`
-          <div style="display:flex;align-items:center;gap:8px;padding:8px;border:1px solid #e4e8f5;border-radius:7px;background:#f5f7ff;cursor:pointer;transition:all 0.12s" onmouseover="this.style.borderColor='#4361ee';this.style.background='#eef1fd'" onmouseout="this.style.borderColor='#e4e8f5';this.style.background='#f5f7ff'">
-            <div style="font-size:16px">${ic}</div>
-            <div><div style="font-size:10px;font-weight:700;color:#0d1117">${t}</div><div style="font-size:9px;color:#6b7280">${s}</div></div>
-          </div>`).join('')}
-      </div>
-    </div>
-  `;
-}
-
-function renderFinanzas(){
-  return `
-    <div class="d-metrics">
-      <div class="d-mc c-os"><div class="d-mc-top"><div class="d-mc-label">Ingresos mes</div><div class="d-mc-icon d-ic-os">↑</div></div><div class="d-mc-val os">$1.2M</div><div class="d-mc-trend d-tr-up">este mes</div></div>
-      <div class="d-mc c-b"><div class="d-mc-top"><div class="d-mc-label">Egresos</div><div class="d-mc-icon d-ic-a">↓</div></div><div class="d-mc-val" style="color:#ef4444">$320K</div></div>
-      <div class="d-mc c-a"><div class="d-mc-top"><div class="d-mc-label">Utilidad</div><div class="d-mc-icon d-ic-b">⊕</div></div><div class="d-mc-val blue">$880K</div></div>
-      <div class="d-mc c-p"><div class="d-mc-top"><div class="d-mc-label">Comisiones</div><div class="d-mc-icon d-ic-p">%</div></div><div class="d-mc-val">$176K</div></div>
-    </div>
-    <div class="d-card">
-      <div class="d-card-head"><div class="d-card-title">Movimientos recientes</div><button class="d-card-action">+ Registrar</button></div>
-      <div style="overflow-x:auto">
-        <table class="d-table">
-          <thead><tr><th class="d-th">Fecha</th><th class="d-th">Descripción</th><th class="d-th">Tipo</th><th class="d-th">Monto</th></tr></thead>
-          <tbody>
-            ${[['Hoy','Venta terminal · 3 servicios','Ingreso','$37.000','#10b981'],['Hoy','Venta terminal · Fade+barba','Ingreso','$12.000','#10b981'],['Ayer','Compra shampoos profesional','Egreso','$45.000','#ef4444'],['Ayer','Venta terminal · 5 servicios','Ingreso','$62.000','#10b981']].map(([f,d,t,m,c])=>`
-              <tr class="d-tr">
-                <td class="d-td" style="font-size:10px;color:#6b7280">${f}</td>
-                <td class="d-td">${d}</td>
-                <td class="d-td"><span style="font-size:9px;font-weight:700;color:${c};background:${c}18;padding:2px 7px;border-radius:100px">${t}</span></td>
-                <td class="d-td" style="font-weight:700;color:${c};font-family:var(--mono)">${m}</td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-function renderServicios(){
-  return `
-    <div class="d-card">
-      <div class="d-card-head"><div class="d-card-title">Servicios configurados</div><button class="d-card-action">+ Agregar</button></div>
-      <div style="overflow-x:auto">
-        <table class="d-table">
-          <thead><tr><th class="d-th">Servicio</th><th class="d-th">Duración</th><th class="d-th">Precio</th><th class="d-th">Activo</th></tr></thead>
-          <tbody>
-            ${[['✂️ Corte clásico','30 min','$8.000'],['🪒 Fade + barba','45 min','$12.000'],['🧴 Coloración','90 min','$25.000'],['💅 Manicure','45 min','$10.000']].map(([n,d,p])=>`
-              <tr class="d-tr">
-                <td class="d-td" style="font-weight:600">${n}</td>
-                <td class="d-td" style="font-size:10px;color:#6b7280">${d}</td>
-                <td class="d-td" style="font-weight:700;color:#4361ee;font-family:var(--mono)">${p}</td>
-                <td class="d-td"><div style="width:28px;height:16px;background:#4361ee;border-radius:100px;position:relative;cursor:pointer"><div style="width:12px;height:12px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;box-shadow:0 1px 2px rgba(0,0,0,0.2)"></div></div></td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-const demoPages = {
-  dashboard: {title:'Dashboard', fn: renderDashboard},
-  citas:     {title:'Citas', fn: renderCitas},
-  terminal:  {title:'Terminal de ventas', fn: renderTerminal},
-  clientes:  {title:'Clientes', fn: renderClientes},
-  finanzas:  {title:'Finanzas', fn: renderFinanzas},
-  servicios: {title:'Servicios', fn: renderServicios},
-};
-
-function demoNav(page, el){
-  const p = demoPages[page];
-  if(!p) return;
-  document.querySelectorAll('.d-nav').forEach(n => n.classList.remove('active'));
-  if(el) el.classList.add('active');
-  else {
-    document.querySelectorAll('.d-nav').forEach(n => {
-      if(n.textContent.trim().toLowerCase().startsWith(page.substring(0,4).toLowerCase()))
-        n.classList.add('active');
-    });
-  }
-  document.getElementById('demo-page-title').textContent = p.title;
-  const content = document.getElementById('demo-content');
-  content.style.opacity = '0';
-  content.style.transform = 'translateY(6px)';
-  setTimeout(() => {
-    content.innerHTML = p.fn();
-    content.style.transition = 'all 0.18s ease';
-    content.style.opacity = '1';
-    content.style.transform = 'translateY(0)';
-  }, 120);
-}
-
-function demoAddCart(nombre, precio){
-  const existing = demoCart.find(i => i.n === nombre);
-  if(existing){ existing.q++; }
-  else { demoCart.push({n:nombre, p:precio, q:1}); }
-  demoTotal = demoCart.reduce((a,i) => a+i.p*i.q, 0);
-  // Re-render terminal
-  document.getElementById('demo-content').innerHTML = renderTerminal();
-}
-
-function demoCobrar(){
-  if(!demoTotal) return;
-  // Show success notif
-  demoCart = []; demoTotal = 0;
-  const notif = document.createElement('div');
-  notif.className = 'd-notif show';
-  notif.innerHTML = '<div style="font-weight:700;margin-bottom:2px">✅ Cobro exitoso</div>Venta registrada automáticamente en finanzas';
-  document.querySelector('.demo-main').appendChild(notif);
-  setTimeout(() => { notif.className = 'd-notif hide'; setTimeout(() => notif.remove(), 300); }, 2800);
-  setTimeout(() => {
-    document.getElementById('demo-content').innerHTML = renderTerminal();
-  }, 300);
-}
-
-// Auto rotating demo notifications
-const demoNotifs = [
-  '🤖 Agente IA: Carlos agendó Fade+barba · 15:00',
-  '📅 Nueva cita: Sofía · Manicure · Mañana 11:00',
-  '💳 Venta completada: $37.000 · Efectivo',
-  '⭐ Reseña recibida: 5★ de María R.',
-  '🔔 Recordatorio enviado a 3 clientes para mañana',
+const plans = [
+  {
+    name: "Básico",
+    label: "Landing premium",
+    price: "$145.000",
+    previousPrice: "$180.000",
+    subtitle: "Pago único setup",
+    description: "Para negocios que quieren una presencia moderna, clara y lista para recibir consultas.",
+    items: [
+      "Landing premium personalizada",
+      "Diseño responsive",
+      "Sección de servicios",
+      "Botón directo a WhatsApp",
+      "Galería visual",
+      "Formulario o CTA de contacto",
+    ],
+  },
+  {
+    name: "Business",
+    label: "Landing + agenda",
+    price: "$190.000",
+    previousPrice: "$250.000",
+    subtitle: "Pago único setup",
+    description: "Para negocios que quieren recibir reservas desde la web y organizar mejor sus horarios.",
+    items: [
+      "Todo lo del plan Básico",
+      "Agenda online integrada",
+      "Selección de servicio y horario",
+      "Registro de clientes",
+      "Control de servicios y precios",
+      "Confirmación de reserva",
+    ],
+  },
+  {
+    name: "Elite",
+    label: "Automatización completa",
+    price: "$390.000",
+    previousPrice: "$560.000",
+    subtitle: "Setup + $65.000 mensual",
+    description: "Para negocios que quieren un sistema completo: página, WhatsApp, agenda, clientes, servicios, profesionales y automatización conectados en un solo lugar.",
+    items: [
+      "Todo lo del plan Business",
+      "sofIA integrada",
+      "WhatsApp automático",
+      "Sistema completo todo en uno",
+      "Panel de control del negocio",
+      "Página + WhatsApp + agenda integrados",
+      "Servicios, clientes y profesionales",
+      "Soporte, mejoras y mantenimiento",
+    ],
+  },
 ];
-let demoNotifIdx = 0;
-function showDemoNotif(){
-  const main = document.querySelector('.demo-main');
-  if(!main) return;
-  let el = document.querySelector('.d-notif');
-  if(el){ el.remove(); }
-  el = document.createElement('div');
-  el.className = 'd-notif show';
-  el.innerHTML = demoNotifs[demoNotifIdx % demoNotifs.length];
-  demoNotifIdx++;
-  main.appendChild(el);
-  setTimeout(() => { el.className = 'd-notif hide'; setTimeout(() => el?.remove(), 300); }, 3500);
+
+const benefits = [
+  {
+    title: "Agenda automática",
+    text: "Tus clientes pueden elegir servicio, horario y dejar sus datos sin esperar respuesta manual.",
+  },
+  {
+    title: "WhatsApp integrado",
+    text: "Facilita consultas, confirmaciones y contacto directo desde botones y flujos preparados para vender.",
+  },
+  {
+    title: "Control del negocio",
+    text: "Organiza servicios, profesionales, horarios, clientes y reservas desde una experiencia simple.",
+  },
+  {
+    title: "Imagen premium",
+    text: "Cada negocio recibe una presencia visual moderna que aumenta confianza y mejora la percepción de marca.",
+  },
+];
+
+const featureList = [
+  "Reservas online 24/7",
+  "Calendario de disponibilidad",
+  "Gestión de clientes",
+  "Control de servicios y precios",
+  "Sistema todo en uno para gestión",
+  "Landing personalizada por negocio",
+  "Diseño responsive premium",
+  "Botones directos a WhatsApp",
+  "Asistente sofIA para atención",
+  ];
+
+const demos = [
+  {
+    title: "Bellas",
+    category: "Beauty Studio",
+    image: "https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=1600&auto=format&fit=crop",
+  },
+  {
+    title: "Luxury Barber",
+    category: "Barber Studio",
+    image: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=1600&auto=format&fit=crop",
+  },
+  {
+    title: "Aura Spa",
+    category: "Spa & Wellness",
+    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1600&auto=format&fit=crop",
+  },
+];
+
+const heroStats = [
+  {
+    label: "Reservas confirmadas",
+    value: "+320",
+    description: "Clientes agendando automáticamente cada mes",
+  },
+  {
+    label: "Atención automática",
+    value: "24/7",
+    description: "Respuestas incluso fuera del horario laboral",
+  },
+  {
+    label: "Más conversión",
+    value: "+82%",
+    description: "Más clientes pasando de consulta a reserva",
+  },
+];
+
+const sofiaMessages = [
+  {
+    role: "assistant",
+    text: "Hola ✨ Bienvenida. Puedo ayudarte por texto, audio o imagen. ¿Qué servicio deseas reservar hoy?",
+  },
+  {
+    role: "user",
+    text: "Quiero reservar manicure permanente para mañana 💅",
+  },
+  {
+    role: "assistant",
+    text: "Perfecto. Revisé la agenda y tengo disponibilidad a las 15:00 y 17:30. También puedo enviarte el catálogo de diseños.",
+  },
+  {
+    role: "user",
+    text: "Me gustaría a las 17:30. ¿Recuerdas el diseño nude que pedí la vez pasada?",
+  },
+  {
+    role: "assistant",
+    text: "Sí, lo recuerdo. Reservo manicure permanente nude a las 17:30 y envío la confirmación por WhatsApp.",
+  },
+];
+
+export const componentTests = [
+  { name: "has three commercial plans", passed: Array.isArray(plans) && plans.length === 3 },
+  { name: "basic plan price is 145000", passed: plans?.[0]?.price === "$145.000" },
+  { name: "business plan price is 190000", passed: plans?.[1]?.price === "$190.000" },
+  { name: "elite plan has updated promotional price", passed: plans?.[2]?.price === "$390.000" },
+  { name: "elite monthly price exists", passed: typeof plans?.[2]?.subtitle === "string" && plans[2].subtitle.includes("$65.000 mensual") },
+  { name: "sofia conversation has at least five messages", passed: Array.isArray(sofiaMessages) && sofiaMessages.length >= 5 },
+  { name: "features mention WhatsApp", passed: Array.isArray(featureList) && featureList.some((item) => typeof item === "string" && item.includes("WhatsApp")) },
+  { name: "feature list has nine items", passed: Array.isArray(featureList) && featureList.length === 9 },
+  { name: "whatsapp url exists", passed: typeof WHATSAPP_URL === "string" && WHATSAPP_URL.includes("wa.me") },
+  { name: "system demo url exists", passed: SYSTEM_DEMO_URL === "https://app.agendaos.pro" },
+  { name: "elite mentions all in one system", passed: Array.isArray(plans?.[2]?.items) && plans[2].items.some((item) => typeof item === "string" && item.includes("todo en uno")) },
+  { name: "all plans have subtitle", passed: Array.isArray(plans) && plans.every((plan) => typeof plan?.subtitle === "string" && plan.subtitle.length > 0) },
+  { name: "all plans have items", passed: Array.isArray(plans) && plans.every((plan) => Array.isArray(plan?.items) && plan.items.length > 0) },
+  { name: "all sofia messages have text", passed: Array.isArray(sofiaMessages) && sofiaMessages.every((message) => typeof message?.text === "string" && message.text.length > 0) },
+  { name: "basic previous price is visible", passed: plans?.[0]?.previousPrice === "$180.000" },
+  { name: "elite previous price is visible", passed: plans?.[2]?.previousPrice === "$560.000" },
+];
+
+function BrandLogo({ className = "" }) {
+  return (
+    <span className={className}>
+      Agenda<span className="text-fuchsia-400">OS</span><span className="ml-1 inline-block h-2 w-2 rounded-full bg-emerald-400 align-middle shadow-[0_0_12px_rgba(52,211,153,.8)]" />
+    </span>
+  );
 }
 
-// Init demo
-setTimeout(() => {
-  demoNav('dashboard', document.querySelector('.d-nav.active'));
-  setTimeout(showDemoNotif, 3000);
-  setInterval(showDemoNotif, 8000);
-}, 200);
-
-const N8N = 'https://n8n-n8n.fa2cjf.easypanel.host/webhook';
-const API_KEY = 'AUTIX-2025-xK9mP3qR8nL7';
-
-// ── SCROLL REVEAL ──────────────────────────────────────────────────────────
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, {threshold: 0.08});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-// ── NAV + FAB ──────────────────────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  document.getElementById('fab').classList.toggle('show', window.scrollY > 500);
-});
-function gotoReg() {
-  document.getElementById('register').scrollIntoView({behavior:'smooth'});
-  setTimeout(() => document.getElementById('r-nom').focus(), 600);
+function SofiaName({ className = "" }) {
+  return (
+    <span className={className}>
+      sof<span className="text-fuchsia-400">IA</span>
+    </span>
+  );
 }
 
-// ── DASHBOARD DATE ─────────────────────────────────────────────────────────
-const now = new Date();
-const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const mdEl = document.getElementById('mock-date');
-if(mdEl) mdEl.textContent = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} · ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+function Button({ children, variant = "primary", href = WHATSAPP_URL, external = false }) {
+  const styles = {
+    primary: "bg-white text-stone-950 hover:bg-stone-200",
+    dark: "bg-fuchsia-500 text-white hover:bg-fuchsia-400",
+    ghost: "border border-white/10 bg-white/5 text-white hover:bg-white/10",
+  };
 
-// ── KPI ANIMATION ──────────────────────────────────────────────────────────
-let kpi = 14;
-setInterval(() => {
-  const el = document.getElementById('kpi-citas');
-  if(el && Math.random() > 0.75) {
-    kpi++;
-    el.textContent = kpi;
-    el.style.color = 'var(--os)';
-    setTimeout(() => el.style.color = '', 600);
-  }
-}, 5000);
-
-// ── FAQ ────────────────────────────────────────────────────────────────────
-function toggleFaq(item) {
-  const open = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if(!open) item.classList.add('open');
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className={`inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-center text-sm font-black transition sm:w-auto ${styles[variant] || styles.primary}`}
+    >
+      {children}
+    </a>
+  );
 }
 
-// ── PLAN SELECTOR ──────────────────────────────────────────────────────────
-let plan = 'pro';
-const prices = {starter:29990, pro:49990, business:79990};
-function selectPlan(p) {
-  plan = p;
-  document.querySelectorAll('.plan-opt').forEach(o => o.classList.remove('sel'));
-  document.getElementById('pl-'+p)?.classList.add('sel');
+function DemoCard({ title, category, image }) {
+  return (
+    <div className="group overflow-hidden rounded-[2rem] border border-white/10 bg-[#111111] shadow-2xl transition hover:-translate-y-2 hover:border-fuchsia-500/40">
+      <div className="relative h-72 overflow-hidden">
+        <img src={image} alt={title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+          <div className="rounded-[1.7rem] border border-white/10 bg-black/40 p-4 backdrop-blur-xl sm:p-5">
+            <p className="text-xs font-black uppercase tracking-[0.28em] text-fuchsia-300">{category}</p>
+            <h3 className="mt-2 text-2xl font-black text-white">{title}</h3>
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="mt-5 inline-flex rounded-full bg-white px-5 py-3 text-sm font-black text-stone-950 transition hover:bg-fuchsia-200">
+              Ver demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-// ── SLUG GENERATOR ─────────────────────────────────────────────────────────
-function autoSlug(val) {
-  const slug = val.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim().replace(/\s+/g, '-')
-    .slice(0, 40);
-  const slugEl = document.getElementById('r-slug');
-  const prevEl = document.getElementById('slug-preview');
-  if(slugEl) slugEl.value = slug;
-  if(prevEl) prevEl.textContent = slug || 'mi-negocio';
+function Benefit({ title, text }) {
+  return (
+    <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition hover:border-fuchsia-500/30 hover:bg-white/[0.05]">
+      <div className="mb-5 h-2 w-16 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-400" />
+      <h3 className="text-2xl font-black text-white">{title}</h3>
+      <p className="mt-4 text-sm font-medium leading-7 text-white/60">{text}</p>
+    </div>
+  );
 }
 
-// ── REGISTER ───────────────────────────────────────────────────────────────
-async function registrar() {
-  const nom   = document.getElementById('r-nom')?.value.trim();
-  const neg   = document.getElementById('r-neg')?.value.trim();
-  const tel   = document.getElementById('r-tel')?.value.trim();
-  const email = document.getElementById('r-email')?.value.trim();
-  const rubro = document.getElementById('r-rubro')?.value;
-  const slug  = document.getElementById('r-slug')?.value.trim();
-  const pass  = document.getElementById('r-pass')?.value.trim();
-  const err   = document.getElementById('reg-err');
-
-  if(!nom || !neg || !tel || !email || !rubro || !slug || !pass) {
-    err.textContent = 'Completa todos los campos para continuar.'; return;
-  }
-  if(pass.length < 6) {
-    err.textContent = 'La contraseña debe tener al menos 6 caracteres.'; return;
-  }
-  if(!/^[a-z0-9-]+$/.test(slug)) {
-    err.textContent = 'El ID solo puede tener letras minúsculas, números y guiones.'; return;
-  }
-  err.textContent = '';
-
-  const btn = document.getElementById('btn-reg');
-  btn.disabled = true;
-  btn.textContent = 'Creando tu cuenta...';
-
-  try {
-    const org_id = slug;
-    const res = await fetch(`${N8N}/agenda-auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': API_KEY
-      },
-      body: JSON.stringify({
-        action: 'register',
-        org_id,
-        password: pass,
-        nombre: neg,
-        slug,
-        plan,
-        meta: { nombre_contacto: nom, telefono: tel, email, rubro }
-      })
-    });
-
-    const data = await res.json();
-
-    if(data.ok || (data.data && data.data[0]?.org_id)) {
-      // ── SUCCESS ──────────────────────────────────────────────────────────
-      document.getElementById('form-state').style.display = 'none';
-      const s = document.getElementById('success-state');
-      s.style.display = 'block';
-      document.getElementById('success-msg').textContent =
-        `Cuenta "${org_id}" creada. Entra con tu ID y contraseña. Tienes 7 días de acceso completo.`;
-
-      // Notify via WhatsApp (no-block)
-      const msg = encodeURIComponent(
-        `🎉 Nuevo registro AgendaOS!\n\n` +
-        `👤 ${nom}\n🏢 ${neg}\n📞 ${tel}\n📧 ${email}\n🔧 ${rubro}\n` +
-        `🆔 ID: ${org_id}\n💰 Plan: ${plan}\n\n` +
-        `→ 7 días de prueba activados`
-      );
-      setTimeout(() => {
-        window.open(`https://wa.me/56973675754?text=${msg}`, '_blank');
-      }, 1500);
-
-    } else {
-      const msg = data.error || 'Ese ID ya está en uso. Prueba con otro.';
-      err.textContent = msg;
-      btn.disabled = false;
-      btn.textContent = 'Crear cuenta gratis → Acceso inmediato';
-    }
-  } catch(e) {
-    err.textContent = 'Error de conexión. Intenta de nuevo o escríbenos por WhatsApp.';
-    btn.disabled = false;
-    btn.textContent = 'Crear cuenta gratis → Acceso inmediato';
-  }
+function ChatBubble({ role, text }) {
+  const isUser = role === "user";
+  return (
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+      <div className={`max-w-sm rounded-[2rem] px-5 py-4 text-sm leading-7 ${isUser ? "bg-fuchsia-500 font-bold text-white shadow-lg shadow-fuchsia-500/20" : "bg-white/5 font-medium text-white/80"}`}>
+        {text}
+      </div>
+    </div>
+  );
 }
 
-// ── SOCIAL PROOF NOTIFICATIONS ─────────────────────────────────────────────
-const notifNames = ['Carlos M.','María F.','Andrés V.','Sofía R.','Diego P.','Camila L.','Roberto S.','Fernanda O.'];
-const notifMsgs  = ['acaba de activar AgendaOS','agendó su primera cita con el agente','activó el plan Pro','configuró su negocio hoy','empezó su periodo gratis'];
-function showNotif() {
-  const n = document.getElementById('notif');
-  document.getElementById('notif-name').textContent = notifNames[Math.floor(Math.random()*notifNames.length)];
-  document.getElementById('notif-msg').textContent  = notifMsgs[Math.floor(Math.random()*notifMsgs.length)];
-  n.classList.add('show');
-  setTimeout(() => n.classList.remove('show'), 4500);
+function PlanCard({ plan, index }) {
+  return (
+    <div className={`relative rounded-[2.5rem] border p-6 backdrop-blur-xl sm:p-8 ${index === 1 ? "border-fuchsia-500/40 bg-fuchsia-500/[0.08] shadow-[0_0_50px_rgba(217,70,239,.18)]" : "border-white/10 bg-white/[0.03]"}`}>
+      {index === 1 && (
+        <div className="absolute right-6 top-6 rounded-full bg-fuchsia-500 px-4 py-2 text-xs font-black text-white">
+          Oferta este mes
+        </div>
+      )}
+
+      <p className="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-300">{plan.name}</p>
+      <h3 className="mt-3 text-2xl font-black text-white">{plan.label}</h3>
+
+      <div className="mt-6 flex flex-wrap items-end gap-3">
+        {plan.previousPrice && (
+          <span className="text-xl font-black text-white/25 line-through sm:text-2xl">{plan.previousPrice}</span>
+        )}
+        <p className="text-5xl font-black leading-none text-white sm:text-6xl">{plan.price}</p>
+      </div>
+
+      <p className="mt-3 text-sm font-semibold text-white/45">{plan.subtitle}</p>
+      <p className="mt-6 text-sm font-medium leading-7 text-white/55">{plan.description}</p>
+
+      <div className="mt-8 space-y-4">
+        {plan.items.map((item) => (
+          <div key={item} className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-semibold text-white/75">
+            ✨ {item}
+          </div>
+        ))}
+      </div>
+
+      <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-4 text-sm font-black text-stone-950 hover:bg-fuchsia-200">
+        Solicitar implementación
+      </a>
+    </div>
+  );
 }
-setTimeout(showNotif, 4000);
-setInterval(showNotif, 14000);
-</script>
-</body>
-</html>
+
+export default function AgendaOSLanding() {
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-[#050505] text-white antialiased">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(217,70,239,.18),transparent_25%),radial-gradient(circle_at_80%_10%,rgba(244,114,182,.12),transparent_24%),radial-gradient(circle_at_50%_80%,rgba(192,132,252,.12),transparent_28%)]" />
+
+      <header className="sticky top-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur-2xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 sm:py-5">
+          <div>
+            <p className="text-2xl font-black tracking-tight"><BrandLogo /></p>
+            
+          </div>
+
+          <nav className="hidden items-center gap-8 text-sm font-semibold text-white/60 lg:flex">
+            <a href="#demos" className="transition hover:text-emerald-400">Demos</a>
+            <a href="#beneficios" className="transition hover:text-emerald-400">Beneficios</a>
+            <a href="#sofia" className="transition hover:text-emerald-400">sof<span className="text-fuchsia-400">IA</span></a>
+            <a href="#planes" className="transition hover:text-emerald-400">Planes</a>
+          </nav>
+
+          <div className="hidden gap-3 sm:flex">
+            <Button variant="ghost" href={SYSTEM_DEMO_URL} external>Ver sistema</Button>
+            <Button variant="dark" href={WHATSAPP_URL} external>Solicitar demo</Button>
+          </div>
+        </div>
+      </header>
+
+      <section className="relative px-4 pb-16 pt-12 sm:px-6 lg:pb-32 lg:pt-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr_.95fr]">
+          <div>
+            <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-fuchsia-500/20 bg-fuchsia-500/10 px-5 py-3 text-sm font-black text-fuchsia-200 backdrop-blur-xl">
+              Plataforma premium para reservas inteligentes
+            </div>
+
+            <h1 className="max-w-5xl text-5xl font-black leading-none tracking-tight sm:text-7xl lg:text-8xl">
+              Convierte conversaciones en reservas <span className="text-fuchsia-400">automáticas</span>.
+            </h1>
+
+            <p className="mt-8 max-w-2xl text-lg font-medium leading-9 text-white/60">
+              <BrandLogo /> ayuda a negocios de belleza, barberías, spa, estética y servicios profesionales a recibir reservas, organizar horarios y atender clientes desde una experiencia moderna, automática y lista para vender más.
+            </p>
+
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <Button variant="dark" href={WHATSAPP_URL} external>Solicitar demo</Button>
+              <Button variant="ghost" href={SYSTEM_DEMO_URL} external>Ver sistema</Button>
+            </div>
+
+            <div className="mt-14 grid gap-4 sm:grid-cols-3">
+              {["Reservas automáticas", "Clientes 24/7", "Agenda + WhatsApp"].map((item) => (
+                <div key={item} className="rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
+                  <p className="text-sm font-black text-white">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="absolute -inset-10 rounded-[3rem] bg-gradient-to-br from-fuchsia-500/30 via-purple-500/10 to-pink-500/20 blur-3xl" />
+            <div className="relative overflow-hidden rounded-[2.8rem] border border-white/10 bg-[#0c0c0c] shadow-[0_0_80px_rgba(217,70,239,.18)]">
+              <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1800&auto=format&fit=crop" alt="Experiencia spa y bienestar conectada a AgendaOS" className="h-[620px] w-full object-cover opacity-60 sm:h-[700px] lg:h-[760px]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black" />
+
+              <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-7">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-fuchsia-200 backdrop-blur-xl">
+                    <BrandLogo /> Dashboard
+                  </div>
+                  <div className="rounded-full border border-white/10 bg-emerald-500/15 px-4 py-2 text-xs font-black text-emerald-300">Online</div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="rounded-[2.2rem] border border-white/10 bg-black/55 p-5 shadow-2xl backdrop-blur-2xl sm:p-6">
+                    <div className="flex items-center gap-4">
+                      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" alt="sofIA" className="h-16 w-16 rounded-full border-2 border-fuchsia-400 object-cover shadow-lg shadow-fuchsia-500/30" />
+                      <div>
+                        <p className="text-2xl font-black text-white"><SofiaName /></p>
+                        <p className="text-sm font-semibold text-fuchsia-200/70">Asistente inteligente de reservas y atención</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 space-y-4">
+                      <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 backdrop-blur-xl">
+                        <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Reserva confirmada</p>
+                        <p className="mt-3 text-sm font-medium leading-7 text-white/80">✨ Camila reservó masaje relajante + spa facial para hoy a las 18:30.</p>
+                      </div>
+
+                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="text-xs font-black uppercase tracking-[0.18em] text-white/40">Conversaciones activas</p>
+                            <p className="mt-2 text-4xl font-black text-white">126</p>
+                          </div>
+                          <div className="rounded-full bg-fuchsia-500/20 px-4 py-2 text-xs font-black text-fuchsia-300">sofIA online</div>
+                        </div>
+                      </div>
+
+                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <p className="text-xs font-black uppercase tracking-[0.18em] text-white/40">Clientes recuperados automáticamente</p>
+                        <p className="mt-2 text-4xl font-black text-white">+94</p>
+                        <p className="mt-2 text-sm font-medium text-white/55">Clientes que volvieron a reservar gracias al seguimiento automático.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {heroStats.map((stat) => (
+                      <div key={stat.label} className="flex min-h-[145px] flex-col justify-start overflow-hidden rounded-[1.35rem] border border-white/10 bg-white/[0.04] p-3 backdrop-blur-xl sm:min-h-[155px] sm:p-4 lg:min-h-[165px]">
+                        <p className="text-[9px] font-black uppercase tracking-[0.12em] text-white/45 sm:text-[10px] lg:text-[11px]">{stat.label}</p>
+                        <p className="mt-2 break-words text-xl font-black leading-none text-white sm:text-2xl lg:text-3xl">{stat.value}</p>
+                        <p className="mt-2 max-w-full break-words text-[10px] font-medium leading-4 text-white/55 sm:text-xs sm:leading-5">{stat.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 lg:py-24" id="demos">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.28em] text-fuchsia-300">Demos reales</p>
+              <h2 className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">Así se vería tu negocio con Agenda<span className="text-fuchsia-400">OS</span>.</h2>
+            </div>
+            <p className="max-w-xl text-base font-medium leading-8 text-white/55">Landing pages premium conectadas a un sistema inteligente de reservas, atención automática y gestión de clientes.</p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-3">{demos.map((demo) => <DemoCard key={demo.title} {...demo} />)}</div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 lg:py-24" id="beneficios">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-black uppercase tracking-[0.28em] text-fuchsia-300">Beneficios</p>
+            <h2 className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">Todo lo que necesita un negocio moderno para agendar más.</h2>
+            <p className="mx-auto mt-6 max-w-3xl text-lg font-medium leading-9 text-white/55">No es solo una página web. Es una experiencia comercial completa para captar clientes, mostrar servicios, recibir reservas y reducir el tiempo perdido respondiendo mensajes repetidos.</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">{benefits.map((benefit) => <Benefit key={benefit.title} {...benefit} />)}</div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {featureList.map((item) => <div key={item} className="rounded-3xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm font-bold text-white/75 backdrop-blur-xl">✨ {item}</div>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 lg:py-24">
+        <div className="mx-auto max-w-7xl rounded-[2rem] border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl sm:rounded-[3rem] sm:p-8 lg:p-14">
+          <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.28em] text-fuchsia-300">Cómo funciona</p>
+              <h2 className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">Página, <span className="text-emerald-400">WhatsApp</span> y sistema trabajando juntos.</h2>
+              <p className="mt-6 text-base font-medium leading-8 text-white/55 sm:text-lg sm:leading-9"><BrandLogo /> conecta la web del negocio, la atención por WhatsApp y el sistema interno de gestión para que todo quede organizado en un mismo flujo: consultas, reservas, clientes, profesionales y servicios.</p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button variant="dark" href={WHATSAPP_URL} external>Solicitar demo</Button>
+                <Button variant="ghost" href={SYSTEM_DEMO_URL} external>Ver demo del sistema</Button>
+              </div>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {[
+                { step: "01", title: "Web", text: "El cliente conoce servicios, precios y agenda desde la página." },
+                { step: "02", title: "WhatsApp", text: "La conversación continúa con atención y confirmaciones." },
+                { step: "03", title: "Sistema", text: "El negocio controla reservas, clientes, servicios y profesionales." },
+              ].map((item) => (
+                <div key={item.step} className="rounded-[2rem] border border-white/10 bg-black/30 p-5 sm:p-6">
+                  <p className="text-sm font-black text-fuchsia-300">{item.step}</p>
+                  <h3 className="mt-4 text-xl font-black sm:text-2xl">{item.title}</h3>
+                  <p className="mt-3 text-sm font-medium leading-6 text-white/55">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 lg:py-24" id="sofia">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 rounded-[2rem] border border-white/10 bg-gradient-to-br from-fuchsia-500/10 via-black to-pink-500/10 p-5 sm:rounded-[3rem] sm:p-8 lg:grid-cols-[.85fr_1.15fr] lg:p-14">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.28em] text-fuchsia-300"><SofiaName /></p>
+            <h2 className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">Mucho más que un chatbot de reservas.</h2>
+            <p className="mt-6 text-lg font-medium leading-9 text-white/60"><SofiaName /> responde mensajes de texto, audios e imágenes, recuerda conversaciones anteriores, comparte horarios, servicios y catálogos, ayuda a elegir tratamientos, revisa disponibilidad en tiempo real y acompaña al cliente hasta completar la reserva. Además, se integra directamente con el sistema de agenda para registrar automáticamente cada cita confirmada.</p>
+            <div className="mt-10 rounded-[2rem] border border-fuchsia-500/20 bg-fuchsia-500/10 p-6 backdrop-blur-xl">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-fuchsia-300">Atención automática</p>
+              <p className="mt-4 text-base font-medium leading-8 text-white/70">Menos tiempo respondiendo mensajes repetidos y más tiempo atendiendo clientes. <SofiaName /> puede responder incluso fuera del horario laboral.</p>
+            </div>
+          </div>
+          <div className="rounded-[2.5rem] border border-white/10 bg-black/40 p-5 shadow-[0_0_50px_rgba(217,70,239,.12)] backdrop-blur-2xl sm:p-6">
+            <div className="mb-6 flex items-center gap-4 border-b border-white/10 pb-5">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" alt="sofIA" className="h-16 w-16 rounded-full border-2 border-fuchsia-400 object-cover" />
+              <div>
+                <p className="text-2xl font-black text-white"><SofiaName /></p>
+                <p className="text-sm font-semibold text-emerald-300">Online · Respondiendo reservas</p>
+              </div>
+            </div>
+            <div className="space-y-4">{sofiaMessages.map((message) => <ChatBubble key={message.text} {...message} />)}</div>
+            <div className="mt-8 rounded-[2rem] border border-fuchsia-500/20 bg-gradient-to-r from-fuchsia-500/20 to-pink-500/10 p-5 text-center backdrop-blur-xl">
+              <p className="text-lg font-black text-white">Convierte conversaciones en reservas reales.</p>
+              <p className="mt-2 text-sm font-medium leading-7 text-white/60">Automatiza atención, mejora la experiencia y haz crecer tu negocio con Agenda<span className="text-fuchsia-400">OS</span>.</p>
+              <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-4 text-sm font-black text-stone-950 transition hover:bg-fuchsia-200 sm:w-auto">Solicitar demo con <SofiaName className="ml-1" /></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 lg:py-24" id="planes">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-black uppercase tracking-[0.28em] text-fuchsia-300">Planes</p>
+            <h2 className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">Soluciones para cada etapa de tu negocio.</h2>
+            <p className="mx-auto mt-6 max-w-3xl text-lg font-medium leading-9 text-white/55">Puedes comenzar con una landing premium y escalar hacia agenda inteligente, atención automática y automatización avanzada cuando el negocio crezca.</p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-3">{plans.map((plan, index) => <PlanCard key={plan.name} plan={plan} index={index} />)}</div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 lg:py-24">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-black to-fuchsia-500/10 p-6 shadow-[0_0_60px_rgba(16,185,129,.12)] backdrop-blur-xl sm:rounded-[3rem] sm:p-10 lg:p-14">
+          <div className="grid gap-10 lg:grid-cols-[1fr_.8fr] lg:items-center">
+            <div>
+              <div className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-5 py-3 text-sm font-black text-emerald-300">🚀 GRATIS SOLO ESTE MES</div>
+              <h2 className="mt-6 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl">Obtén <span className="text-fuchsia-400">gratis</span> el sistema base de gestión para tu <span className="text-fuchsia-400">negocio</span>.</h2>
+              <p className="mt-6 max-w-2xl text-base font-medium leading-8 text-white/60 sm:text-lg sm:leading-9">Este mes estamos entregando acceso gratuito al sistema base de Agenda<span className="text-fuchsia-400">OS</span> para nuevos negocios. Administra clientes, servicios, reservas, profesionales y horarios desde una sola plataforma.</p>
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                {["Control de reservas", "Gestión de clientes", "Servicios y profesionales", "Agenda online", "Panel administrativo", "Acceso desde cualquier dispositivo"].map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-bold text-white/75">✨ {item}</div>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-[2rem] border border-white/10 bg-black/40 p-6 backdrop-blur-2xl">
+              <div className="rounded-[2rem] border border-emerald-500/20 bg-emerald-500/10 p-6 text-center">
+                <p className="text-sm font-black uppercase tracking-[0.22em] text-emerald-300">Acceso promocional</p>
+                <p className="mt-5 text-6xl font-black text-white">GRATIS</p>
+                <p className="mt-4 text-sm font-semibold text-white/55">Solo por este mes para nuevos negocios.</p>
+              </div>
+              <div className="mt-8 flex flex-col gap-4">
+                <Button variant="dark" href={SYSTEM_DEMO_URL} external>Ver sistema</Button>
+                <Button variant="ghost" href={WHATSAPP_URL} external>Registrarme gratis</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-white/5 px-6 py-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
+          <div>
+            <p className="text-2xl font-black"><BrandLogo /></p>
+            <p className="mt-2 text-sm font-medium text-white/40">Plataforma inteligente para reservas y automatización.</p>
+          </div>
+          <div className="flex flex-col items-center gap-4 sm:flex-row">
+            <Button variant="ghost" href={SYSTEM_DEMO_URL} external>Ver sistema</Button>
+            <Button variant="dark" href={WHATSAPP_URL} external>Comenzar</Button>
+          </div>
+        </div>
+        <p className="mt-10 text-center text-sm font-medium text-white/30">© 2026 AgendaOS · by autix</p>
+      </footer>
+    </main>
+  );
+}
