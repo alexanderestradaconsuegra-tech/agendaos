@@ -1,160 +1,141 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-CL">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bellas Studio · AgendaOS Demo</title>
-  <meta name="description" content="Demo de landing para beauty studio con agenda online, reserva web y asistente sofIA conectado a AgendaOS." />
+  <title>Bellas Studio | Uñas modernas con agenda inteligente</title>
+  <meta name="description" content="Demo AgendaOS para estudio de uñas moderno con catálogo de diseños, agenda online, asistente sofIA y reserva inteligente por WhatsApp." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html,body{margin:0;background:#0a0a0a;color:#fff;font-family:Inter,system-ui,sans-serif;scroll-behavior:smooth}
-    .glass{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px)}
-    .hover-card{transition:.35s ease;will-change:transform}
-    .hover-card:hover{transform:translateY(-8px);box-shadow:0 20px 70px rgba(217,70,239,.22);border-color:rgba(217,70,239,.4)}
-    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.15),rgba(0,0,0,.82));}
-    .booking-btn{transition:.25s ease}
-    .booking-btn.active{background:#d946ef;color:white;border-color:rgba(217,70,239,.75);box-shadow:0 14px 40px rgba(217,70,239,.22)}
+    html,body{margin:0;background:#09060a;color:#fff;font-family:Inter,system-ui,sans-serif;scroll-behavior:smooth}
+    .glass{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(18px)}
+    .hover-card{transition:.35s ease;will-change:transform}.hover-card:hover{transform:translateY(-8px);box-shadow:0 24px 80px rgba(217,70,239,.22);border-color:rgba(217,70,239,.45)}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.42),rgba(0,0,0,.78));z-index:1}
+    .booking-btn{transition:.25s ease}.booking-btn.active{background:#d946ef;color:white;border-color:rgba(217,70,239,.75);box-shadow:0 14px 40px rgba(217,70,239,.22)}
+    .ticker{white-space:nowrap;overflow:hidden}.ticker span{display:inline-block;animation:ticker 24s linear infinite}@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .shine{position:relative;overflow:hidden}.shine:after{content:"";position:absolute;top:-80%;left:-45%;width:35%;height:260%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transform:rotate(20deg);animation:shine 5s ease-in-out infinite}@keyframes shine{0%,65%{left:-45%}100%{left:130%}}
+    @media(max-width:768px){.hover-card:hover{transform:none}}
   </style>
 </head>
 <body>
   <main class="relative overflow-hidden">
-    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(217,70,239,.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(236,72,153,.16),transparent_28%)]"></div>
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_12%_18%,rgba(217,70,239,.22),transparent_30%),radial-gradient(circle_at_85%_10%,rgba(244,114,182,.16),transparent_26%),radial-gradient(circle_at_50%_90%,rgba(251,207,232,.10),transparent_32%)]"></div>
 
-    <header class="sticky top-0 z-50 border-b border-white/5 bg-black/40 backdrop-blur-2xl">
-      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-        <a href="/" class="text-2xl font-black">Bellas <span class="text-fuchsia-400">Studio</span></a>
-        <a href="#agendar" class="rounded-full bg-fuchsia-500 px-5 py-3 text-sm font-black text-white hover:bg-fuchsia-400">Agendar cita</a>
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-black/45 backdrop-blur-2xl">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+        <a href="/" class="text-2xl font-black tracking-tight">Bellas <span class="text-fuchsia-400">Studio</span></a>
+        <nav class="hidden items-center gap-7 text-sm font-bold text-white/60 lg:flex">
+          <a class="hover:text-fuchsia-300" href="#catalogo">Diseños</a>
+          <a class="hover:text-fuchsia-300" href="#agendar">Agenda</a>
+          <a class="hover:text-fuchsia-300" href="#sofia">sofIA</a>
+        </nav>
+        <a href="#agendar" class="rounded-full bg-fuchsia-500 px-5 py-3 text-sm font-black text-white transition hover:bg-fuchsia-400">Agendar cita</a>
       </div>
     </header>
 
-    <section class="hero relative flex min-h-screen items-center justify-center overflow-hidden px-6">
-      <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 h-full w-full object-cover" alt="Bellas Studio salón de belleza premium" />
-      <div class="relative z-10 mx-auto max-w-5xl text-center">
-        <div class="mb-6 inline-flex rounded-full border border-fuchsia-500/20 bg-fuchsia-500/10 px-5 py-3 text-sm font-black text-fuchsia-200">Demo Beauty Studio</div>
-        <h1 class="text-5xl font-black leading-none tracking-tight sm:text-7xl lg:text-8xl">Tu próxima cita de belleza comienza aquí ✨</h1>
-        <p class="mx-auto mt-8 max-w-3xl text-lg leading-9 text-white/70">Reserva manicure, pestañas, cejas, skincare y tratamientos faciales desde una experiencia premium conectada con AgendaOS.</p>
-        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a href="#agendar" class="rounded-full bg-white px-8 py-4 text-sm font-black text-black">Agendar desde la web</a>
-          <a href="#servicios" class="rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-black text-white">Ver servicios</a>
+    <section class="hero relative min-h-screen overflow-hidden px-4 py-20 sm:px-6 lg:flex lg:items-center">
+      <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=2200&auto=format&fit=crop" class="absolute inset-0 h-full w-full object-cover opacity-75" alt="Uñas premium modernas" />
+      <div class="relative z-10 mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
+        <div>
+          <div class="mb-6 inline-flex rounded-full border border-fuchsia-300/25 bg-fuchsia-500/10 px-5 py-3 text-sm font-black text-fuchsia-100">Nail Beauty Studio · Powered by AgendaOS</div>
+          <h1 class="max-w-4xl text-5xl font-black leading-none tracking-tight sm:text-7xl lg:text-8xl">Uñas perfectas, agenda inteligente y reserva en segundos.</h1>
+          <p class="mt-7 max-w-2xl text-lg leading-9 text-white/72">Una demo de última generación para estudios de uñas: catálogo visual, agenda online, recomendaciones de estilo y sof<span class="text-fuchsia-300">IA</span> acompañando cada reserva hasta confirmarla.</p>
+          <div class="mt-9 flex flex-col gap-4 sm:flex-row">
+            <a href="#agendar" class="rounded-full bg-white px-8 py-4 text-center text-sm font-black text-black">Agendar desde la web</a>
+            <a href="#catalogo" class="rounded-full border border-white/10 bg-white/5 px-8 py-4 text-center text-sm font-black text-white">Explorar diseños</a>
+          </div>
+          <div class="mt-10 grid gap-4 sm:grid-cols-3">
+            <div class="glass rounded-3xl p-5"><p class="text-3xl font-black">4.9/5</p><p class="mt-2 text-xs font-bold uppercase tracking-[.18em] text-white/45">Opiniones</p></div>
+            <div class="glass rounded-3xl p-5"><p class="text-3xl font-black">10 min</p><p class="mt-2 text-xs font-bold uppercase tracking-[.18em] text-white/45">Reserva online</p></div>
+            <div class="glass rounded-3xl p-5"><p class="text-3xl font-black">24/7</p><p class="mt-2 text-xs font-bold uppercase tracking-[.18em] text-white/45">Atención automática</p></div>
+          </div>
+        </div>
+
+        <div class="glass shine rounded-[2.8rem] p-5 shadow-[0_0_90px_rgba(217,70,239,.22)] sm:p-6">
+          <div class="overflow-hidden rounded-[2.2rem] bg-black/30">
+            <img src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?q=80&w=1600&auto=format&fit=crop" class="h-96 w-full object-cover" alt="Diseño de uñas premium" />
+          </div>
+          <div class="mt-5 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl bg-white/5 p-4"><p class="text-xs text-white/45">Diseño sugerido</p><p class="mt-1 font-black">French Glow</p></div>
+            <div class="rounded-2xl bg-white/5 p-4"><p class="text-xs text-white/45">Disponible</p><p class="mt-1 font-black text-emerald-300">Hoy 17:30</p></div>
+            <div class="rounded-2xl bg-white/5 p-4"><p class="text-xs text-white/45">Reserva</p><p class="mt-1 font-black">Confirmada</p></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="servicios" class="px-6 py-24">
+    <div class="ticker border-y border-fuchsia-400/15 bg-fuchsia-500/10 py-4 text-sm font-black uppercase tracking-[.2em] text-fuchsia-100">
+      <span> ✨ Uñas modernas · Agenda inteligente · Reserva online · WhatsApp automático · Catálogo digital · sofIA recomienda estilos · Uñas modernas · Agenda inteligente · Reserva online · WhatsApp automático · Catálogo digital · sofIA recomienda estilos </span>
+    </div>
+
+    <section class="px-4 py-24 sm:px-6">
       <div class="mx-auto max-w-7xl">
-        <div class="mb-14 text-center">
-          <p class="text-sm font-black uppercase tracking-[0.3em] text-fuchsia-300">Servicios</p>
-          <h2 class="mt-5 text-5xl font-black">Experiencias pensadas para resaltar tu belleza.</h2>
+        <div class="mb-12 text-center">
+          <p class="text-sm font-black uppercase tracking-[0.3em] text-fuchsia-300">Beauty tech</p>
+          <h2 class="mt-5 text-4xl font-black sm:text-6xl">Más que una página bonita: una experiencia de uñas inteligente.</h2>
+          <p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-white/60">Bellas puede mostrar diseños, servicios, precios y disponibilidad para convertir visitantes en reservas reales.</p>
         </div>
-
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          <div class="glass hover-card rounded-[2rem] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200&auto=format&fit=crop" class="h-64 w-full object-cover" alt="Manicure premium">
-            <div class="p-6"><h3 class="text-2xl font-black">Manicure Premium</h3><p class="mt-3 text-sm leading-7 text-white/60">Diseños modernos, nail art y acabado profesional.</p></div>
-          </div>
-          <div class="glass hover-card rounded-[2rem] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1200&auto=format&fit=crop" class="h-64 w-full object-cover" alt="Lashes and brows">
-            <div class="p-6"><h3 class="text-2xl font-black">Lashes & Brows</h3><p class="mt-3 text-sm leading-7 text-white/60">Pestañas y cejas diseñadas para resaltar tu mirada.</p></div>
-          </div>
-          <div class="glass hover-card rounded-[2rem] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=1200&auto=format&fit=crop" class="h-64 w-full object-cover" alt="Skincare facial">
-            <div class="p-6"><h3 class="text-2xl font-black">Skincare Facial</h3><p class="mt-3 text-sm leading-7 text-white/60">Limpieza profunda y tratamientos faciales premium.</p></div>
-          </div>
-          <div class="glass hover-card rounded-[2rem] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=1200&auto=format&fit=crop" class="h-64 w-full object-cover" alt="Glow experience">
-            <div class="p-6"><h3 class="text-2xl font-black">Glow Experience</h3><p class="mt-3 text-sm leading-7 text-white/60">Experiencia completa de belleza y bienestar.</p></div>
-          </div>
+          <div class="glass hover-card rounded-[2rem] p-6"><div class="mb-6 text-5xl">💅</div><h3 class="text-2xl font-black">Diseños personalizados</h3><p class="mt-4 text-sm leading-7 text-white/60">Catálogo visual con estilos, tendencias y precios claros.</p></div>
+          <div class="glass hover-card rounded-[2rem] p-6"><div class="mb-6 text-5xl">🤖</div><h3 class="text-2xl font-black">sofIA recomienda</h3><p class="mt-4 text-sm leading-7 text-white/60">El cliente responde preferencias y recibe una sugerencia ideal.</p></div>
+          <div class="glass hover-card rounded-[2rem] p-6"><div class="mb-6 text-5xl">📅</div><h3 class="text-2xl font-black">Agenda integrada</h3><p class="mt-4 text-sm leading-7 text-white/60">Horarios disponibles y confirmación inmediata.</p></div>
+          <div class="glass hover-card rounded-[2rem] p-6"><div class="mb-6 text-5xl">📲</div><h3 class="text-2xl font-black">WhatsApp listo</h3><p class="mt-4 text-sm leading-7 text-white/60">Mensaje prellenado con servicio, horario y precio.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="agendar" class="px-6 py-24">
+    <section id="catalogo" class="px-4 py-24 sm:px-6">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div><p class="text-sm font-black uppercase tracking-[0.3em] text-fuchsia-300">Catálogo inteligente</p><h2 class="mt-5 text-4xl font-black sm:text-6xl">Estilos más pedidos.</h2></div>
+          <p class="max-w-xl text-base leading-8 text-white/55">Cada diseño puede convertirse en una reserva directa o un servicio administrado desde AgendaOS.</p>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <article class="glass hover-card overflow-hidden rounded-[2rem]"><img class="h-72 w-full object-cover" src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?q=80&w=1400&auto=format&fit=crop" alt="French Glow"><div class="p-6"><div class="mb-3 inline-flex rounded-full bg-fuchsia-500/15 px-3 py-1 text-xs font-black text-fuchsia-200">Más vendido</div><h3 class="text-2xl font-black">French Glow</h3><p class="mt-3 text-sm text-white/60">Elegante, limpio y premium.</p><p class="mt-4 text-3xl font-black">$25.000</p></div></article>
+          <article class="glass hover-card overflow-hidden rounded-[2rem]"><img class="h-72 w-full object-cover" src="https://images.unsplash.com/photo-1600428936723-0f91c3be94ad?q=80&w=1400&auto=format&fit=crop" alt="Chrome Aura"><div class="p-6"><div class="mb-3 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70">Tendencia</div><h3 class="text-2xl font-black">Chrome Aura</h3><p class="mt-3 text-sm text-white/60">Brillo futurista con acabado espejo.</p><p class="mt-4 text-3xl font-black">$32.000</p></div></article>
+          <article class="glass hover-card overflow-hidden rounded-[2rem]"><img class="h-72 w-full object-cover" src="https://images.unsplash.com/photo-1610992235683-e39b9d301bb2?q=80&w=1400&auto=format&fit=crop" alt="Nail Art Pro"><div class="p-6"><div class="mb-3 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-black text-white/70">Premium</div><h3 class="text-2xl font-black">Nail Art Pro</h3><p class="mt-3 text-sm text-white/60">Diseño personalizado con detalles finos.</p><p class="mt-4 text-3xl font-black">$38.000</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="agendar" class="px-4 py-24 sm:px-6">
       <div class="mx-auto max-w-7xl">
         <div class="mb-12 text-center">
           <p class="text-sm font-black uppercase tracking-[0.3em] text-fuchsia-300">Agenda web</p>
-          <h2 class="mt-5 text-5xl font-black">Agenda tu cita en menos de un minuto.</h2>
-          <p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-white/60">Esta zona simula cómo un cliente puede elegir servicio, horario y confirmar la reserva desde la página, mientras sof<span class="text-fuchsia-400">IA</span> acompaña el proceso.</p>
+          <h2 class="mt-5 text-4xl font-black sm:text-6xl">Agenda tu cita en menos de un minuto.</h2>
+          <p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-white/60">El cliente elige diseño, horario y confirma. sof<span class="text-fuchsia-400">IA</span> simula la conversación y deja todo listo para reservar.</p>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
           <div class="glass rounded-[2.5rem] p-6 sm:p-8">
             <div class="grid gap-6 lg:grid-cols-2">
-              <div>
-                <p class="text-sm font-black uppercase tracking-[0.2em] text-fuchsia-300">1. Elige servicio</p>
-                <div class="mt-5 grid gap-3" id="serviceButtons">
-                  <button data-service="Manicure Premium" data-price="$25.000" class="booking-btn active rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-left font-black">💅 Manicure Premium <span class="block pt-1 text-xs font-medium text-white/55">60 min · $25.000</span></button>
-                  <button data-service="Lashes & Brows" data-price="$32.000" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-left font-black">✨ Lashes & Brows <span class="block pt-1 text-xs font-medium text-white/55">75 min · $32.000</span></button>
-                  <button data-service="Skincare Facial" data-price="$38.000" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-left font-black">🧖‍♀️ Skincare Facial <span class="block pt-1 text-xs font-medium text-white/55">80 min · $38.000</span></button>
-                </div>
-              </div>
-
-              <div>
-                <p class="text-sm font-black uppercase tracking-[0.2em] text-fuchsia-300">2. Elige horario</p>
-                <div class="mt-5 grid grid-cols-2 gap-3" id="timeButtons">
-                  <button data-time="Hoy 15:00" class="booking-btn active rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Hoy<br><span class="text-fuchsia-200">15:00</span></button>
-                  <button data-time="Hoy 17:30" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Hoy<br><span class="text-fuchsia-200">17:30</span></button>
-                  <button data-time="Mañana 11:00" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Mañana<br><span class="text-fuchsia-200">11:00</span></button>
-                  <button data-time="Mañana 18:00" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Mañana<br><span class="text-fuchsia-200">18:00</span></button>
-                </div>
-              </div>
+              <div><p class="text-sm font-black uppercase tracking-[0.2em] text-fuchsia-300">1. Elige diseño</p><div class="mt-5 grid gap-3" id="serviceButtons"><button data-service="French Glow" data-price="$25.000" class="booking-btn active rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-left font-black">💅 French Glow <span class="block pt-1 text-xs font-medium text-white/55">60 min · $25.000</span></button><button data-service="Chrome Aura" data-price="$32.000" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-left font-black">✨ Chrome Aura <span class="block pt-1 text-xs font-medium text-white/55">75 min · $32.000</span></button><button data-service="Nail Art Pro" data-price="$38.000" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-left font-black">🎨 Nail Art Pro <span class="block pt-1 text-xs font-medium text-white/55">90 min · $38.000</span></button></div></div>
+              <div><p class="text-sm font-black uppercase tracking-[0.2em] text-fuchsia-300">2. Elige horario</p><div class="mt-5 grid grid-cols-2 gap-3" id="timeButtons"><button data-time="Hoy 15:00" class="booking-btn active rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Hoy<br><span class="text-fuchsia-200">15:00</span></button><button data-time="Hoy 17:30" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Hoy<br><span class="text-fuchsia-200">17:30</span></button><button data-time="Mañana 11:00" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Mañana<br><span class="text-fuchsia-200">11:00</span></button><button data-time="Mañana 18:00" class="booking-btn rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-center font-black">Mañana<br><span class="text-fuchsia-200">18:00</span></button></div></div>
             </div>
 
             <div class="mt-8 rounded-[2rem] border border-fuchsia-500/20 bg-fuchsia-500/10 p-5">
-              <p class="text-sm font-black uppercase tracking-[0.2em] text-fuchsia-200">Resumen de reserva</p>
-              <div class="mt-4 grid gap-4 sm:grid-cols-3">
-                <div><p class="text-xs text-white/45">Servicio</p><p id="summaryService" class="mt-1 font-black">Manicure Premium</p></div>
-                <div><p class="text-xs text-white/45">Horario</p><p id="summaryTime" class="mt-1 font-black">Hoy 15:00</p></div>
-                <div><p class="text-xs text-white/45">Precio</p><p id="summaryPrice" class="mt-1 font-black">$25.000</p></div>
-              </div>
+              <p class="text-sm font-black uppercase tracking-[0.2em] text-fuchsia-200">Resumen inteligente</p>
+              <div class="mt-4 grid gap-4 sm:grid-cols-3"><div><p class="text-xs text-white/45">Diseño</p><p id="summaryService" class="mt-1 font-black">French Glow</p></div><div><p class="text-xs text-white/45">Horario</p><p id="summaryTime" class="mt-1 font-black">Hoy 15:00</p></div><div><p class="text-xs text-white/45">Precio</p><p id="summaryPrice" class="mt-1 font-black">$25.000</p></div></div>
             </div>
-
-            <a id="confirmBooking" href="https://wa.me/56973675754?text=Hola%2C%20quiero%20reservar%20Manicure%20Premium%20para%20Hoy%2015%3A00" target="_blank" class="mt-6 inline-flex w-full justify-center rounded-full bg-white px-6 py-4 text-sm font-black text-black">Confirmar cita por WhatsApp</a>
+            <a id="confirmBooking" href="https://wa.me/56973675754?text=Hola%2C%20quiero%20reservar%20French%20Glow%20para%20Hoy%2015%3A00" target="_blank" class="mt-6 inline-flex w-full justify-center rounded-full bg-white px-6 py-4 text-sm font-black text-black">Confirmar cita por WhatsApp</a>
           </div>
 
-          <div class="glass rounded-[2.5rem] p-6">
-            <div class="mb-6 flex items-center gap-4 border-b border-white/10 pb-5">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" class="h-16 w-16 rounded-full border-2 border-fuchsia-400 object-cover" alt="sofIA agente de reservas">
-              <div><p class="text-2xl font-black">sof<span class="text-fuchsia-400">IA</span></p><p class="text-sm text-emerald-300">Online · Simulando reserva</p></div>
-            </div>
-
-            <div class="space-y-4 text-sm leading-7" id="chatBox">
-              <div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Hola ✨ Soy sofIA. Te ayudo a reservar en Bellas Studio.</div>
-              <div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Quiero agendar Manicure Premium</div>
-              <div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Perfecto 💅 Tengo disponibilidad Hoy 15:00. ¿Confirmamos?</div>
-              <div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Sí, confirmar cita ✨</div>
-            </div>
-
-            <div class="mt-8 rounded-[2rem] border border-emerald-500/20 bg-emerald-500/10 p-5">
-              <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Cómo se vería conectado</p>
-              <p class="mt-3 text-sm leading-7 text-white/65">En AgendaOS real, esta acción puede crear la reserva, guardar el cliente, actualizar la disponibilidad y enviar confirmación por WhatsApp automáticamente.</p>
-            </div>
+          <div id="sofia" class="glass rounded-[2.5rem] p-6">
+            <div class="mb-6 flex items-center gap-4 border-b border-white/10 pb-5"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" class="h-16 w-16 rounded-full border-2 border-fuchsia-400 object-cover" alt="sofIA agente de reservas"><div><p class="text-2xl font-black">sof<span class="text-fuchsia-400">IA</span></p><p class="text-sm text-emerald-300">Online · Recomendando estilos</p></div></div>
+            <div class="space-y-4 text-sm leading-7" id="chatBox"><div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Hola ✨ Soy sofIA. Te ayudo a elegir diseño y reservar.</div><div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Quiero French Glow</div><div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Perfecto 💅 Tengo disponibilidad Hoy 15:00. ¿Confirmamos?</div><div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Sí, confirmar cita ✨</div></div>
+            <div class="mt-8 rounded-[2rem] border border-emerald-500/20 bg-emerald-500/10 p-5"><p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Conectado a AgendaOS</p><p class="mt-3 text-sm leading-7 text-white/65">En la versión real, esta acción crea la reserva, guarda el cliente, actualiza disponibilidad y envía confirmación por WhatsApp automáticamente.</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="px-6 py-24">
-      <div class="mx-auto grid max-w-7xl items-center gap-12 rounded-[3rem] border border-white/10 bg-white/[0.03] p-8 lg:grid-cols-2 lg:p-14">
-        <div>
-          <p class="text-sm font-black uppercase tracking-[0.3em] text-fuchsia-300">Reserva inteligente</p>
-          <h2 class="mt-5 text-5xl font-black">Agenda automáticamente con sof<span class="text-fuchsia-400">IA</span>.</h2>
-          <p class="mt-6 text-lg leading-9 text-white/65">Nuestra asistente responde mensajes, muestra horarios disponibles y confirma reservas automáticamente para que nunca pierdas una cita.</p>
-          <div class="mt-8 flex flex-col gap-4 sm:flex-row">
-            <a href="#agendar" class="rounded-full bg-fuchsia-500 px-7 py-4 text-sm font-black text-white">Probar agenda web</a>
-            <a href="/" class="rounded-full border border-white/10 bg-white/5 px-7 py-4 text-sm font-black text-white">Volver a AgendaOS</a>
-          </div>
-        </div>
-
-        <div class="glass rounded-[2.5rem] p-6">
-          <div class="space-y-4 text-sm leading-7">
-            <div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Hola ✨ ¿Qué servicio deseas reservar?</div>
-            <div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Quiero manicure permanente para mañana 💅</div>
-            <div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Tengo disponibilidad a las 15:00 y 17:30. ¿Cuál prefieres?</div>
-            <div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">17:30 ✨</div>
-            <div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Perfecto. Tu cita quedó confirmada 💖</div>
-          </div>
-        </div>
+    <section class="px-4 py-24 sm:px-6">
+      <div class="mx-auto max-w-7xl rounded-[3rem] border border-white/10 bg-gradient-to-br from-fuchsia-500/15 via-black to-pink-500/10 p-8 text-center lg:p-14">
+        <p class="text-sm font-black uppercase tracking-[0.3em] text-fuchsia-300">Demo comercial</p>
+        <h2 class="mx-auto mt-5 max-w-4xl text-4xl font-black sm:text-6xl">Una página de uñas que no solo se ve linda: vende, agenda y automatiza.</h2>
+        <p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-white/60">Ideal para mostrarle a un salón cómo AgendaOS transforma su presencia digital en un sistema real de reservas.</p>
+        <div class="mt-10 flex flex-col justify-center gap-4 sm:flex-row"><a href="#agendar" class="rounded-full bg-fuchsia-500 px-8 py-4 text-sm font-black text-white">Probar agenda inteligente</a><a href="/" class="rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-black text-white">Volver a AgendaOS</a></div>
       </div>
     </section>
 
@@ -165,46 +146,7 @@
   </main>
 
   <script>
-    const serviceButtons = document.querySelectorAll('#serviceButtons .booking-btn');
-    const timeButtons = document.querySelectorAll('#timeButtons .booking-btn');
-    const summaryService = document.getElementById('summaryService');
-    const summaryTime = document.getElementById('summaryTime');
-    const summaryPrice = document.getElementById('summaryPrice');
-    const confirmBooking = document.getElementById('confirmBooking');
-    const chatBox = document.getElementById('chatBox');
-
-    let selectedService = 'Manicure Premium';
-    let selectedPrice = '$25.000';
-    let selectedTime = 'Hoy 15:00';
-
-    function updateBooking() {
-      summaryService.textContent = selectedService;
-      summaryTime.textContent = selectedTime;
-      summaryPrice.textContent = selectedPrice;
-      const msg = `Hola, quiero reservar ${selectedService} para ${selectedTime}. Precio referencial ${selectedPrice}.`;
-      confirmBooking.href = `https://wa.me/56973675754?text=${encodeURIComponent(msg)}`;
-      chatBox.innerHTML = `
-        <div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Hola ✨ Soy sofIA. Te ayudo a reservar en Bellas Studio.</div>
-        <div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Quiero agendar ${selectedService}</div>
-        <div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Perfecto 💖 Tengo disponibilidad ${selectedTime}. El valor referencial es ${selectedPrice}. ¿Confirmamos?</div>
-        <div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Sí, confirmar cita ✨</div>
-      `;
-    }
-
-    serviceButtons.forEach(btn => btn.addEventListener('click', () => {
-      serviceButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedService = btn.dataset.service;
-      selectedPrice = btn.dataset.price;
-      updateBooking();
-    }));
-
-    timeButtons.forEach(btn => btn.addEventListener('click', () => {
-      timeButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedTime = btn.dataset.time;
-      updateBooking();
-    }));
+    const serviceButtons=document.querySelectorAll('#serviceButtons .booking-btn');const timeButtons=document.querySelectorAll('#timeButtons .booking-btn');const summaryService=document.getElementById('summaryService');const summaryTime=document.getElementById('summaryTime');const summaryPrice=document.getElementById('summaryPrice');const confirmBooking=document.getElementById('confirmBooking');const chatBox=document.getElementById('chatBox');let selectedService='French Glow';let selectedPrice='$25.000';let selectedTime='Hoy 15:00';function updateBooking(){summaryService.textContent=selectedService;summaryTime.textContent=selectedTime;summaryPrice.textContent=selectedPrice;const msg=`Hola, quiero reservar ${selectedService} para ${selectedTime}. Precio referencial ${selectedPrice}.`;confirmBooking.href=`https://wa.me/56973675754?text=${encodeURIComponent(msg)}`;chatBox.innerHTML=`<div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Hola ✨ Soy sofIA. Te ayudo a elegir diseño y reservar.</div><div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Quiero ${selectedService}</div><div class="rounded-[1.8rem] bg-white/5 px-5 py-4 text-white/80">Perfecto 💖 Tengo disponibilidad ${selectedTime}. El valor referencial es ${selectedPrice}. ¿Confirmamos?</div><div class="ml-auto max-w-sm rounded-[1.8rem] bg-fuchsia-500 px-5 py-4 font-bold">Sí, confirmar cita ✨</div>`}serviceButtons.forEach(btn=>btn.addEventListener('click',()=>{serviceButtons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedService=btn.dataset.service;selectedPrice=btn.dataset.price;updateBooking()}));timeButtons.forEach(btn=>btn.addEventListener('click',()=>{timeButtons.forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedTime=btn.dataset.time;updateBooking()}));
   </script>
 </body>
 </html>
