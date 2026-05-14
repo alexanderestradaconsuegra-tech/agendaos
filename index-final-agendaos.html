@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgendaOS Chile | Agenda Online, Reservas y Automatización con IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html,body{margin:0;min-height:100%;background:#07111f;scroll-behavior:smooth}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:white}
+    .glass{background:rgba(255,255,255,.055);border:1px solid rgba(125,211,252,.18);backdrop-filter:blur(18px)}
+    .glow{box-shadow:0 0 80px rgba(56,189,248,.22)}
+    .card-hover{transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease,background .32s ease,filter .32s ease;will-change:transform}
+    .card-hover:hover{transform:translateY(-8px) scale(1.012);border-color:rgba(56,189,248,.62)!important;box-shadow:0 28px 80px rgba(56,189,248,.22),0 8px 24px rgba(0,0,0,.35);background-color:rgba(255,255,255,.075)}
+    .image-hover img{transition:transform .65s ease,filter .65s ease}.image-hover:hover img{transform:scale(1.07);filter:saturate(1.12) contrast(1.06)}
+    .soft-hover{transition:transform .28s ease,background .28s ease,border-color .28s ease}.soft-hover:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.54)!important;background:rgba(255,255,255,.08)}
+    @media(max-width:768px){.card-hover:hover,.soft-hover:hover{transform:none}}
+  </style>
+</head>
+<body class="bg-[#07111f] text-white antialiased">
+  <main class="relative overflow-hidden">
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(56,189,248,.22),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,.16),transparent_25%),radial-gradient(circle_at_50%_80%,rgba(103,232,249,.12),transparent_30%)]"></div>
+
+    <header class="sticky top-0 z-50 border-b border-sky-300/10 bg-[#07111f]/70 backdrop-blur-2xl">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+        <a href="#" class="text-2xl font-black tracking-tight">Agenda<span class="text-sky-300">OS</span></a>
+        <nav class="hidden items-center gap-8 text-sm font-semibold text-white/60 lg:flex">
+          <a href="#sistema" class="transition hover:text-cyan-300">Sistema</a>
+          <a href="#demos" class="transition hover:text-cyan-300">Demos</a>
+          <a href="#ai" class="transition hover:text-cyan-300">sof<span class="text-sky-300">IA</span></a>
+          <a href="#planes" class="transition hover:text-cyan-300">Planes</a>
+        </nav>
+        <div class="hidden gap-3 sm:flex">
+          <a href="https://app.agendaos.pro" target="_blank" class="rounded-full border border-sky-300/20 bg-white/5 px-5 py-3 text-sm font-black text-white transition hover:bg-white/10">Ver sistema</a>
+          <a href="/registro.html" class="rounded-full bg-sky-400 px-5 py-3 text-sm font-black text-slate-950 transition hover:bg-cyan-300">Probar gratis</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="px-4 pb-16 pt-12 sm:px-6 lg:pb-32 lg:pt-24">
+      <div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr_.95fr]">
+        <div>
+          <div class="mb-8 inline-flex rounded-full border border-sky-300/25 bg-sky-400/10 px-5 py-3 text-sm font-black text-sky-200 backdrop-blur-xl">Sistema operativo inteligente para negocios con reservas</div>
+          <h1 class="max-w-5xl text-5xl font-black leading-none tracking-tight sm:text-7xl lg:text-8xl">Reservas, clientes y operación conectada desde un solo lugar.</h1>
+          <p class="mt-8 max-w-2xl text-lg font-medium leading-9 text-white/65">Agenda<span class="text-sky-300">OS</span> ayuda a negocios de servicios a gestionar reservas, profesionales, clientes, disponibilidad y automatizaciones desde una plataforma moderna y conectada.</p>
+          <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+            <a href="/registro.html" class="inline-flex items-center justify-center rounded-full bg-sky-400 px-6 py-4 text-sm font-black text-slate-950 transition hover:bg-cyan-300">Probar AgendaOS gratis 30 días</a>
+            <a href="#demos" class="inline-flex items-center justify-center rounded-full border border-sky-300/20 bg-white/5 px-6 py-4 text-sm font-black text-white transition hover:bg-white/10">Ver demos premium</a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute -inset-10 rounded-[3rem] bg-gradient-to-br from-sky-400/30 via-cyan-300/10 to-blue-500/20 blur-3xl"></div>
+          <div class="relative overflow-hidden rounded-[2.8rem] border border-sky-300/15 bg-[#071827] glow image-hover">
+            <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1800&auto=format&fit=crop" alt="Sistema AgendaOS" class="h-[680px] w-full object-cover opacity-55" />
+            <div class="absolute inset-0 bg-gradient-to-b from-[#07111f]/15 via-[#07111f]/55 to-[#07111f]"></div>
+            <div class="absolute inset-0 flex flex-col justify-between p-5 sm:p-7">
+              <div class="flex items-center justify-between gap-3">
+                <div class="rounded-full border border-sky-300/15 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-sky-200 backdrop-blur-xl">Agenda<span class="text-sky-300">OS</span> Dashboard</div>
+                <div class="rounded-full border border-cyan-300/15 bg-cyan-300/10 px-4 py-2 text-xs font-black text-cyan-200">Online</div>
+              </div>
+              <div class="space-y-4">
+                <div class="card-hover rounded-[2.2rem] border border-sky-300/15 bg-[#061524]/70 p-5 shadow-2xl backdrop-blur-2xl sm:p-6">
+                  <div class="flex items-center gap-4">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" alt="sofIA" class="h-16 w-16 rounded-full border-2 border-sky-300 object-cover shadow-lg shadow-sky-500/30" />
+                    <div><p class="text-2xl font-black">sof<span class="text-sky-300">IA</span></p><p class="text-sm font-semibold text-sky-200/70">Asistente inteligente de reservas</p></div>
+                  </div>
+                  <div class="mt-6 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 p-4"><p class="text-xs font-black uppercase tracking-[0.2em] text-cyan-200">Reserva confirmada</p><p class="mt-3 text-sm font-medium leading-7 text-white/80">✨ Camila reservó manicure permanente para hoy a las 18:30.</p></div>
+                  <div class="mt-4 grid gap-3 sm:grid-cols-2"><div class="soft-hover rounded-2xl border border-sky-300/15 bg-white/[0.04] p-4"><p class="text-xs font-black uppercase tracking-[0.16em] text-white/40">Reservas hoy</p><p class="mt-2 text-4xl font-black">38</p></div><div class="soft-hover rounded-2xl border border-sky-300/15 bg-white/[0.04] p-4"><p class="text-xs font-black uppercase tracking-[0.16em] text-white/40">Ocupación</p><p class="mt-2 text-4xl font-black">92%</p></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sistema" class="px-4 py-16 sm:px-6 lg:py-24">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[0.28em] text-sky-300">Agenda inteligente</p><h2 class="mt-5 text-4xl font-black sm:text-5xl">Una agenda moderna que muestra la operación viva del negocio.</h2><p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-white/55">No es solo un calendario. Agenda<span class="text-sky-300">OS</span> muestra reservas, estados, profesionales, disponibilidad y acciones automáticas en tiempo real.</p></div>
+        <div class="grid gap-6 lg:grid-cols-[1.25fr_.75fr]">
+          <div class="glass overflow-hidden rounded-[2.5rem] p-5 shadow-[0_0_90px_rgba(56,189,248,.10)]">
+            <div class="mb-5 flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-center sm:justify-between"><div><p class="text-xs font-black uppercase tracking-[.24em] text-sky-300">Hoy · Martes</p><h3 class="mt-2 text-3xl font-black">Agenda operativa</h3></div><div class="flex flex-wrap gap-2 text-xs font-black"><span class="rounded-full bg-emerald-300/15 px-3 py-2 text-emerald-200">Confirmado</span><span class="rounded-full bg-sky-400/15 px-3 py-2 text-sky-200">WhatsApp</span><span class="rounded-full bg-cyan-300/15 px-3 py-2 text-cyan-200">sofIA</span></div></div>
+            <div class="space-y-3">
+              <div class="grid gap-3 rounded-[1.6rem] border border-white/10 bg-white/[.035] p-4 sm:grid-cols-[90px_1fr_auto] sm:items-center"><p class="text-lg font-black text-sky-300">09:00</p><div><p class="font-black">Corte premium · Luxury Barber</p><p class="mt-1 text-sm text-white/45">Cliente confirmado · profesional asignado</p></div><span class="w-fit rounded-full bg-emerald-300/15 px-3 py-2 text-xs font-black text-emerald-200">Confirmado</span></div>
+              <div class="grid gap-3 rounded-[1.6rem] border border-sky-300/20 bg-sky-400/[.08] p-4 sm:grid-cols-[90px_1fr_auto] sm:items-center"><p class="text-lg font-black text-sky-300">10:30</p><div><p class="font-black">Manicure permanente · AURA NAILS</p><p class="mt-1 text-sm text-white/45">Reserva creada desde WhatsApp por sofIA</p></div><span class="w-fit rounded-full bg-sky-300 px-3 py-2 text-xs font-black text-slate-950">Nueva</span></div>
+              <div class="grid gap-3 rounded-[1.6rem] border border-white/10 bg-white/[.035] p-4 sm:grid-cols-[90px_1fr_auto] sm:items-center"><p class="text-lg font-black text-cyan-300">12:00</p><div><p class="font-black">Evaluación dental · OralCare</p><p class="mt-1 text-sm text-white/45">Recordatorio automático enviado al cliente</p></div><span class="w-fit rounded-full bg-cyan-300/15 px-3 py-2 text-xs font-black text-cyan-200">Recordado</span></div>
+              <div class="grid gap-3 rounded-[1.6rem] border border-emerald-300/20 bg-emerald-300/[.07] p-4 sm:grid-cols-[90px_1fr_auto] sm:items-center"><p class="text-lg font-black text-emerald-200">17:30</p><div><p class="font-black">Reserva confirmada + abono</p><p class="mt-1 text-sm text-white/45">Pago registrado · ubicación enviada · horario bloqueado</p></div><span class="w-fit rounded-full bg-emerald-300 px-3 py-2 text-xs font-black text-slate-950">Pagado</span></div>
+            </div>
+          </div>
+          <div class="space-y-5"><div class="glass rounded-[2rem] p-6"><p class="text-xs font-black uppercase tracking-[.22em] text-white/35">Resumen de hoy</p><div class="mt-5 grid gap-4"><div class="rounded-[1.5rem] border border-white/10 bg-black/20 p-5"><p class="text-4xl font-black text-sky-300">38</p><p class="mt-1 text-sm font-semibold text-white/50">Reservas gestionadas</p></div><div class="rounded-[1.5rem] border border-white/10 bg-black/20 p-5"><p class="text-4xl font-black text-cyan-300">92%</p><p class="mt-1 text-sm font-semibold text-white/50">Ocupación estimada</p></div><div class="rounded-[1.5rem] border border-white/10 bg-black/20 p-5"><p class="text-4xl font-black">$846.000</p><p class="mt-1 text-sm font-semibold text-white/50">Ingresos proyectados</p></div></div></div><div class="glass rounded-[2rem] p-6"><p class="text-xs font-black uppercase tracking-[.22em] text-cyan-300">Automatizaciones activas</p><div class="mt-5 space-y-3 text-sm leading-7 text-white/70"><p>✔️ Confirmaciones automáticas</p><p>✔️ Recordatorios antes de la cita</p><p>✔️ Reagendamiento inteligente</p><p>✔️ Recuperación de clientes inactivos</p><p>✔️ Disponibilidad sincronizada</p></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="demos" class="px-4 py-16 sm:px-6 lg:py-24">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[0.28em] text-sky-300">Presencia Online</p><h2 class="mt-5 text-4xl font-black sm:text-5xl">¿No necesitas sistema todavía?</h2><p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-white/55">También creamos páginas premium para negocios que solo quieren verse profesionales y comenzar a recibir reservas online rápidamente.</p></div>
+        <div class="grid gap-6 lg:grid-cols-3">
+          <a href="/bellas.html" class="card-hover image-hover group overflow-hidden rounded-[2rem] border border-sky-300/15 bg-[#071827]"><img class="h-72 w-full object-cover" src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=1600&auto=format&fit=crop" alt="AURA NAILS"><div class="p-6"><p class="text-xs font-black uppercase tracking-[0.28em] text-sky-300">Beauty Studio</p><h3 class="mt-2 text-2xl font-black">AURA NAILS</h3><span class="mt-5 inline-flex rounded-full bg-white px-5 py-3 text-sm font-black text-slate-950">Ver demo</span></div></a>
+          <a href="/barber.html" class="card-hover image-hover group overflow-hidden rounded-[2rem] border border-sky-300/15 bg-[#071827]"><img class="h-72 w-full object-cover" src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=1600&auto=format&fit=crop" alt="Luxury Barber"><div class="p-6"><p class="text-xs font-black uppercase tracking-[0.28em] text-sky-300">Barber Studio</p><h3 class="mt-2 text-2xl font-black">Luxury Barber</h3><span class="mt-5 inline-flex rounded-full bg-white px-5 py-3 text-sm font-black text-slate-950">Ver demo</span></div></a>
+          <a href="/dental.html" class="card-hover image-hover group overflow-hidden rounded-[2rem] border border-sky-300/15 bg-[#071827]"><img class="h-72 w-full object-cover" src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=85&w=1600&auto=format&fit=crop" alt="OralCare Dental"><div class="p-6"><p class="text-xs font-black uppercase tracking-[0.28em] text-sky-300">Dental Clinic</p><h3 class="mt-2 text-2xl font-black">OralCare Dental</h3><span class="mt-5 inline-flex rounded-full bg-white px-5 py-3 text-sm font-black text-slate-950">Ver demo</span></div></a>
+        </div>
+        <div class="mt-10 rounded-[2rem] border border-emerald-300/15 bg-emerald-300/[.06] p-5 text-center"><p class="text-sm font-black text-emerald-200">Promoción AgendaOS</p><p class="mt-3 text-base leading-8 text-white/70">Compra tu Presencia Online y activa Agenda<span class="text-sky-300">OS</span> gratis por 30 días.</p></div>
+      </div>
+    </section>
+
+    <section id="ai" class="relative px-4 py-16 sm:px-6 lg:py-24">
+      <div class="mx-auto max-w-7xl rounded-[3rem] border border-cyan-300/15 bg-gradient-to-br from-cyan-300/[.06] via-[#07111f] to-sky-400/[.08] p-8 shadow-[0_0_120px_rgba(56,189,248,.08)] lg:p-14">
+        <div class="grid gap-10 lg:grid-cols-[1fr_.95fr] lg:items-center"><div><p class="text-sm font-black uppercase tracking-[0.28em] text-cyan-300">AgendaOS AI</p><h2 class="mt-5 text-4xl font-black sm:text-5xl">Sistema, presencia online y sofIA trabajando juntos.</h2><p class="mt-6 max-w-2xl text-lg leading-9 text-white/58">La versión más avanzada de Agenda<span class="text-sky-300">OS</span>. Reservas online, dashboard operativo y atención automática por WhatsApp con sofIA integrada.</p><div class="mt-8 space-y-3 text-sm leading-8 text-white/70"><p>✔️ Responde automáticamente por WhatsApp</p><p>✔️ Comparte horarios, servicios y catálogo</p><p>✔️ Agenda citas automáticamente</p><p>✔️ Recordatorios y confirmaciones</p><p>✔️ Disponibilidad sincronizada en tiempo real</p></div><div class="mt-10 flex flex-col gap-4 sm:flex-row"><a href="https://wa.me/56973675754" class="inline-flex items-center justify-center rounded-full bg-emerald-300 px-7 py-4 text-sm font-black text-slate-950 transition hover:bg-emerald-200">Hablar con sofIA</a><a href="/registro.html" class="inline-flex items-center justify-center rounded-full border border-cyan-300/20 bg-white/5 px-7 py-4 text-sm font-black text-white transition hover:bg-white/10">Probar AgendaOS AI</a></div></div><div class="glass rounded-[2.5rem] p-6"><div class="mb-5 flex items-center gap-4 border-b border-white/10 pb-5"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300&auto=format&fit=crop" class="h-14 w-14 rounded-full border-2 border-cyan-300 object-cover" alt="sofIA"><div><p class="text-2xl font-black">sof<span class="text-sky-300">IA</span></p><p class="text-sm font-semibold text-cyan-300">Asistente inteligente AgendaOS</p></div></div><div class="space-y-3 text-sm leading-7"><div class="rounded-2xl bg-white/6 px-5 py-4 text-white/80">Hola ✨ Tengo disponibilidad mañana a las 17:30 para manicure permanente.</div><div class="ml-auto max-w-[85%] rounded-2xl bg-sky-400 px-5 py-4 font-bold text-slate-950">Perfecto, ¿puedes reservarlo?</div><div class="rounded-2xl bg-emerald-300/15 px-5 py-4 text-emerald-100">Reserva confirmada ✔️ También envié ubicación, servicio y recordatorio automático.</div></div><a href="https://wa.me/56973675754" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-emerald-300 px-6 py-4 text-sm font-black text-slate-950 transition hover:bg-emerald-200">Abrir WhatsApp con sofIA</a></div></div>
+      </div>
+    </section>
+
+    <section id="planes" class="relative px-4 py-16 sm:px-6 lg:py-24">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[0.28em] text-sky-300">Planes AgendaOS</p><h2 class="mt-5 text-4xl font-black sm:text-5xl">Elige cómo quieres modernizar tu negocio.</h2><p class="mx-auto mt-6 max-w-3xl text-lg leading-9 text-white/55">Desde presencia online hasta automatización completa con inteligencia artificial integrada.</p><div class="mt-10 inline-flex rounded-full border border-white/10 bg-white/5 p-2 text-sm font-black">
+            <button id="monthlyBtn" onclick="togglePricing('monthly')" class="rounded-full bg-sky-400 px-6 py-3 text-slate-950 transition">Mensual</button>
+            <button id="yearlyBtn" onclick="togglePricing('yearly')" class="rounded-full px-6 py-3 text-white/55 transition hover:text-white">Anual · Ahorra 20%</button>
+          </div></div>
+        <div class="grid gap-6 lg:grid-cols-3"><div class="glass card-hover rounded-[2.5rem] p-7"><div class="mb-5 inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-black text-white/70">Presencia Online</div><h3 class="text-3xl font-black">Tu negocio online listo para recibir reservas.</h3><div class="mt-8 flex items-end gap-2"><p class="text-5xl font-black text-sky-300">$149.000</p><p class="pb-1 text-sm font-bold text-white/35">pago único</p></div><div class="mt-8 space-y-3 text-sm leading-7 text-white/70"><p>✔️ Diseño premium personalizado</p><p>✔️ Reservas online simples</p><p>✔️ Botón WhatsApp directo</p><p>✔️ Optimizado para móviles</p><p>✔️ Servicios y horarios visibles</p></div><a href="#demos" class="mt-10 inline-flex w-full items-center justify-center rounded-full border border-sky-300/20 bg-white/5 px-6 py-4 text-sm font-black text-white transition hover:bg-white/10">Ver demos premium</a></div><div class="card-hover relative overflow-hidden rounded-[2.5rem] border border-sky-300/25 bg-gradient-to-br from-sky-400/[.12] via-[#07111f] to-cyan-300/[.08] p-7 shadow-[0_0_90px_rgba(56,189,248,.14)]"><div class="absolute right-5 top-5 rounded-full bg-sky-300 px-4 py-2 text-xs font-black text-slate-950">Más popular</div><div class="mb-5 inline-flex rounded-full bg-sky-400/15 px-4 py-2 text-xs font-black text-sky-200">AgendaOS Core</div><h3 class="text-3xl font-black">El sistema operativo del negocio.</h3><div class="mt-8 flex items-end gap-2"><p id="corePrice" class="text-5xl font-black text-sky-300">$39.000</p><p id="corePeriod" class="pb-1 text-sm font-bold text-white/35">/ mes</p></div><p class="mt-3 text-sm font-semibold text-emerald-200">30 días gratis para comenzar.</p><div class="mt-8 space-y-3 text-sm leading-7 text-white/70"><p>✔️ Agenda inteligente</p><p>✔️ Dashboard operativo</p><p>✔️ Gestión de profesionales</p><p>✔️ Reservas online</p><p>✔️ Clientes y disponibilidad</p><p>✔️ Automatizaciones básicas</p><p>✔️ Reportes y métricas</p></div><a href="/registro.html" class="mt-10 inline-flex w-full items-center justify-center rounded-full bg-sky-400 px-6 py-4 text-sm font-black text-slate-950 transition hover:bg-cyan-300">Probar AgendaOS gratis</a></div><div class="glass card-hover rounded-[2.5rem] p-7"><div class="mb-5 inline-flex rounded-full bg-emerald-300/15 px-4 py-2 text-xs font-black text-emerald-200">AgendaOS AI</div><h3 class="text-3xl font-black">Automatización total con sofIA.</h3><div class="mt-8 flex items-end gap-2"><p id="aiPrice" class="text-5xl font-black text-cyan-300">$79.000</p><p id="aiPeriod" class="pb-1 text-sm font-bold text-white/35">/ mes</p></div><p class="mt-3 text-sm font-semibold text-cyan-200">Sistema + presencia online + WhatsApp inteligente.</p><div class="mt-8 space-y-3 text-sm leading-7 text-white/70"><p>✔️ Todo lo incluido en AgendaOS Core</p><p>✔️ sofIA por WhatsApp</p><p>✔️ Atención automática 24/7</p><p>✔️ Confirmaciones inteligentes</p><p>✔️ Reagendamiento automático</p><p>✔️ Catálogo y servicios automáticos</p></div><a href="https://wa.me/56973675754" class="mt-10 inline-flex w-full items-center justify-center rounded-full bg-emerald-300 px-6 py-4 text-sm font-black text-slate-950 transition hover:bg-emerald-200">Hablar con sofIA</a></div></div>
+      </div>
+    </section>
+
+    <section id="registro" class="relative px-4 py-16 sm:px-6 lg:py-24">
+      <div class="card-hover mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-gradient-to-br from-cyan-300/10 via-[#07111f] to-sky-500/10 p-6 sm:rounded-[3rem] lg:p-14">
+        <div class="grid gap-10 lg:grid-cols-[1fr_.85fr] lg:items-center">
+          <div>
+            <div class="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-5 py-3 text-sm font-black text-cyan-200">🚀 PRUEBA GRATIS 30 DÍAS</div>
+            <h2 class="mt-6 max-w-3xl text-4xl font-black sm:text-5xl">Registra tu <span class="text-sky-300">negocio</span> y empieza a probar Agenda<span class="text-sky-300">OS</span>.</h2>
+            <p class="mt-6 max-w-2xl text-lg leading-9 text-white/60">Comienza gratis y descubre cómo AgendaOS puede ayudarte a organizar reservas, automatizar atención y modernizar la operación de tu negocio desde el primer día.</p>
+            <div class="mt-8 grid gap-3 text-sm font-bold text-white/65 sm:grid-cols-2"><div class="rounded-2xl border border-white/10 bg-white/[.04] px-4 py-3">✔️ Registro del negocio</div><div class="rounded-2xl border border-white/10 bg-white/[.04] px-4 py-3">✔️ Contacto para seguimiento</div><div class="rounded-2xl border border-white/10 bg-white/[.04] px-4 py-3">✔️ Activación inicial</div><div class="rounded-2xl border border-white/10 bg-white/[.04] px-4 py-3">✔️ Base para CRM comercial</div></div>
+          </div>
+          <div class="rounded-[2rem] border border-sky-300/15 bg-[#061524]/70 p-6 text-center"><p class="text-sm font-black uppercase tracking-[0.22em] text-cyan-300">Acceso para negocios</p><p class="mt-5 text-6xl font-black">30 DÍAS</p><p class="mt-4 text-sm leading-7 text-white/55">Sin compromiso inicial. Ideal para conocer el sistema, registrar tu negocio y validar si AgendaOS se adapta a tu operación.</p><a href="/registro.html" class="mt-8 inline-flex w-full justify-center rounded-full bg-sky-400 px-6 py-4 text-sm font-black text-slate-950 transition hover:bg-cyan-300">Registrar mi negocio</a></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="relative border-t border-white/10 bg-[#040912]/90 px-4 py-8 backdrop-blur-xl sm:px-6">
+      <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><div><p class="text-lg font-black tracking-tight">Agenda<span class="text-sky-300">OS</span></p><p class="mt-1 text-sm font-medium text-white/45">Plataforma inteligente para reservas, operación y automatización.</p></div><div class="flex flex-wrap items-center justify-center gap-3 text-xs font-bold text-white/45 sm:justify-end"><a href="#demos" class="transition hover:text-sky-300">Demos</a><span class="text-white/15">•</span><a href="/registro.html" class="transition hover:text-sky-300">Registro</a><span class="text-white/15">•</span><a href="https://wa.me/56973675754" class="transition hover:text-sky-300">WhatsApp</a></div></div>
+      <div class="mx-auto mt-6 max-w-7xl border-t border-white/5 pt-5 text-center text-[11px] font-semibold tracking-[.12em] text-white/25 sm:text-left">© 2026 AgendaOS · Chile</div>
+    </footer>
+  </main>
+<script>
+function togglePricing(mode){
+  const monthlyBtn=document.getElementById('monthlyBtn');
+  const yearlyBtn=document.getElementById('yearlyBtn');
+  const corePrice=document.getElementById('corePrice');
+  const aiPrice=document.getElementById('aiPrice');
+  const corePeriod=document.getElementById('corePeriod');
+  const aiPeriod=document.getElementById('aiPeriod');
+  if(mode==='yearly'){
+    monthlyBtn.classList.remove('bg-sky-400','text-slate-950'); monthlyBtn.classList.add('text-white/55');
+    yearlyBtn.classList.add('bg-sky-400','text-slate-950'); yearlyBtn.classList.remove('text-white/55');
+    corePrice.textContent='$374.400'; aiPrice.textContent='$758.400'; corePeriod.textContent='/ año'; aiPeriod.textContent='/ año';
+  }else{
+    yearlyBtn.classList.remove('bg-sky-400','text-slate-950'); yearlyBtn.classList.add('text-white/55');
+    monthlyBtn.classList.add('bg-sky-400','text-slate-950'); monthlyBtn.classList.remove('text-white/55');
+    corePrice.textContent='$39.000'; aiPrice.textContent='$79.000'; corePeriod.textContent='/ mes'; aiPeriod.textContent='/ mes';
+  }
+}
+</script>
+</body>
+</html>
