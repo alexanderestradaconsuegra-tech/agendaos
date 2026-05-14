@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+FILE="/usr/share/nginx/html/index.html"
+
+if grep -q "agendaos-sofia-mobile-tight-fix" "$FILE"; then
+  echo "El ajuste móvil fuerte de sofIA ya estaba aplicado."
+  nginx -s reload
+  exit 0
+fi
+
+sed -i 's#</style>#\n    /* agendaos-sofia-mobile-tight-fix */\n    @media (max-width: 640px) {\n      html, body {\n        max-width: 100% !important;\n        overflow-x: hidden !important;\n      }\n\n      #sofia,\n      #sofia * {\n        box-sizing: border-box !important;\n      }\n\n      #sofia {\n        width: 100% !important;\n        max-width: 100vw !important;\n        overflow-x: hidden !important;\n        padding-left: .75rem !important;\n        padding-right: .75rem !important;\n      }\n\n      #sofia > div {\n        width: 100% !important;\n        max-width: 100% !important;\n        overflow: hidden !important;\n        margin-left: auto !important;\n        margin-right: auto !important;\n        gap: 1rem !important;\n      }\n\n      #sofia h2 {\n        font-size: 1.9rem !important;\n        line-height: 1.08 !important;\n        word-break: normal !important;\n      }\n\n      #sofia > div > div {\n        min-width: 0 !important;\n        max-width: 100% !important;\n      }\n\n      #sofia .card-hover {\n        width: 100% !important;\n        max-width: 100% !important;\n        min-width: 0 !important;\n        overflow: hidden !important;\n        padding: .75rem !important;\n      }\n\n      #sofia .card-hover > div,\n      #sofia form,\n      #sofia input,\n      #sofia button {\n        max-width: 100% !important;\n        min-width: 0 !important;\n      }\n\n      #sofia #chatMessages {\n        width: 100% !important;\n        min-height: 245px !important;\n        max-height: 245px !important;\n        overflow-y: auto !important;\n        overflow-x: hidden !important;\n      }\n\n      #sofia #chatMessages .flex {\n        max-width: 100% !important;\n      }\n\n      #sofia #chatMessages .max-w-\\[86\\%\\],\n      #sofia #chatMessages [class*=\"max-w-\"] {\n        max-width: 88% !important;\n        word-wrap: break-word !important;\n        overflow-wrap: anywhere !important;\n      }\n\n      #sofia #sofiaForm {\n        width: 100% !important;\n        display: flex !important;\n        flex-direction: column !important;\n      }\n\n      #sofia #sofiaInput,\n      #sofia #sofiaSend {\n        width: 100% !important;\n        max-width: 100% !important;\n        min-width: 0 !important;\n        display: block !important;\n      }\n\n      #sofia .mb-5.flex.items-center.justify-between {\n        display: grid !important;\n        grid-template-columns: 1fr auto !important;\n      }\n\n      #sofia .mb-5.flex.items-center.justify-between > div:first-child {\n        min-width: 0 !important;\n      }\n\n      #sofia .mb-5.flex.items-center.justify-between img {\n        flex: 0 0 auto !important;\n      }\n\n      #sofia .mb-5.flex.items-center.justify-between p {\n        white-space: normal !important;\n      }\n\n      #sofia .rounded-full.border.border-emerald-300\\/20 {\n        white-space: nowrap !important;\n      }\n    }\n  </style>#' "$FILE"
+
+nginx -s reload
+
+echo "Ajuste móvil fuerte de sofIA aplicado."
