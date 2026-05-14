@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luxury Barber Studio | AgendaOS Demo</title>
+  <meta name="description" content="Demo premium de agenda online para barbería y peluquería masculina con AgendaOS." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#070707',
+            coal: '#111111',
+            gold: '#C9A35B',
+            champagne: '#F4E7C8'
+          },
+          boxShadow: {
+            glow: '0 0 70px rgba(201, 163, 91, .22)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#070707; }
+    .glass { background: rgba(255,255,255,.06); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.12); }
+    .gold-line { background: linear-gradient(90deg, transparent, #C9A35B, transparent); }
+  </style>
+</head>
+<body class="text-white antialiased selection:bg-gold selection:text-black">
+  <header class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
+      <a href="#inicio" class="flex items-center gap-3">
+        <span class="grid h-10 w-10 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold font-black">LB</span>
+        <div>
+          <p class="text-sm uppercase tracking-[.35em] text-gold">Luxury</p>
+          <p class="-mt-1 text-lg font-semibold">Barber Studio</p>
+        </div>
+      </a>
+      <div class="hidden items-center gap-8 text-sm text-white/75 md:flex">
+        <a href="#servicios" class="hover:text-gold">Servicios</a>
+        <a href="#equipo" class="hover:text-gold">Equipo</a>
+        <a href="#sucursales" class="hover:text-gold">Sucursales</a>
+        <a href="#agenda" class="hover:text-gold">Agenda</a>
+      </div>
+      <a href="#agenda" class="rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-black transition hover:bg-champagne">Reservar Hora</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="relative min-h-screen overflow-hidden pt-28">
+      <div class="absolute inset-0">
+        <img class="h-full w-full object-cover opacity-45" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=2200&q=85" alt="Interior de barbería premium" />
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/35"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(201,163,91,.25),transparent_34%)]"></div>
+      </div>
+
+      <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 lg:grid-cols-[1.05fr_.95fr]">
+        <div>
+          <div class="mb-6 inline-flex items-center gap-3 rounded-full border border-gold/30 bg-gold/10 px-4 py-2 text-sm text-champagne">
+            <span class="h-2 w-2 rounded-full bg-gold"></span>
+            Barbería & peluquería masculina premium
+          </div>
+          <h1 class="max-w-4xl text-5xl font-black leading-[.95] tracking-tight md:text-7xl">
+            Corte, barba y experiencia de primer nivel.
+          </h1>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-white/72">
+            En Luxury Barber Studio nos especializamos en cortes de cabello, barba, afeitado clásico y tratamientos faciales para hombres. Agenda tu hora online y vive una atención personalizada en un ambiente elegante, cómodo y moderno.
+          </p>
+          <div class="mt-9 flex flex-col gap-4 sm:flex-row">
+            <a href="#agenda" class="rounded-full bg-gold px-8 py-4 text-center font-bold text-black shadow-glow transition hover:bg-champagne">Agendar Hora</a>
+            <a href="#servicios" class="rounded-full border border-white/15 px-8 py-4 text-center font-bold text-white transition hover:border-gold hover:text-gold">Ver Servicios</a>
+          </div>
+          <div class="mt-12 grid max-w-xl grid-cols-3 gap-4 text-center">
+            <div class="glass rounded-3xl p-4"><p class="text-3xl font-black text-gold">2</p><p class="text-xs text-white/60">sucursales</p></div>
+            <div class="glass rounded-3xl p-4"><p class="text-3xl font-black text-gold">5★</p><p class="text-xs text-white/60">experiencia</p></div>
+            <div class="glass rounded-3xl p-4"><p class="text-3xl font-black text-gold">24/7</p><p class="text-xs text-white/60">reservas</p></div>
+          </div>
+        </div>
+
+        <div class="glass rounded-[2rem] p-4 shadow-glow">
+          <img class="h-[520px] w-full rounded-[1.5rem] object-cover" src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1400&q=85" alt="Corte y barba moderna" />
+          <div class="-mt-24 ml-5 mr-5 rounded-3xl border border-white/10 bg-black/75 p-5 backdrop-blur-xl">
+            <p class="text-sm uppercase tracking-[.25em] text-gold">Servicio destacado</p>
+            <h2 class="mt-1 text-2xl font-bold">Corte + barba ritual</h2>
+            <p class="mt-2 text-sm text-white/65">Asesoría, corte, perfilado con navaja, toallas calientes, productos premium y masaje express.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicios" class="mx-auto max-w-7xl px-5 py-24">
+      <div class="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p class="text-sm uppercase tracking-[.35em] text-gold">Nuestros Servicios</p>
+          <h2 class="mt-3 text-4xl font-black md:text-5xl">Todo lo que buscas, en un mismo lugar</h2>
+        </div>
+        <p class="max-w-xl text-white/60">Todos los servicios incluyen asesoría, bebestible de cortesía y masaje express. Precios demo en CLP.</p>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <article class="glass rounded-[2rem] p-7 transition hover:-translate-y-1 hover:border-gold/40">
+          <p class="text-gold">01</p>
+          <h3 class="mt-5 text-2xl font-bold">Corte de Cabello</h3>
+          <p class="mt-3 text-white/60">Asesoría, corte con máquina y/o tijeras, lavado, peinado y aplicación de pomada a elección.</p>
+          <div class="mt-8 flex items-center justify-between"><span class="text-3xl font-black">$17.500</span><span class="text-sm text-white/50">40 min</span></div>
+        </article>
+        <article class="glass rounded-[2rem] p-7 transition hover:-translate-y-1 hover:border-gold/40">
+          <p class="text-gold">02</p>
+          <h3 class="mt-5 text-2xl font-bold">Perfilado de Barba</h3>
+          <p class="mt-3 text-white/60">Arreglo de barba, toallas calientes, perfilado con navaja y productos premium.</p>
+          <div class="mt-8 flex items-center justify-between"><span class="text-3xl font-black">$15.500</span><span class="text-sm text-white/50">30 min</span></div>
+        </article>
+        <article class="glass rounded-[2rem] p-7 transition hover:-translate-y-1 hover:border-gold/40">
+          <p class="text-gold">03</p>
+          <h3 class="mt-5 text-2xl font-bold">Afeitado al Ras</h3>
+          <p class="mt-3 text-white/60">Crema o gel de afeitar, rasurado con navaja, toallas calientes y after shave.</p>
+          <div class="mt-8 flex items-center justify-between"><span class="text-3xl font-black">$15.500</span><span class="text-sm text-white/50">30 min</span></div>
+        </article>
+        <article class="glass rounded-[2rem] p-7 transition hover:-translate-y-1 hover:border-gold/40">
+          <p class="text-gold">04</p>
+          <h3 class="mt-5 text-2xl font-bold">Tratamiento Facial</h3>
+          <p class="mt-3 text-white/60">Limpieza, exfoliación, toallas calientes, máscara de carbón e hidratación.</p>
+          <div class="mt-8 flex items-center justify-between"><span class="text-3xl font-black">$16.000</span><span class="text-sm text-white/50">35 min</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="border-y border-white/10 bg-white/[.03] py-24">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="mb-12 text-center">
+          <p class="text-sm uppercase tracking-[.35em] text-gold">Experiencia Luxury</p>
+          <h2 class="mt-3 text-4xl font-black md:text-5xl">Clásico o moderno, siempre preciso</h2>
+        </div>
+        <div class="grid gap-5 md:grid-cols-4">
+          <img class="h-80 rounded-[2rem] object-cover md:col-span-2" src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=1200&q=85" alt="Corte moderno degradado" />
+          <img class="h-80 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1622296089863-eb7fc530daa8?auto=format&fit=crop&w=900&q=85" alt="Perfilado de barba" />
+          <img class="h-80 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=900&q=85" alt="Barbería masculina" />
+          <img class="h-80 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=900&q=85" alt="Styling masculino" />
+          <img class="h-80 rounded-[2rem] object-cover md:col-span-3" src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1500&q=85" alt="Barbero trabajando" />
+        </div>
+      </div>
+    </section>
+
+    <section id="equipo" class="mx-auto max-w-7xl px-5 py-24">
+      <div class="mb-12 text-center">
+        <p class="text-sm uppercase tracking-[.35em] text-gold">Equipo</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">Barberos especialistas</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-white/60">Equipo capacitado, años de experiencia y pasión por el oficio para entregar una atención personalizada.</p>
+      </div>
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <article class="glass rounded-[2rem] p-5 text-center">
+          <img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=85" alt="Barbero Mateo Vargas" />
+          <h3 class="mt-5 text-xl font-bold">Mateo Vargas</h3><p class="text-gold">Barbero</p>
+          <a href="#agenda" class="mt-5 inline-block rounded-full border border-gold/40 px-5 py-2 text-sm text-gold hover:bg-gold hover:text-black">Reservar</a>
+        </article>
+        <article class="glass rounded-[2rem] p-5 text-center">
+          <img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=85" alt="Barbero Lucas Ríos" />
+          <h3 class="mt-5 text-xl font-bold">Lucas Ríos</h3><p class="text-gold">Barbero</p>
+          <a href="#agenda" class="mt-5 inline-block rounded-full border border-gold/40 px-5 py-2 text-sm text-gold hover:bg-gold hover:text-black">Reservar</a>
+        </article>
+        <article class="glass rounded-[2rem] p-5 text-center">
+          <img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=85" alt="Barbero Diego Silva" />
+          <h3 class="mt-5 text-xl font-bold">Diego Silva</h3><p class="text-gold">Barbero</p>
+          <a href="#agenda" class="mt-5 inline-block rounded-full border border-gold/40 px-5 py-2 text-sm text-gold hover:bg-gold hover:text-black">Reservar</a>
+        </article>
+        <article class="glass rounded-[2rem] p-5 text-center">
+          <img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=85" alt="Barbero Tomás Herrera" />
+          <h3 class="mt-5 text-xl font-bold">Tomás Herrera</h3><p class="text-gold">Barbero</p>
+          <a href="#agenda" class="mt-5 inline-block rounded-full border border-gold/40 px-5 py-2 text-sm text-gold hover:bg-gold hover:text-black">Reservar</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="sucursales" class="border-y border-white/10 bg-white/[.03] py-24">
+      <div class="mx-auto max-w-7xl px-5">
+        <div class="mb-12 text-center">
+          <p class="text-sm uppercase tracking-[.35em] text-gold">Sucursales</p>
+          <h2 class="mt-3 text-4xl font-black md:text-5xl">Luxury Barber Studio más cerca de ti</h2>
+        </div>
+        <div class="grid gap-5 md:grid-cols-2">
+          <article class="glass overflow-hidden rounded-[2rem]">
+            <img class="h-80 w-full object-cover" src="https://images.unsplash.com/photo-1588771930296-88c2cb03f386?auto=format&fit=crop&w=1600&q=85" alt="Interior amplio de barbería con barberos trabajando en Providencia" />
+            <div class="p-7">
+              <h3 class="text-2xl font-bold">Sucursal Providencia</h3>
+              <p class="mt-3 text-white/60">Av. Nueva Providencia 2145, Local 3. Estacionamiento gratuito.</p>
+              <a href="#agenda" class="mt-6 inline-block rounded-full bg-gold px-6 py-3 font-bold text-black hover:bg-champagne">Agendar Hora</a>
+            </div>
+          </article>
+          <article class="glass overflow-hidden rounded-[2rem]">
+            <img class="h-80 w-full object-cover" src="https://images.unsplash.com/photo-1519500528352-2d1460418d41?auto=format&fit=crop&w=1600&q=85" alt="Barberos trabajando con clientes en sucursal Las Condes" />
+            <div class="p-7">
+              <h3 class="text-2xl font-bold">Sucursal Las Condes</h3>
+              <p class="mt-3 text-white/60">Av. Apoquindo 4890, Local 12. Frente a estación Escuela Militar.</p>
+              <a href="#agenda" class="mt-6 inline-block rounded-full bg-gold px-6 py-3 font-bold text-black hover:bg-champagne">Agendar Hora</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-5 py-24">
+      <div class="mb-12 text-center">
+        <p class="text-sm uppercase tracking-[.35em] text-gold">Testimonios</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">Experiencia de clientes</h2>
+      </div>
+      <div class="grid gap-5 md:grid-cols-3">
+        <article class="glass rounded-[2rem] p-7"><p class="text-gold">★★★★★</p><p class="mt-5 text-white/75">Local elegante, atención impecable y corte de muy buen nivel. Se nota el detalle en cada servicio.</p><h3 class="mt-6 font-bold">Javier Sánchez</h3></article>
+        <article class="glass rounded-[2rem] p-7"><p class="text-gold">★★★★★</p><p class="mt-5 text-white/75">Buen ambiente, buena música, productos premium y barberos profesionales. Recomendado 100%.</p><h3 class="mt-6 font-bold">Christian Ramírez</h3></article>
+        <article class="glass rounded-[2rem] p-7"><p class="text-gold">★★★★★</p><p class="mt-5 text-white/75">Excelente servicio, cómodo y con estilo. Ideal para corte, barba y un momento de relajo.</p><h3 class="mt-6 font-bold">Antonio Lobos</h3></article>
+      </div>
+    </section>
+
+    <section id="agenda" class="mx-auto grid max-w-7xl gap-10 px-5 py-24 lg:grid-cols-[.9fr_1.1fr]">
+      <div>
+        <p class="text-sm uppercase tracking-[.35em] text-gold">Reserva Online</p>
+        <h2 class="mt-3 text-4xl font-black md:text-5xl">Elige tu servicio y agenda en segundos</h2>
+        <p class="mt-5 text-lg leading-8 text-white/65">Selecciona la sucursal, tu barbero favorito, el servicio que quieres y el horario que más te acomode. Al confirmar, simularemos tu solicitud en esta demo de AgendaOS.</p>
+        <div class="mt-8 rounded-[2rem] border border-gold/20 bg-gold/10 p-6 text-champagne">
+          <p class="font-bold">¿Qué puedes reservar?</p>
+          <ul class="mt-4 space-y-3 text-sm text-white/75">
+            <li>• Corte de cabello clásico o moderno</li>
+            <li>• Perfilado y arreglo de barba</li>
+            <li>• Afeitado al ras con toallas calientes</li>
+            <li>• Corte + barba para una experiencia completa</li>
+          </ul>
+        </div>
+      </div>
+
+      <form id="bookingForm" class="glass rounded-[2rem] p-6 md:p-8">
+        <div class="grid gap-5 md:grid-cols-2">
+          <label class="block"><span class="text-sm text-white/70">Sucursal</span><select name="branch" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold"><option value="Providencia">Providencia</option><option value="Las Condes">Las Condes</option></select></label>
+          <label class="block"><span class="text-sm text-white/70">Barbero</span><select name="barber" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold"><option value="Mateo Vargas">Mateo Vargas</option><option value="Lucas Ríos">Lucas Ríos</option><option value="Diego Silva">Diego Silva</option><option value="Tomás Herrera">Tomás Herrera</option><option value="Sin preferencia">Sin preferencia</option></select></label>
+          <label class="block md:col-span-2"><span class="text-sm text-white/70">Servicio</span><select name="service" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold"><option value="Corte de Cabello">Corte de Cabello — $17.500</option><option value="Perfilado de Barba">Perfilado de Barba — $15.500</option><option value="Afeitado al Ras">Afeitado al Ras — $15.500</option><option value="Tratamiento Facial">Tratamiento Facial — $16.000</option><option value="Corte + Barba Ritual">Corte + Barba Ritual — $29.900</option></select></label>
+          <label class="block"><span class="text-sm text-white/70">Fecha</span><input name="date" type="date" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold" /></label>
+          <label class="block"><span class="text-sm text-white/70">Hora</span><select name="time" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold"><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option>18:00</option><option>19:00</option></select></label>
+          <label class="block"><span class="text-sm text-white/70">Nombre</span><input name="name" type="text" required placeholder="Tu nombre" class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold" /></label>
+          <label class="block"><span class="text-sm text-white/70">WhatsApp</span><input name="phone" type="tel" required placeholder="+56 9 0000 0000" class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold" /></label>
+          <label class="block md:col-span-2"><span class="text-sm text-white/70">Notas</span><textarea name="notes" rows="4" placeholder="Ej: degradado bajo, barba cuadrada, preferencia de barbero..." class="mt-2 w-full rounded-2xl border border-white/10 bg-black/70 px-4 py-4 outline-none focus:border-gold"></textarea></label>
+        </div>
+        <button id="submitBtn" class="mt-6 w-full rounded-full bg-gold px-8 py-4 font-black text-black transition hover:bg-champagne">Confirmar reserva</button>
+        <p id="formMsg" class="mt-4 hidden rounded-2xl px-4 py-3 text-sm"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 px-5 py-10 text-center text-sm text-white/45">
+    <p class="font-semibold text-white/65">Luxury Barber Studio</p>
+    <p class="mt-2">Av. Nueva Providencia 2145, Local 3 · Av. Apoquindo 4890, Local 12</p>
+    <p class="mt-2 text-gold">by Autix</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const msg = document.getElementById('formMsg');
+    const btn = document.getElementById('submitBtn');
+    const today = new Date().toISOString().split('T')[0];
+    form.date.min = today;
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Procesando...';
+      msg.className = 'mt-4 rounded-2xl px-4 py-3 text-sm bg-emerald-500/15 text-emerald-200 border border-emerald-400/20';
+      msg.textContent = 'Demo AgendaOS: la reserva fue simulada correctamente.';
+      msg.classList.remove('hidden');
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Confirmar reserva'; }, 700);
+    });
+  </script>
+</body>
+</html>
