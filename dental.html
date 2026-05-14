@@ -3,105 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clínica Dental NovaSmile | AgendaOS Demo</title>
-  <meta name="description" content="Demo premium AgendaOS para clínica dental con especialidades odontológicas, profesionales y agendamiento online." />
+  <title>OralCare Studio | Clínica Dental Premium</title>
+  <meta name="description" content="Demo AgendaOS para clínica dental premium con especialidades odontológicas y agendamiento online." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config={theme:{extend:{colors:{navy:'#071827',deep:'#04111f',cyan:'#38bdf8',aqua:'#67e8f9',mint:'#99f6e4'},boxShadow:{glow:'0 0 80px rgba(56,189,248,.22)'}}}}
+    tailwind.config={theme:{extend:{colors:{petrol:'#123C4A',soft:'#F5FBFA',mint:'#8DE3D1',teal:'#1E7F86',sand:'#EAF2EF',ink:'#10252B'},boxShadow:{soft:'0 24px 80px rgba(18,60,74,.12)'}}}}
   </script>
   <style>
-    html{scroll-behavior:smooth}body{margin:0;background:#04111f;color:white;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}.glass{background:rgba(255,255,255,.065);border:1px solid rgba(103,232,249,.18);backdrop-filter:blur(18px)}.card{transition:.28s ease}.card:hover{transform:translateY(-6px);box-shadow:0 24px 80px rgba(56,189,248,.18);border-color:rgba(103,232,249,.42)}.slot.active{background:#67e8f9!important;color:#04111f!important}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#04111f 0%,rgba(4,17,31,.82) 42%,rgba(4,17,31,.28) 100%);z-index:1}@media(max-width:768px){.card:hover{transform:none}}
+    html{scroll-behavior:smooth}body{margin:0;background:#F5FBFA;color:#10252B;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}.card{transition:.3s ease}.card:hover{transform:translateY(-7px);box-shadow:0 26px 80px rgba(18,60,74,.14)}.blob{border-radius:42% 58% 60% 40%/45% 42% 58% 55%}.field{width:100%;border-radius:1.25rem;border:1px solid rgba(18,60,74,.12);background:white;padding:1rem;color:#10252B;outline:none}.field:focus{border-color:#1E7F86;box-shadow:0 0 0 4px rgba(141,227,209,.28)}@media(max-width:768px){.card:hover{transform:none}}
   </style>
 </head>
-<body class="antialiased selection:bg-aqua selection:text-deep">
-  <header class="fixed inset-x-0 top-0 z-50 border-b border-cyan/10 bg-deep/75 backdrop-blur-2xl">
+<body>
+  <header class="sticky top-0 z-50 border-b border-petrol/10 bg-soft/85 backdrop-blur-2xl">
     <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
-      <a href="#inicio" class="flex items-center gap-3">
-        <span class="grid h-11 w-11 place-items-center rounded-2xl bg-cyan text-deep font-black">NS</span>
-        <div><p class="text-lg font-black leading-none">NovaSmile</p><p class="text-xs uppercase tracking-[.28em] text-aqua">Dental Center</p></div>
-      </a>
-      <div class="hidden items-center gap-7 text-sm font-bold text-white/70 lg:flex">
-        <a href="#especialidades" class="hover:text-aqua">Especialidades</a><a href="#equipo" class="hover:text-aqua">Equipo</a><a href="#tecnologia" class="hover:text-aqua">Tecnología</a><a href="#agenda" class="hover:text-aqua">Agenda</a>
-      </div>
-      <a href="#agenda" class="rounded-full bg-aqua px-5 py-3 text-sm font-black text-deep transition hover:bg-white">Agendar evaluación</a>
+      <a href="#inicio" class="flex items-center gap-3"><span class="grid h-12 w-12 place-items-center rounded-2xl bg-petrol text-white font-black">OC</span><div><p class="text-xl font-black leading-none text-petrol">OralCare</p><p class="text-xs uppercase tracking-[.32em] text-teal">Dental Studio</p></div></a>
+      <div class="hidden items-center gap-7 text-sm font-bold text-petrol/70 lg:flex"><a href="#especialidades">Especialidades</a><a href="#metodo">Método</a><a href="#equipo">Equipo</a><a href="#agenda">Agenda</a></div>
+      <a href="#agenda" class="rounded-full bg-petrol px-5 py-3 text-sm font-black text-white">Agendar evaluación</a>
     </nav>
   </header>
 
   <main id="inicio">
-    <section class="hero relative min-h-screen overflow-hidden pt-28">
-      <img class="absolute inset-0 h-full w-full object-cover opacity-55" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=85&w=2200&auto=format&fit=crop" alt="Clínica dental moderna" />
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(103,232,249,.22),transparent_34%)]"></div>
-      <div class="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 lg:grid-cols-[1fr_.9fr] lg:py-28">
+    <section class="relative overflow-hidden px-5 py-16 lg:py-24">
+      <div class="absolute right-[-12%] top-[-18%] h-[560px] w-[560px] rounded-full bg-mint/35 blur-3xl"></div>
+      <div class="absolute bottom-[-20%] left-[-12%] h-[420px] w-[420px] rounded-full bg-teal/10 blur-3xl"></div>
+      <div class="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.95fr_1.05fr]">
         <div>
-          <div class="mb-6 inline-flex rounded-full border border-aqua/30 bg-aqua/10 px-5 py-3 text-sm font-black text-aqua">Odontología integral · Ortodoncia · Implantes · Dolor orofacial</div>
-          <h1 class="max-w-4xl text-5xl font-black leading-[.95] tracking-tight md:text-7xl">Sonríe con confianza desde tu primera evaluación.</h1>
-          <p class="mt-7 max-w-2xl text-lg leading-8 text-white/72">NovaSmile Dental Center reúne especialidades odontológicas avanzadas, diagnóstico digital y agendamiento online para entregar una experiencia clínica clara, moderna y humana.</p>
-          <div class="mt-9 flex flex-col gap-4 sm:flex-row"><a href="#agenda" class="rounded-full bg-aqua px-8 py-4 text-center font-black text-deep shadow-glow">Agendar evaluación</a><a href="#especialidades" class="rounded-full border border-white/15 px-8 py-4 text-center font-black text-white hover:border-aqua hover:text-aqua">Ver especialidades</a></div>
-          <div class="mt-12 grid max-w-2xl grid-cols-3 gap-4 text-center"><div class="glass rounded-3xl p-5"><p class="text-3xl font-black text-aqua">+10</p><p class="text-xs text-white/60">años experiencia</p></div><div class="glass rounded-3xl p-5"><p class="text-3xl font-black text-aqua">9</p><p class="text-xs text-white/60">especialidades</p></div><div class="glass rounded-3xl p-5"><p class="text-3xl font-black text-aqua">24/7</p><p class="text-xs text-white/60">agenda online</p></div></div>
+          <div class="mb-7 inline-flex rounded-full border border-teal/15 bg-white px-5 py-3 text-sm font-black text-teal shadow-sm">Clínica dental integral · Santiago</div>
+          <h1 class="max-w-4xl text-5xl font-black leading-[.92] tracking-tight text-petrol md:text-7xl">Odontología moderna para sonrisas sanas y naturales.</h1>
+          <p class="mt-7 max-w-2xl text-lg leading-8 text-ink/65">OralCare Studio combina especialidades odontológicas, diagnóstico digital y una experiencia tranquila para pacientes que buscan claridad, estética y salud bucal.</p>
+          <div class="mt-9 flex flex-col gap-4 sm:flex-row"><a href="#agenda" class="rounded-full bg-teal px-8 py-4 text-center font-black text-white shadow-soft">Reservar evaluación</a><a href="#especialidades" class="rounded-full border border-petrol/15 bg-white px-8 py-4 text-center font-black text-petrol">Ver tratamientos</a></div>
+          <div class="mt-12 grid max-w-2xl grid-cols-3 gap-4"><div class="rounded-[2rem] bg-white p-5 shadow-soft"><p class="text-3xl font-black text-teal">9</p><p class="mt-1 text-xs font-bold text-ink/45">especialidades</p></div><div class="rounded-[2rem] bg-white p-5 shadow-soft"><p class="text-3xl font-black text-teal">3D</p><p class="mt-1 text-xs font-bold text-ink/45">diagnóstico digital</p></div><div class="rounded-[2rem] bg-white p-5 shadow-soft"><p class="text-3xl font-black text-teal">24/7</p><p class="mt-1 text-xs font-bold text-ink/45">agenda online</p></div></div>
         </div>
-        <div class="glass rounded-[2.5rem] p-5 shadow-glow">
-          <img class="h-[520px] w-full rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=85&w=1400&auto=format&fit=crop" alt="Atención odontológica premium" />
-          <div class="-mt-28 mx-5 rounded-[2rem] border border-aqua/20 bg-deep/85 p-6 backdrop-blur-xl"><p class="text-xs font-black uppercase tracking-[.25em] text-aqua">Evaluación inicial</p><h2 class="mt-2 text-2xl font-black">Diagnóstico + plan dental personalizado</h2><p class="mt-3 text-sm leading-6 text-white/65">Agenda tu evaluación y recibe orientación según tu caso: estética, dolor, ortodoncia, implantes o rehabilitación.</p></div>
+        <div class="relative">
+          <div class="blob absolute -inset-5 bg-mint/35"></div>
+          <div class="relative grid gap-5 rounded-[3rem] bg-white p-5 shadow-soft">
+            <img class="h-[500px] w-full rounded-[2.4rem] object-cover" src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=85&w=1500&auto=format&fit=crop" alt="Atención dental premium" />
+            <div class="grid gap-4 md:grid-cols-3"><div class="rounded-3xl bg-sand p-4"><p class="text-xs font-black uppercase text-teal">Plan</p><p class="mt-2 font-black">Personalizado</p></div><div class="rounded-3xl bg-sand p-4"><p class="text-xs font-black uppercase text-teal">Atención</p><p class="mt-2 font-black">Sin estrés</p></div><div class="rounded-3xl bg-petrol p-4 text-white"><p class="text-xs font-black uppercase text-mint">Online</p><p class="mt-2 font-black">Agenda lista</p></div></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="especialidades" class="mx-auto max-w-7xl px-5 py-24">
-      <div class="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end"><div><p class="text-sm font-black uppercase tracking-[.32em] text-aqua">Especialidades</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Todo para tu salud bucal en un solo lugar.</h2></div><p class="max-w-xl text-white/60">Especialidades basadas en el esquema de clínicas odontológicas integrales: ortodoncia, implantes, dolor orofacial, cirugía, estética y rehabilitación.</p></div>
-      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">01</p><h3 class="mt-4 text-2xl font-black">Ortodoncia</h3><p class="mt-3 text-white/62">Prevención, diagnóstico y tratamiento de anomalías de forma, posición y función entre huesos y dientes.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">02</p><h3 class="mt-4 text-2xl font-black">TTM y Dolor Orofacial</h3><p class="mt-3 text-white/62">Manejo de trastornos temporomandibulares, dolor orofacial, bruxismo y trastornos asociados al sueño.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">03</p><h3 class="mt-4 text-2xl font-black">Odontología Integral</h3><p class="mt-3 text-white/62">Diagnóstico y tratamiento general para problemas de salud bucal en pacientes adultos y jóvenes.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">04</p><h3 class="mt-4 text-2xl font-black">Periodoncia</h3><p class="mt-3 text-white/62">Prevención, diagnóstico y tratamiento de encías y tejidos que soportan los dientes.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">05</p><h3 class="mt-4 text-2xl font-black">Implantología</h3><p class="mt-3 text-white/62">Reposición de piezas dentales mediante implantes y planificación quirúrgica moderna.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">06</p><h3 class="mt-4 text-2xl font-black">Cirugía Bucal</h3><p class="mt-3 text-white/62">Extracciones, terceros molares, procedimientos quirúrgicos e injertos según evaluación clínica.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">07</p><h3 class="mt-4 text-2xl font-black">Estética Dental</h3><p class="mt-3 text-white/62">Blanqueamiento, diseño de sonrisa, carillas y tratamientos para una estética natural.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">08</p><h3 class="mt-4 text-2xl font-black">Endodoncia</h3><p class="mt-3 text-white/62">Tratamiento de enfermedades de la pulpa dental para conservar piezas dañadas.</p></article>
-        <article class="glass card rounded-[2rem] p-7"><p class="text-aqua">09</p><h3 class="mt-4 text-2xl font-black">Rehabilitación Oral</h3><p class="mt-3 text-white/62">Recuperación de función, armonía y estética mediante coronas, prótesis y restauraciones.</p></article>
-      </div>
-    </section>
-
-    <section id="tecnologia" class="border-y border-cyan/10 bg-white/[.03] py-24">
-      <div class="mx-auto max-w-7xl px-5"><div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[.32em] text-aqua">Tecnología clínica</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Diagnóstico claro, experiencia tranquila.</h2></div><div class="grid gap-5 md:grid-cols-4"><img class="h-80 rounded-[2rem] object-cover md:col-span-2" src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=85&w=1400&auto=format&fit=crop" alt="Equipo dental moderno"><img class="h-80 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=85&w=900&auto=format&fit=crop" alt="Odontóloga atendiendo paciente"><img class="h-80 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1588776813677-77aaf5595b83?q=85&w=900&auto=format&fit=crop" alt="Instrumental dental"><img class="h-80 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1629909615184-74f495363b67?q=85&w=900&auto=format&fit=crop" alt="Consulta dental"><img class="h-80 rounded-[2rem] object-cover md:col-span-3" src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=85&w=1500&auto=format&fit=crop" alt="Sonrisa dental"></div></div>
-    </section>
-
-    <section id="equipo" class="mx-auto max-w-7xl px-5 py-24">
-      <div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[.32em] text-aqua">Equipo</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Especialistas para cada etapa del tratamiento.</h2><p class="mx-auto mt-5 max-w-2xl text-white/60">Equipo demo compuesto por profesionales de ortodoncia, implantología, rehabilitación y estética dental.</p></div>
-      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        <article class="glass card rounded-[2rem] p-5 text-center"><img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=85&w=600&auto=format&fit=crop" alt="Dra. Laura Rivas"><h3 class="mt-5 text-xl font-black">Dra. Laura Rivas</h3><p class="text-aqua">Ortodoncia</p><a href="#agenda" class="mt-5 inline-block rounded-full border border-aqua/40 px-5 py-2 text-sm text-aqua hover:bg-aqua hover:text-deep">Agendar</a></article>
-        <article class="glass card rounded-[2rem] p-5 text-center"><img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=85&w=600&auto=format&fit=crop" alt="Dr. Tomás Herrera"><h3 class="mt-5 text-xl font-black">Dr. Tomás Herrera</h3><p class="text-aqua">Implantes</p><a href="#agenda" class="mt-5 inline-block rounded-full border border-aqua/40 px-5 py-2 text-sm text-aqua hover:bg-aqua hover:text-deep">Agendar</a></article>
-        <article class="glass card rounded-[2rem] p-5 text-center"><img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=85&w=600&auto=format&fit=crop" alt="Dra. Sofía Miranda"><h3 class="mt-5 text-xl font-black">Dra. Sofía Miranda</h3><p class="text-aqua">Estética Dental</p><a href="#agenda" class="mt-5 inline-block rounded-full border border-aqua/40 px-5 py-2 text-sm text-aqua hover:bg-aqua hover:text-deep">Agendar</a></article>
-        <article class="glass card rounded-[2rem] p-5 text-center"><img class="mx-auto h-44 w-44 rounded-full object-cover" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=85&w=600&auto=format&fit=crop" alt="Dr. Nicolás Pérez"><h3 class="mt-5 text-xl font-black">Dr. Nicolás Pérez</h3><p class="text-aqua">Dolor Orofacial</p><a href="#agenda" class="mt-5 inline-block rounded-full border border-aqua/40 px-5 py-2 text-sm text-aqua hover:bg-aqua hover:text-deep">Agendar</a></article>
-      </div>
-    </section>
-
-    <section class="border-y border-cyan/10 bg-white/[.03] py-24"><div class="mx-auto max-w-7xl px-5"><div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[.32em] text-aqua">Sucursales demo</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Atención dental en Santiago.</h2></div><div class="grid gap-5 md:grid-cols-2"><article class="glass overflow-hidden rounded-[2rem]"><img class="h-80 w-full object-cover" src="https://images.unsplash.com/photo-1629909615486-9f2d1a4a08e8?q=85&w=1400&auto=format&fit=crop" alt="Sucursal Las Condes"><div class="p-7"><h3 class="text-2xl font-black">Sucursal Las Condes</h3><p class="mt-3 text-white/60">Av. Apoquindo 4120, Oficina 801. Metro Alcántara.</p><a href="#agenda" class="mt-6 inline-block rounded-full bg-aqua px-6 py-3 font-black text-deep">Agendar evaluación</a></div></article><article class="glass overflow-hidden rounded-[2rem]"><img class="h-80 w-full object-cover" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=85&w=1400&auto=format&fit=crop" alt="Sucursal Ñuñoa"><div class="p-7"><h3 class="text-2xl font-black">Sucursal Ñuñoa</h3><p class="mt-3 text-white/60">Av. Irarrázaval 2985, Piso 4. Atención particular.</p><a href="#agenda" class="mt-6 inline-block rounded-full bg-aqua px-6 py-3 font-black text-deep">Agendar evaluación</a></div></article></div></div></section>
-
-    <section class="mx-auto max-w-7xl px-5 py-24"><div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[.32em] text-aqua">Pacientes</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Experiencia clínica clara y segura.</h2></div><div class="grid gap-5 md:grid-cols-3"><article class="glass rounded-[2rem] p-7"><p class="text-aqua">★★★★★</p><p class="mt-5 text-white/75">Me explicaron cada etapa del tratamiento y pude agendar mi control online sin llamadas.</p><h3 class="mt-6 font-black">Carolina Fuentes</h3></article><article class="glass rounded-[2rem] p-7"><p class="text-aqua">★★★★★</p><p class="mt-5 text-white/75">Excelente atención para ortodoncia. Muy moderno y fácil de coordinar horarios.</p><h3 class="mt-6 font-black">Matías Rojas</h3></article><article class="glass rounded-[2rem] p-7"><p class="text-aqua">★★★★★</p><p class="mt-5 text-white/75">El diagnóstico fue claro y el equipo muy profesional. La agenda online ayuda mucho.</p><h3 class="mt-6 font-black">Francisca Medina</h3></article></div></section>
-
-    <section id="agenda" class="mx-auto grid max-w-7xl gap-10 px-5 py-24 lg:grid-cols-[.9fr_1.1fr]">
-      <div><p class="text-sm font-black uppercase tracking-[.32em] text-aqua">Agenda Online</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Agenda tu evaluación dental en segundos.</h2><p class="mt-5 text-lg leading-8 text-white/65">Selecciona sucursal, especialidad, profesional, fecha y hora. Esta demo simula el flujo AgendaOS sin enviar datos reales.</p><div class="mt-8 rounded-[2rem] border border-aqua/20 bg-aqua/10 p-6 text-mint"><p class="font-black">Evaluaciones disponibles</p><ul class="mt-4 space-y-3 text-sm text-white/75"><li>• Evaluación de ortodoncia</li><li>• Evaluación por dolor orofacial / bruxismo</li><li>• Evaluación de implantes</li><li>• Evaluación estética dental</li><li>• Urgencia dental demo</li></ul></div></div>
-      <form id="bookingForm" class="glass rounded-[2rem] p-6 md:p-8">
-        <div class="grid gap-5 md:grid-cols-2">
-          <label><span class="text-sm text-white/70">Sucursal</span><select name="branch" class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua"><option>Las Condes</option><option>Ñuñoa</option></select></label>
-          <label><span class="text-sm text-white/70">Especialidad</span><select name="specialty" class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua"><option>Ortodoncia</option><option>TTM y Dolor Orofacial</option><option>Odontología Integral</option><option>Implantología</option><option>Cirugía Bucal</option><option>Periodoncia</option><option>Endodoncia</option><option>Rehabilitación Oral</option><option>Estética Dental</option></select></label>
-          <label><span class="text-sm text-white/70">Profesional</span><select name="doctor" class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua"><option>Sin preferencia</option><option>Dra. Laura Rivas</option><option>Dr. Tomás Herrera</option><option>Dra. Sofía Miranda</option><option>Dr. Nicolás Pérez</option></select></label>
-          <label><span class="text-sm text-white/70">Fecha</span><input name="date" type="date" required class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua" /></label>
-          <label><span class="text-sm text-white/70">Hora</span><select name="time" class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua"><option>09:00</option><option>10:30</option><option>12:00</option><option>15:00</option><option>16:30</option><option>18:00</option></select></label>
-          <label><span class="text-sm text-white/70">Nombre</span><input name="name" required placeholder="Tu nombre" class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua" /></label>
-          <label><span class="text-sm text-white/70">Teléfono</span><input name="phone" required placeholder="+56 9 0000 0000" class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua" /></label>
-          <label><span class="text-sm text-white/70">Email</span><input name="email" type="email" required placeholder="correo@ejemplo.cl" class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua" /></label>
-          <label class="md:col-span-2"><span class="text-sm text-white/70">Motivo de consulta</span><textarea name="notes" rows="4" placeholder="Ej: evaluación de brackets, dolor mandibular, implante, limpieza, estética dental..." class="mt-2 w-full rounded-2xl border border-white/10 bg-deep px-4 py-4 outline-none focus:border-aqua"></textarea></label>
+    <section id="especialidades" class="px-5 py-20">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 grid gap-6 lg:grid-cols-[.8fr_1.2fr] lg:items-end"><div><p class="text-sm font-black uppercase tracking-[.32em] text-teal">Tratamientos</p><h2 class="mt-4 text-4xl font-black text-petrol md:text-6xl">Especialidades odontológicas.</h2></div><p class="max-w-2xl text-lg leading-8 text-ink/60">Una clínica pensada para resolver desde prevención y estética hasta tratamientos complejos de rehabilitación, implantes y dolor orofacial.</p></div>
+        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">01</span><h3 class="mt-5 text-2xl font-black text-petrol">Ortodoncia</h3><p class="mt-3 text-ink/60">Alineación dental, mordida, brackets y alternativas estéticas según evaluación.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">02</span><h3 class="mt-5 text-2xl font-black text-petrol">TTM y Dolor Orofacial</h3><p class="mt-3 text-ink/60">Bruxismo, dolor mandibular, trastornos temporomandibulares y sueño.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">03</span><h3 class="mt-5 text-2xl font-black text-petrol">Odontología Integral</h3><p class="mt-3 text-ink/60">Diagnóstico general, limpieza, restauraciones y prevención.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">04</span><h3 class="mt-5 text-2xl font-black text-petrol">Periodoncia</h3><p class="mt-3 text-ink/60">Tratamiento de encías y tejidos que sostienen los dientes.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">05</span><h3 class="mt-5 text-2xl font-black text-petrol">Implantología</h3><p class="mt-3 text-ink/60">Reposición de piezas dentales mediante implantes y planificación quirúrgica.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">06</span><h3 class="mt-5 text-2xl font-black text-petrol">Cirugía Bucal</h3><p class="mt-3 text-ink/60">Extracciones, terceros molares y procedimientos quirúrgicos orales.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">07</span><h3 class="mt-5 text-2xl font-black text-petrol">Estética Dental</h3><p class="mt-3 text-ink/60">Blanqueamiento, carillas, diseño de sonrisa y armonía natural.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">08</span><h3 class="mt-5 text-2xl font-black text-petrol">Endodoncia</h3><p class="mt-3 text-ink/60">Tratamiento de conductos para conservar piezas comprometidas.</p></article>
+          <article class="card rounded-[2rem] bg-white p-7 shadow-sm"><span class="rounded-full bg-mint/35 px-3 py-1 text-xs font-black text-teal">09</span><h3 class="mt-5 text-2xl font-black text-petrol">Rehabilitación Oral</h3><p class="mt-3 text-ink/60">Coronas, prótesis, restauraciones y recuperación funcional.</p></article>
         </div>
-        <button id="submitBtn" class="mt-6 w-full rounded-full bg-aqua px-8 py-4 font-black text-deep transition hover:bg-white">Confirmar evaluación</button>
-        <p id="formMsg" class="mt-4 hidden rounded-2xl px-4 py-3 text-sm"></p>
-      </form>
+      </div>
+    </section>
+
+    <section id="metodo" class="px-5 py-20">
+      <div class="mx-auto max-w-7xl overflow-hidden rounded-[3rem] bg-petrol text-white shadow-soft">
+        <div class="grid gap-0 lg:grid-cols-2">
+          <div class="p-8 lg:p-14"><p class="text-sm font-black uppercase tracking-[.32em] text-mint">Método OralCare</p><h2 class="mt-4 text-4xl font-black md:text-5xl">Una experiencia clínica distinta.</h2><div class="mt-10 space-y-5"><div class="rounded-3xl bg-white/8 p-5"><p class="font-black text-mint">01 · Evaluación digital</p><p class="mt-2 text-white/65">Revisión, diagnóstico y orientación clara.</p></div><div class="rounded-3xl bg-white/8 p-5"><p class="font-black text-mint">02 · Plan de tratamiento</p><p class="mt-2 text-white/65">Prioridades, tiempos, alternativas y costos demo.</p></div><div class="rounded-3xl bg-white/8 p-5"><p class="font-black text-mint">03 · Controles agendados</p><p class="mt-2 text-white/65">Seguimiento con recordatorios y agenda online.</p></div></div></div>
+          <img class="h-full min-h-[520px] w-full object-cover" src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=85&w=1500&auto=format&fit=crop" alt="Tecnología dental" />
+        </div>
+      </div>
+    </section>
+
+    <section id="equipo" class="px-5 py-20">
+      <div class="mx-auto max-w-7xl"><div class="mb-12 text-center"><p class="text-sm font-black uppercase tracking-[.32em] text-teal">Equipo clínico</p><h2 class="mt-4 text-4xl font-black text-petrol md:text-5xl">Especialistas para cada caso.</h2></div><div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <article class="card rounded-[2rem] bg-white p-5 text-center shadow-sm"><img class="mx-auto h-44 w-44 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=85&w=600&auto=format&fit=crop"><h3 class="mt-5 text-xl font-black text-petrol">Dra. Laura Rivas</h3><p class="text-teal">Ortodoncia</p></article>
+        <article class="card rounded-[2rem] bg-white p-5 text-center shadow-sm"><img class="mx-auto h-44 w-44 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=85&w=600&auto=format&fit=crop"><h3 class="mt-5 text-xl font-black text-petrol">Dr. Tomás Herrera</h3><p class="text-teal">Implantes</p></article>
+        <article class="card rounded-[2rem] bg-white p-5 text-center shadow-sm"><img class="mx-auto h-44 w-44 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=85&w=600&auto=format&fit=crop"><h3 class="mt-5 text-xl font-black text-petrol">Dra. Sofía Miranda</h3><p class="text-teal">Estética Dental</p></article>
+        <article class="card rounded-[2rem] bg-white p-5 text-center shadow-sm"><img class="mx-auto h-44 w-44 rounded-[2rem] object-cover" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=85&w=600&auto=format&fit=crop"><h3 class="mt-5 text-xl font-black text-petrol">Dr. Nicolás Pérez</h3><p class="text-teal">Dolor Orofacial</p></article>
+      </div></div>
+    </section>
+
+    <section id="agenda" class="px-5 py-20">
+      <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.85fr_1.15fr]">
+        <div class="rounded-[3rem] bg-sand p-8 lg:p-12"><p class="text-sm font-black uppercase tracking-[.32em] text-teal">Agenda online</p><h2 class="mt-4 text-4xl font-black text-petrol md:text-5xl">Reserva tu evaluación dental.</h2><p class="mt-5 text-lg leading-8 text-ink/65">Selecciona sucursal, especialidad, profesional, fecha y hora. Esta demo simula el flujo de AgendaOS sin enviar datos reales.</p><div class="mt-8 grid gap-4"><div class="rounded-3xl bg-white p-5"><p class="font-black text-petrol">Las Condes</p><p class="text-ink/55">Av. Apoquindo 4120, Oficina 801.</p></div><div class="rounded-3xl bg-white p-5"><p class="font-black text-petrol">Ñuñoa</p><p class="text-ink/55">Av. Irarrázaval 2985, Piso 4.</p></div></div></div>
+        <form id="bookingForm" class="rounded-[3rem] bg-white p-6 shadow-soft md:p-8">
+          <div class="grid gap-5 md:grid-cols-2">
+            <label><span class="text-sm font-bold text-ink/60">Sucursal</span><select name="branch" class="field mt-2"><option>Las Condes</option><option>Ñuñoa</option></select></label>
+            <label><span class="text-sm font-bold text-ink/60">Especialidad</span><select name="specialty" class="field mt-2"><option>Ortodoncia</option><option>TTM y Dolor Orofacial</option><option>Odontología Integral</option><option>Implantología</option><option>Cirugía Bucal</option><option>Periodoncia</option><option>Endodoncia</option><option>Rehabilitación Oral</option><option>Estética Dental</option></select></label>
+            <label><span class="text-sm font-bold text-ink/60">Profesional</span><select name="doctor" class="field mt-2"><option>Sin preferencia</option><option>Dra. Laura Rivas</option><option>Dr. Tomás Herrera</option><option>Dra. Sofía Miranda</option><option>Dr. Nicolás Pérez</option></select></label>
+            <label><span class="text-sm font-bold text-ink/60">Fecha</span><input name="date" type="date" required class="field mt-2" /></label>
+            <label><span class="text-sm font-bold text-ink/60">Hora</span><select name="time" class="field mt-2"><option>09:00</option><option>10:30</option><option>12:00</option><option>15:00</option><option>16:30</option><option>18:00</option></select></label>
+            <label><span class="text-sm font-bold text-ink/60">Nombre</span><input name="name" required placeholder="Tu nombre" class="field mt-2" /></label>
+            <label><span class="text-sm font-bold text-ink/60">Teléfono</span><input name="phone" required placeholder="+56 9 0000 0000" class="field mt-2" /></label>
+            <label><span class="text-sm font-bold text-ink/60">Email</span><input name="email" type="email" required placeholder="correo@ejemplo.cl" class="field mt-2" /></label>
+            <label class="md:col-span-2"><span class="text-sm font-bold text-ink/60">Motivo de consulta</span><textarea name="notes" rows="4" placeholder="Ej: evaluación de brackets, dolor mandibular, implante, limpieza, estética dental..." class="field mt-2"></textarea></label>
+          </div>
+          <button id="submitBtn" class="mt-6 w-full rounded-full bg-petrol px-8 py-4 font-black text-white transition hover:bg-teal">Confirmar evaluación</button>
+          <p id="formMsg" class="mt-4 hidden rounded-2xl px-4 py-3 text-sm"></p>
+        </form>
+      </div>
     </section>
   </main>
-  <footer class="border-t border-cyan/10 px-5 py-10 text-center text-sm text-white/45"><p class="font-semibold text-white/70">NovaSmile Dental Center</p><p class="mt-2">Av. Apoquindo 4120, Las Condes · Av. Irarrázaval 2985, Ñuñoa</p><p class="mt-2 text-aqua">Demo creada con AgendaOS</p></footer>
+
+  <footer class="border-t border-petrol/10 px-5 py-10 text-center text-sm text-ink/50"><p class="font-black text-petrol">OralCare Dental Studio</p><p class="mt-2">Av. Apoquindo 4120, Las Condes · Av. Irarrázaval 2985, Ñuñoa</p><p class="mt-2 text-teal">Demo creada con AgendaOS</p></footer>
   <script>
-    const form=document.getElementById('bookingForm');const msg=document.getElementById('formMsg');const btn=document.getElementById('submitBtn');const today=new Date().toISOString().split('T')[0];form.date.min=today;form.addEventListener('submit',e=>{e.preventDefault();btn.disabled=true;btn.textContent='Procesando...';msg.className='mt-4 rounded-2xl px-4 py-3 text-sm bg-emerald-500/15 text-emerald-200 border border-emerald-400/20';msg.textContent='Demo AgendaOS: evaluación dental simulada correctamente.';msg.classList.remove('hidden');setTimeout(()=>{btn.disabled=false;btn.textContent='Confirmar evaluación'},700)});
+    const form=document.getElementById('bookingForm'),msg=document.getElementById('formMsg'),btn=document.getElementById('submitBtn');form.date.min=new Date().toISOString().split('T')[0];form.addEventListener('submit',e=>{e.preventDefault();btn.disabled=true;btn.textContent='Procesando...';msg.className='mt-4 rounded-2xl px-4 py-3 text-sm bg-emerald-50 text-emerald-700 border border-emerald-200';msg.textContent='Demo AgendaOS: evaluación dental simulada correctamente.';msg.classList.remove('hidden');setTimeout(()=>{btn.disabled=false;btn.textContent='Confirmar evaluación'},700)});
   </script>
 </body>
 </html>
